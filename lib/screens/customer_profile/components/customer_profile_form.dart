@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gogi/components/custom_surfix_icon.dart';
 import 'package:gogi/components/default_button.dart';
 import 'package:gogi/components/form_error.dart';
+import 'package:gogi/models/Store.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -19,7 +20,7 @@ class _CustomerProfileFormState extends State<CustomerProfileForm> {
   String? name;
   String? address;
   String? phoneNumber;
-  String? store;
+  int? dropdownValue = 1;
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -75,11 +76,9 @@ class _CustomerProfileFormState extends State<CustomerProfileForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Address",
         hintText: "Enter your address",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon:
             CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
@@ -104,27 +103,42 @@ class _CustomerProfileFormState extends State<CustomerProfileForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Phone Number",
         hintText: "Enter your phone number",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
       ),
     );
   }
 
-  TextFormField buildStoreFormField() {
-    return TextFormField(
-      onSaved: (newValue) => store = newValue,
+  InputDecorator buildStoreFormField() {
+    return InputDecorator(
       decoration: InputDecoration(
-        labelText: "Store",
-        hintText: "Choose store",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Shop.svg"),
+        contentPadding:
+        EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
+        labelText: 'Store',
+        border:
+        OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<int>(
+          value: dropdownValue,
+          icon: const Icon(Icons.arrow_drop_down),
+          iconSize: 24,
+          elevation: 16,
+          onChanged: (int? newValue) {
+            setState(() {
+              dropdownValue = newValue!;
+            });
+          },
+          items: demoStores.map((store) {
+            return DropdownMenuItem<int>(
+              value: store.id,
+              child: Text(store.name),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
@@ -134,22 +148,20 @@ class _CustomerProfileFormState extends State<CustomerProfileForm> {
       onSaved: (newValue) => name = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kNamelNullError);
+          removeError(error: kNameNullError);
         }
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kNamelNullError);
+          addError(error: kNameNullError);
           return "";
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Name",
         hintText: "Enter your name",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
       ),

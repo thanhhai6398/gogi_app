@@ -4,16 +4,18 @@ import 'package:gogi/enums.dart';
 
 import 'components/body.dart';
 
-class ProfileScreen extends StatelessWidget {
-  static String routeName = "/profile";
+class OrderScreen extends StatelessWidget {
+  static String routeName = "/order";
+
+  const OrderScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile", style: TextStyle(color: Colors.black)),
+        title: const Text("Receipt", style: TextStyle(color: Colors.black),),
       ),
       body: Body(),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
+      bottomNavigationBar: const CustomBottomNavBar(selectedMenu: MenuState.receipt),
     );
   }
 }

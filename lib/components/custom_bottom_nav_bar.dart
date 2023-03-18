@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gogi/screens/order/order_screen.dart';
 
 import '../constants.dart';
 import '../enums.dart';
@@ -52,15 +53,24 @@ class CustomBottomNavBar extends StatelessWidget {
               IconButton(
                 icon: SvgPicture.asset(
                   "assets/icons/Menu Icon2.svg",
+                  width: 22,
+                  height: 22,
                   color: MenuState.menu == selectedMenu
-                  ? kPrimaryColor
-                  : inActiveIconColor,
+                      ? kPrimaryColor
+                      : inActiveIconColor,
                 ),
-                onPressed: () => Navigator.pushNamed(context, MenuScreen.routeName),
+                onPressed: () =>
+                    Navigator.pushNamed(context, MenuScreen.routeName),
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Bill Icon2.svg"),
-                onPressed: () {},
+                icon: SvgPicture.asset(
+                  "assets/icons/Bill Icon2.svg",
+                  color: MenuState.receipt == selectedMenu
+                      ? kPrimaryColor
+                      : inActiveIconColor,
+                ),
+                onPressed: () =>
+                    Navigator.pushNamed(context, OrderScreen.routeName),
               ),
               IconButton(
                 icon: SvgPicture.asset(

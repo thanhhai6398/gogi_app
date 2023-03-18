@@ -117,7 +117,7 @@ class _StateCheckoutCard extends State<CheckoutCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text.rich(
+                const Text.rich(
                   TextSpan(
                     text: "Total:\n",
                     children: [

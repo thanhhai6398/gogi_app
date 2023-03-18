@@ -1,25 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:gogi/components/custom_surfix_icon.dart';
-import 'package:gogi/components/default_button.dart';
-import 'package:gogi/components/form_error.dart';
+import 'package:gogi/constants.dart';
+import 'package:gogi/size_config.dart';
 
-import '../../../constants.dart';
-import '../../../size_config.dart';
+import '../../../components/custom_surfix_icon.dart';
+import '../../../components/default_button.dart';
+import '../../../components/form_error.dart';
 
+class Body extends StatelessWidget {
+  const Body({super.key});
 
-class SignUpForm extends StatefulWidget {
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding:
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          child: Column(
+            children: [
+              SizedBox(height: SizeConfig.screenHeight * 0.04),
+              Text(
+                "Reset Password",
+                style: TextStyle(
+                  fontSize: getProportionateScreenWidth(28),
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                "Please enter your password",
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: SizeConfig.screenHeight * 0.1),
+              ResetPassForm(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class ResetPassForm extends StatefulWidget{
+  @override
+  _ResetPassFormState createState() => _ResetPassFormState();
+}
+
+class _ResetPassFormState extends State<ResetPassForm>{
   final _formKey = GlobalKey<FormState>();
-  String? email;
   String? password;
   String? conform_password;
-  String? phoneNumber;
-
-  bool remember = false;
   final List<String?> errors = [];
 
   void addError({String? error}) {
@@ -42,59 +74,23 @@ class _SignUpFormState extends State<SignUpForm> {
       key: _formKey,
       child: Column(
         children: [
-          buildPhoneNumberFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          buildEmailFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildConformPassFormField(),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "Sign up",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
+              text: "Reset",
+              press: () {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                }
               }
-            }
           ),
         ],
       ),
     );
   }
-
-  TextFormField buildPhoneNumberFormField() {
-    return TextFormField(
-      keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phoneNumber = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPhoneNumberNullError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kPhoneNumberNullError);
-          return "";
-        } else if (!phoneValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidPhoneNumberError);
-          return "";
-        }
-        return null;
-      },
-      decoration: const InputDecoration(
-        labelText: "Phone Number",
-        hintText: "Enter your phone number",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
-      ),
-    );
-  }
-
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
@@ -158,39 +154,6 @@ class _SignUpFormState extends State<SignUpForm> {
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
-      ),
-    );
-  }
-
-  TextFormField buildEmailFormField() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kEmailNullError);
-        } else if (emailValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidEmailError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kEmailNullError);
-          return "";
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidEmailError);
-          return "";
-        }
-        return null;
-      },
-      decoration: const InputDecoration(
-        labelText: "Email",
-        hintText: "Enter your email",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
       ),
     );
   }

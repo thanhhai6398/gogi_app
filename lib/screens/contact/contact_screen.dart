@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-
 import 'components/body.dart';
+class ContactScreen extends StatelessWidget {
+  static String routeName = "/contact";
 
-class CustomerProfileScreen extends StatelessWidget {
-  static String routeName = "/customer_profile";
+  const ContactScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Checkout', style: TextStyle(color: Colors.black),),
+        title: const Text("Contact", style: TextStyle(color: Colors.black),),
       ),
       body: Body(),
     );
   }
+
 }

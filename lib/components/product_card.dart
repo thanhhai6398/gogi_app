@@ -32,38 +32,37 @@ class ProductCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AspectRatio(
-                aspectRatio: 1.4,
-                child: Container(
-                  padding: EdgeInsets.all(getProportionateScreenWidth(5)),
-                  decoration: BoxDecoration(
-                    color: kSecondaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Hero(
-                    tag: product.id.toString(),
-                    child: Image.asset(product.images[0], fit: BoxFit.fitHeight,),
+                aspectRatio: 2/3,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Hero(
+                      tag: product.id.toString(),
+                      child: Image.asset(
+                        product.images[0],
+                        fit: BoxFit.fill,
+                      ),
+                    )),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                alignment: Alignment.topCenter,
+                child: Text(
+                  product.title,
+                  style: TextStyle(color: Colors.black),
+                  maxLines: 2,
+                ),
+              ),
+              Container(
+                alignment: Alignment.topCenter,
+                child: Text(
+                  "${product.price}đ",
+                  style: TextStyle(
+                    fontSize: getProportionateScreenWidth(18),
+                    fontWeight: FontWeight.w600,
+                    color: kPrimaryColor,
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
-              Text(
-                product.title,
-                style: TextStyle(color: Colors.black),
-                maxLines: 2,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "\$${product.price}",
-                    style: TextStyle(
-                      fontSize: getProportionateScreenWidth(18),
-                      fontWeight: FontWeight.w600,
-                      color: kPrimaryColor,
-                    ),
-                  ),
-                ],
-              )
             ],
           ),
         ),

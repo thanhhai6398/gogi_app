@@ -108,7 +108,7 @@ class _SignFormState extends State<SignForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Password",
         hintText: "Password",
         // If  you are using latest version of flutter then lable text and hint text shown like this
@@ -141,7 +141,7 @@ class _SignFormState extends State<SignForm> {
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Phone",
         hintText: "Phone number",
         // If  you are using latest version of flutter then lable text and hint text shown like this

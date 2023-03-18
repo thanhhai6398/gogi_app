@@ -16,10 +16,10 @@ class Body extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: SizeConfig.screenHeight * 0.03),
-                Text("Inforomation", style: headingStyle),
+                SizedBox(height: getProportionateScreenHeight(10)),
+                Text("Information", style: headingStyle),
                 Text(
-                  "Complete your details to order",
+                  "Complete your details to receipt",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.06),

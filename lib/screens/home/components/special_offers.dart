@@ -62,12 +62,11 @@ class SpecialOfferCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: Image(
               image: AssetImage(image),
-              height: 200,
-              width: 180,
+              fit: BoxFit.cover,
             ),
           ),
           Padding(padding: EdgeInsets.only(right: 5.00)),
-          Text("$category")
+          Text("$category",)
         ]),
       ),
     );

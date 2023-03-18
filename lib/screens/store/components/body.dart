@@ -1,6 +1,6 @@
-import 'package:gogi/screens/menu/components/categories.dart';
-import 'package:gogi/screens/menu/components/products.dart';
 import 'package:flutter/material.dart';
+import 'package:gogi/screens/store/components/stores.dart';
+import 'package:gogi/screens/store/components/search.dart';
 
 import '../../../size_config.dart';
 
@@ -10,10 +10,10 @@ class Body extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: [
+          Search(),
           SizedBox(height: getProportionateScreenHeight(20)),
-          Categories(),
-          SizedBox(height: getProportionateScreenHeight(10)),
-          Expanded(child: Products()),
+          Expanded(child: Stores())
+          ,
         ],
       ),
     );
