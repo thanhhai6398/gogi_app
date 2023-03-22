@@ -9,7 +9,7 @@ class Products extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       shrinkWrap: true,
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(5.0),
       children: List.generate(demoOrderDetails.length, (index) {
         return Center(
           child: ProductOrder(detail: demoOrderDetails[index]),
@@ -30,62 +30,143 @@ class ProductOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        color: Colors.white,
-        child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                    padding: const EdgeInsets.all(5.0),
-                    alignment: Alignment.topCenter,
-                    child: Row(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "x ${detail.quantity}",
-                          ),
-                        ),
-                        SizedBox(width: 5.0,),
-                        Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                detail.product_id.toString(),
-                                style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(18),
-                                  fontWeight: FontWeight.w400,
-                                  color: kPrimaryColor,
-                                ),
-                                maxLines: 2,
-                              ),
-                            ),
-                            SizedBox(height: getProportionateScreenHeight(5)),
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                "Size: ${detail.size}",
-                              ),
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "${detail.price}đ",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                        )
-                      ],
-                    )),
-              ),
-            ]
-        )
+      color: Colors.white,
+      child: Row(
+        children: <Widget>[
+          // Expanded(
+          //   child: Container(
+          //     padding: const EdgeInsets.all(5.0),
+          //     alignment: Alignment.topCenter,
+          //     child: Row(
+          //       children: [
+          //         Align(
+          //           alignment: Alignment.topLeft,
+          //           child: Text(
+          //             "x ${detail.quantity}",
+          //           ),
+          //         ),
+          //         SizedBox(
+          //           width: 5.0,
+          //         ),
+          //         Container(
+          //           padding:
+          //               EdgeInsets.all(getProportionateScreenWidth(10)),
+          //           decoration: BoxDecoration(
+          //             color: Color(0xFFF5F6F9),
+          //             borderRadius: BorderRadius.circular(15),
+          //           ),
+          //           //product.image
+          //           child: Image.asset(
+          //             'assets/images/1.jpg',
+          //             height: getProportionateScreenHeight(80),
+          //             width: getProportionateScreenWidth(50),
+          //           ),
+          //         ),
+          //         SizedBox(
+          //           width: 5.0,
+          //         ),
+          //         Column(
+          //           children: [
+          //             Container(
+          //               alignment: Alignment.topLeft,
+          //               //detail.product_id.toString()
+          //               child: Text(
+          //                 'Trà sữa trân châu',
+          //                 style: TextStyle(
+          //                   fontSize: getProportionateScreenWidth(18),
+          //                   fontWeight: FontWeight.w400,
+          //                   color: kPrimaryColor,
+          //                 ),
+          //                 maxLines: 2,
+          //               ),
+          //             ),
+          //             SizedBox(height: getProportionateScreenHeight(5)),
+          //             Container(
+          //               alignment: Alignment.topLeft,
+          //               child: Text(
+          //                 "Size: ${detail.size}",
+          //               ),
+          //             ),
+          //             SizedBox(height: getProportionateScreenHeight(5)),
+          //             Container(
+          //               alignment: Alignment.topRight,
+          //               child: Text(
+          //                 "${detail.price}đ",
+          //                 style: const TextStyle(
+          //                   fontWeight: FontWeight.w600,
+          //                   color: kPrimaryColor,
+          //                 ),
+          //               ),
+          //             )
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          Container(
+            alignment: Alignment.center,
+            child: Text(
+              "x ${detail.quantity}",
+            ),
+          ),
+          SizedBox(
+            width: 5.0,
+          ),
+          Container(
+            padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+            decoration: BoxDecoration(
+              color: Color(0xFFF5F6F9),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            //product.image
+            child: Image.asset(
+              'assets/images/1.jpg',
+              height: getProportionateScreenHeight(80),
+              width: getProportionateScreenWidth(50),
+            ),
+          ),
+          SizedBox(
+            width: 5.0,
+          ),
+          Expanded(
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    //detail.product_id.toString()
+                    child: Text(
+                      'Trà sữa trân châu',
+                      style: TextStyle(
+                        fontSize: getProportionateScreenWidth(18),
+                        fontWeight: FontWeight.w400,
+                        color: kPrimaryColor,
+                      ),
+                      maxLines: 2,
+                    ),
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(5)),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Size: ${detail.size}",
+                    ),
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(5)),
+                  Container(
+                    alignment: Alignment.topRight,
+                    child: Text(
+                      "${detail.price}đ",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: kPrimaryColor,
+                      ),
+                    ),
+                  )
+            ],
+          )),
+        ],
+      ),
     );
   }
 }

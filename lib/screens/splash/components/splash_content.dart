@@ -17,7 +17,7 @@ class SplashContent extends StatelessWidget {
       children: <Widget>[
         Spacer(),
         Text(
-          "GOGi",
+          "GOGI",
           style: TextStyle(
             fontSize: getProportionateScreenWidth(36),
             color: kPrimaryColor,
@@ -29,11 +29,24 @@ class SplashContent extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         Spacer(flex: 2),
-        Image.asset(
-          image!,
-          height: getProportionateScreenHeight(265),
-          width: getProportionateScreenWidth(235),
+        Container(
+          width: 300,
+          height: 300,
+          decoration: BoxDecoration(
+            color: kPrimaryColor,
+            shape: BoxShape.circle,
+            image: DecorationImage(
+                image: AssetImage(image!),
+                fit: BoxFit.contain,
+            ),
+          ),
         ),
+        // Image.asset(
+        //   image!,
+        //   height: getProportionateScreenHeight(265),
+        //   width: getProportionateScreenWidth(235),
+        //
+        // ),
       ],
     );
   }

@@ -9,24 +9,23 @@ import '../../../components/default_button.dart';
 
 class Body extends StatefulWidget {
   @override
-  _BodyState createState() => _BodyState();
+  State<Body> createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
   int currentPage = 0;
   List<Map<String, String>> splashData = [
     {
-      "text": "Welcome to Gogi, Let’s start!",
+      "text": "Welcome to Gogi milk tea \nLet’s start!",
       "image": "assets/images/logo.png"
     },
     {
-      "text":
-          "We help people conect with store \naround United State of America",
-      "image": "assets/images/logo.png"
+      "text": "We help people connect with store \naround United State of Vietnam",
+      "image": "assets/images/splash2.png"
     },
     {
       "text": "We show the easy way to shop. \nJust stay at home with us",
-      "image": "assets/images/logo.png"
+      "image": "assets/images/splash3.png"
     },
   ];
   @override
@@ -37,7 +36,7 @@ class _BodyState extends State<Body> {
         child: Column(
           children: <Widget>[
             Expanded(
-              flex: 3,
+              flex: 4,
               child: PageView.builder(
                 onPageChanged: (value) {
                   setState(() {
@@ -66,7 +65,7 @@ class _BodyState extends State<Body> {
                         (index) => buildDot(index: index),
                       ),
                     ),
-                    Spacer(flex: 3),
+                    Spacer(flex: 1),
                     DefaultButton(
                       text: "Continue",
                       press: () {

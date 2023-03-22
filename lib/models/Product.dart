@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 class Product {
   final int id;
   final String title, description;
-  final List<String> images;
-  final List<Color> colors;
+  final String image;
   final double rating, price;
   final bool isFavourite, isPopular;
 
   Product({
     required this.id,
-    required this.images,
-    required this.colors,
+    required this.image,
     this.rating = 0.0,
     this.isFavourite = false,
     this.isPopular = false,
@@ -26,17 +24,9 @@ class Product {
 List<Product> demoProducts = [
   Product(
     id: 1,
-    images: [
-      "assets/images/1.jpg",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Tra sua",
-    price: 64.99,
+    image: "assets/images/1.jpg",
+    title: "Trà sữa trân châu",
+    price: 30000,
     description: description,
     rating: 4.8,
     isFavourite: true,
@@ -44,34 +34,18 @@ List<Product> demoProducts = [
   ),
   Product(
     id: 2,
-    images: [
-      "assets/images/2.jpg",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Tra sua nuong",
-    price: 50.5,
+    image:  "assets/images/2.jpg",
+    title: "Trà sữa nướng",
+    price: 25000,
     description: description,
     rating: 4.1,
     isPopular: true,
   ),
   Product(
     id: 3,
-    images: [
-      "assets/images/3.jpg",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Tra dau tam",
-    price: 36.55,
+    image: "assets/images/3.jpg",
+    title: "Trà dâu tằm",
+    price: 28000,
     description: description,
     rating: 4.1,
     isFavourite: true,
@@ -79,34 +53,18 @@ List<Product> demoProducts = [
   ),
   Product(
     id: 4,
-    images: [
-      "assets/images/4.jpg",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Tra Nhai",
-    price: 20.20,
+    image: "assets/images/4.jpg",
+    title: "Trà Nhài",
+    price: 22000,
     description: description,
     rating: 4.1,
     isFavourite: true,
   ),
   Product(
     id: 5,
-    images: [
-      "assets/images/3.jpg",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Tra dau tam",
-    price: 36.55,
+    image: "assets/images/3.jpg",
+    title: "Trà dâu",
+    price: 30000,
     description: description,
     rating: 4.1,
     isFavourite: true,
@@ -114,17 +72,9 @@ List<Product> demoProducts = [
   ),
   Product(
     id: 6,
-    images: [
-      "assets/images/4.jpg",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Tra Nhai",
-    price: 20.20,
+    image: "assets/images/4.jpg",
+    title: "Trà Nhài",
+    price: 20000,
     description: description,
     rating: 4.1,
     isFavourite: true,

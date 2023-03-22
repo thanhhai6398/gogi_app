@@ -20,7 +20,7 @@ List<OrderDetail> demoOrderDetails = [
   OrderDetail(
     id: 1,
     price: 25000,
-    quantity: 1,
+    quantity: 3,
     size: 'M',
     order_id: 1,
     product_id: 1,
@@ -44,7 +44,23 @@ List<OrderDetail> demoOrderDetails = [
   OrderDetail(
     id: 4,
     price: 20000,
+    quantity: 2,
+    size: 'S',
+    order_id: 2,
+    product_id: 2,
+  ),
+  OrderDetail(
+    id: 5,
+    price: 15000,
     quantity: 1,
+    size: 'M',
+    order_id: 2,
+    product_id: 3,
+  ),
+  OrderDetail(
+    id: 6,
+    price: 20000,
+    quantity: 2,
     size: 'S',
     order_id: 2,
     product_id: 2,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/constants.dart';
 import 'package:gogi/screens/splash/components/body.dart';
 import 'package:gogi/size_config.dart';
 

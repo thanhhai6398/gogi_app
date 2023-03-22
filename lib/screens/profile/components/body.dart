@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/screens/splash/splash_screen.dart';
 
 import 'profile_menu.dart';
 import 'profile_pic.dart';
@@ -18,24 +19,16 @@ class Body extends StatelessWidget {
             press: () => {},
           ),
           ProfileMenu(
-            text: "Notifications",
-            icon: "assets/icons/Bell.svg",
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "Settings",
+            text: "Forgot Password",
             icon: "assets/icons/Settings.svg",
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "Help Center",
-            icon: "assets/icons/Question mark.svg",
             press: () {},
           ),
           ProfileMenu(
             text: "Log Out",
             icon: "assets/icons/Log out.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, SplashScreen.routeName);
+            },
           ),
         ],
       ),

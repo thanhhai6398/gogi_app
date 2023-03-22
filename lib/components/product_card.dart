@@ -38,7 +38,7 @@ class ProductCard extends StatelessWidget {
                     child: Hero(
                       tag: product.id.toString(),
                       child: Image.asset(
-                        product.images[0],
+                        product.image,
                         fit: BoxFit.fill,
                       ),
                     )),
@@ -49,7 +49,7 @@ class ProductCard extends StatelessWidget {
                 child: Text(
                   product.title,
                   style: TextStyle(color: Colors.black),
-                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Container(

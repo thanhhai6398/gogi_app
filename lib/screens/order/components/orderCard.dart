@@ -21,11 +21,10 @@ class OrderCard extends StatelessWidget {
     return Card(
         color: Colors.white,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
               padding: const EdgeInsets.all(5.0),
-              alignment: Alignment.topLeft,
+              alignment: Alignment.center,
               child: const Image(
                 image: AssetImage('assets/images/Order.png'),
                 width: 80,

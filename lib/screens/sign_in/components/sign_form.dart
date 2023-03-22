@@ -3,15 +3,15 @@ import 'package:gogi/components/custom_surfix_icon.dart';
 import 'package:gogi/components/form_error.dart';
 import 'package:gogi/helper/keyboard.dart';
 import 'package:gogi/screens/forgot_password/forgot_password_screen.dart';
-import 'package:gogi/screens/login_success/login_success_screen.dart';
 
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import '../../home/home_screen.dart';
 
 class SignForm extends StatefulWidget {
   @override
-  _SignFormState createState() => _SignFormState();
+  State<SignForm> createState() => _SignFormState();
 }
 
 class _SignFormState extends State<SignForm> {
@@ -77,7 +77,7 @@ class _SignFormState extends State<SignForm> {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
                 KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },
           ),

@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gogi/screens/order/components/orderCard.dart';
 
-import '../../../constants.dart';
 import '../../../models/Order.dart';
 import '../../../size_config.dart';
 
-class Content extends StatefulWidget {
-  const Content({
+class OrderContent extends StatefulWidget {
+  const OrderContent({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<Content> createState() => _ContentState();
+  State<OrderContent> createState() => _OrderContentState();
 }
 
-class _ContentState extends State<Content> {
+class _OrderContentState extends State<OrderContent> {
   List<Order> _foundedOrders = [];
 
   @override

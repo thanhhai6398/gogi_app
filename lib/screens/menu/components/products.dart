@@ -49,7 +49,7 @@ class ProductCardMenu extends StatelessWidget {
                   padding: const EdgeInsets.all(5.0),
                   alignment: Alignment.topCenter,
                   child: Image.asset(
-                    product.images[0],
+                    product.image,
                     height: 120,
                     width: 80,
                   ),

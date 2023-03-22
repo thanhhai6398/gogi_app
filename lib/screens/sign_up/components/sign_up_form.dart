@@ -9,7 +9,7 @@ import '../../../size_config.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
 class _SignUpFormState extends State<SignUpForm> {
