@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gogi/components/no_account_text.dart';
-import 'package:gogi/components/socal_card.dart';
+import 'package:gogi/components/social_card.dart';
 import '../../../size_config.dart';
 import 'sign_form.dart';
 
@@ -18,7 +18,7 @@ class Body extends StatelessWidget {
               children: [
                 SizedBox(height: SizeConfig.screenHeight * 0.04),
                 Text(
-                  "Welcome Back",
+                  "Xin chào",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: getProportionateScreenWidth(28),
@@ -26,7 +26,7 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Sign in with your phone number and password",
+                  "Đăng nhập với số điện thoại và mật khẩu",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
@@ -35,15 +35,15 @@ class Body extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SocalCard(
+                    SocialCard(
                       icon: "assets/icons/google-icon.svg",
                       press: () {},
                     ),
-                    SocalCard(
+                    SocialCard(
                       icon: "assets/icons/facebook-2.svg",
                       press: () {},
                     ),
-                    SocalCard(
+                    SocialCard(
                       icon: "assets/icons/twitter.svg",
                       press: () {},
                     ),

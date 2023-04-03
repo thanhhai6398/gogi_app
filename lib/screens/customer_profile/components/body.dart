@@ -17,16 +17,16 @@ class Body extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: getProportionateScreenHeight(10)),
-                Text("Information", style: headingStyle),
-                Text(
-                  "Complete your details to receipt",
+                Text("Thông tin", style: headingStyle),
+                const Text(
+                  "Điền đầy đủ thông tin để đặt hàng",
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: SizeConfig.screenHeight * 0.06),
+                SizedBox(height: SizeConfig.screenHeight * 0.05),
                 CustomerProfileForm(),
                 SizedBox(height: getProportionateScreenHeight(30)),
                 Text(
-                  "By continuing your confirm that you agree \nwith our Term and Condition",
+                  "Chọn 'Tiếp tục' để xác nhận \nvới các thông tin trên",
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.caption,
                 ),

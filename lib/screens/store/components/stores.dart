@@ -6,14 +6,18 @@ import '../../../models/Store.dart';
 import '../../../size_config.dart';
 
 class Stores extends StatelessWidget {
+  List<Store> stores = [];
+
+  Stores({super.key, required this.stores});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.all(20.0),
-      children: List.generate(demoStores.length, (index) {
+      children: List.generate(stores.length, (index) {
         return Center(
-          child: StoreCard(store: demoStores[index]),
+          child: StoreCard(store: stores[index]),
         );
       }),
     );
@@ -36,11 +40,10 @@ class StoreCard extends StatelessWidget {
     return Card(
         color: Colors.white,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
               padding: const EdgeInsets.all(5.0),
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment.center,
               child: SvgPicture.asset(
                 "assets/icons/Shop Icon.svg",
                 height: 100,

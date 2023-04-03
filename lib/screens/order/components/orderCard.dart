@@ -83,7 +83,7 @@ class OrderCard extends StatelessWidget {
                           backgroundColor:
                               MaterialStatePropertyAll<Color>(kPrimaryColor)),
                       child: const Text(
-                        "detail >",
+                        "Chi tiết",
                         style: TextStyle(
                           decoration: TextDecoration.underline,
                           fontStyle: FontStyle.italic,

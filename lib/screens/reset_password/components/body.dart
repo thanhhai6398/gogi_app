@@ -21,18 +21,19 @@ class Body extends StatelessWidget {
             children: [
               SizedBox(height: SizeConfig.screenHeight * 0.04),
               Text(
-                "Reset Password",
+                "Đặt lại mật khẩu",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(28),
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              SizedBox(height: SizeConfig.screenHeight * 0.03),
               const Text(
-                "Please enter your password",
+                "Vui lòng nhập mật khẩu của bạn",
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: SizeConfig.screenHeight * 0.1),
+              SizedBox(height: SizeConfig.screenHeight * 0.08),
               ResetPassForm(),
             ],
           ),
@@ -80,7 +81,7 @@ class _ResetPassFormState extends State<ResetPassForm>{
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-              text: "Reset",
+              text: "Đặt lại",
               press: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();

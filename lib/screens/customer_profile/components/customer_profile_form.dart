@@ -52,7 +52,7 @@ class _CustomerProfileFormState extends State<CustomerProfileForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "Checkout",
+            text: "Đặt hàng",
             press: () {},
           ),
         ],
@@ -77,8 +77,8 @@ class _CustomerProfileFormState extends State<CustomerProfileForm> {
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Address",
-        hintText: "Enter your address",
+        labelText: "Địa chỉ",
+        hintText: "Địa chỉ",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon:
             CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
@@ -104,8 +104,8 @@ class _CustomerProfileFormState extends State<CustomerProfileForm> {
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Phone Number",
-        hintText: "Enter your phone number",
+        labelText: "Số điện thoại",
+        hintText: "Số điện thoại",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
       ),
@@ -117,7 +117,7 @@ class _CustomerProfileFormState extends State<CustomerProfileForm> {
       decoration: InputDecoration(
         contentPadding:
         EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
-        labelText: 'Store',
+        labelText: 'Cửa hàng',
         border:
         OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
       ),
@@ -160,8 +160,8 @@ class _CustomerProfileFormState extends State<CustomerProfileForm> {
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Name",
-        hintText: "Enter your name",
+        labelText: "Tên",
+        hintText: "Tên",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
       ),

@@ -41,7 +41,7 @@ class Body extends StatelessWidget {
             Row(
               children: [
                 const Text(
-                  "Total:",
+                  "Tổng cộng:",
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 20.0,

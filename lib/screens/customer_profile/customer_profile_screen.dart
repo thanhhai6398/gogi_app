@@ -8,7 +8,7 @@ class CustomerProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Checkout', style: TextStyle(color: Colors.black),),
+        title: Text('Đặt hàng', style: TextStyle(color: Colors.black),),
       ),
       body: Body(),
     );

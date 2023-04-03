@@ -55,7 +55,7 @@ class _OrderContentState extends State<OrderContent> {
     },
     {
       "id": 4,
-      "name": 'All',
+      "name": 'Tất cả',
       "status": 'All',
     },
   ];
@@ -69,7 +69,7 @@ class _OrderContentState extends State<OrderContent> {
           decoration: InputDecoration(
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
-            labelText: 'Choose status',
+            labelText: 'Chọn',
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
           ),

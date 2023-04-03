@@ -43,7 +43,7 @@ class Body extends StatelessWidget {
                           top: getProportionateScreenWidth(15),
                         ),
                         child: DefaultButton(
-                          text: "Add To Cart",
+                          text: "Thêm vào giỏ hàng",
                           press: () {},
                         ),
                       ),

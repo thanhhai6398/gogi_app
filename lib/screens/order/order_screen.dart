@@ -12,7 +12,7 @@ class OrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Receipt", style: TextStyle(color: Colors.black),),
+        title: const Text("Đơn hàng", style: TextStyle(color: Colors.black),),
       ),
       body: Body(),
       bottomNavigationBar: const CustomBottomNavBar(selectedMenu: MenuState.receipt),

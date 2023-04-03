@@ -52,7 +52,7 @@ class _SignUpFormState extends State<SignUpForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "Sign up",
+            text: "Đăng ký",
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
@@ -85,8 +85,8 @@ class _SignUpFormState extends State<SignUpForm> {
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Phone Number",
-        hintText: "Enter your phone number",
+        labelText: "Số điện thoại",
+        hintText: "Số điện thoại",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -118,8 +118,8 @@ class _SignUpFormState extends State<SignUpForm> {
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Password",
-        hintText: "Enter your password",
+        labelText: "Mật khẩu",
+        hintText: "Mật khẩu",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -152,8 +152,8 @@ class _SignUpFormState extends State<SignUpForm> {
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Confirm Password",
-        hintText: "Re-enter your password",
+        labelText: "Nhập lại mật khẩu",
+        hintText: "Mật khẩu",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -186,7 +186,7 @@ class _SignUpFormState extends State<SignUpForm> {
       },
       decoration: const InputDecoration(
         labelText: "Email",
-        hintText: "Enter your email",
+        hintText: "Email",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,

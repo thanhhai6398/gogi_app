@@ -62,7 +62,7 @@ class _SignFormState extends State<SignForm> {
                 onTap: () => Navigator.pushNamed(
                     context, ForgotPasswordScreen.routeName),
                 child: Text(
-                  "Forgot Password",
+                  "Quên mật khẩu",
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),
               )
@@ -71,7 +71,7 @@ class _SignFormState extends State<SignForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
-            text: "Continue",
+            text: "Tiếp tục",
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
@@ -109,8 +109,8 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Password",
-        hintText: "Password",
+        labelText: "Mật khẩu",
+        hintText: "Mật khẩu",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -142,8 +142,8 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       decoration: const InputDecoration(
-        labelText: "Phone",
-        hintText: "Phone number",
+        labelText: "Số điện thoại",
+        hintText: "Số điện thoại",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,

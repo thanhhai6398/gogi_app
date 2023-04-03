@@ -14,35 +14,55 @@ class Store {
     required this.province_id,
     required this.name,
   });
+
+  // factory Store.fromJson(Map<String, dynamic> json) {
+  //   Map<String, dynamic> data = json['data'];
+  //   return Store(
+  //     id: data['id'] as int,
+  //     name: data['storeName'] as String,
+  //     address: data['address'] as String,
+  //     district_id: data['districtId'] as int,
+  //     province_id: data['provinceId'] as int,
+  //   );
+  // }
+  factory Store.fromJson(Map<String, dynamic> json) {
+    return Store(
+      id: json['id'] as int,
+      name: json['storeName'] as String,
+      address: json['address'] as String,
+      district_id: json['districtId'] as int,
+      province_id: json['provinceId'] as int,
+    );
+  }
 }
 
 List<Store> demoStores = [
   Store(
     id:1,
-    address: "1332 Kha Van Can",
+    address: "1332 Kha Vạn Cân",
     district_id: 769,
     province_id: 79,
-    name: "GoGi Thu Duc",
+    name: "GoGi Thủ Đức",
   ),
   Store(
     id:2,
-    address: "130 Phan Van Tri",
+    address: "130 Phan Văn Trị",
     district_id: 769,
     province_id: 79,
-    name: "GoGi Binh Thanh",
+    name: "GoGi Bình Thạnh",
   ),
   Store(
     id:3,
-    address: "81 Nguyen Thi Minh Khai",
+    address: "81 Nguyễn Thị Minh Khai",
     district_id: 769,
     province_id: 79,
-    name: "GoGi Q1",
+    name: "GoGi Quận 1",
   ),
   Store(
     id:4,
-    address: "130 Kha Van Can",
+    address: "130 Lê Văn Chí",
     district_id: 769,
     province_id: 79,
-    name: "GoGi Thu Duc",
+    name: "GoGi Quận 9",
   ),
 ];

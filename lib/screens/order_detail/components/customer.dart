@@ -9,7 +9,7 @@ class Customer extends StatelessWidget {
           children: [
             Row(
               children: const [
-                Text ("Name:"),
+                Text ("Tên:"),
                 Spacer(),
                 Text ("Thanh Hai"),
               ]
@@ -17,7 +17,7 @@ class Customer extends StatelessWidget {
             const SizedBox(height: 5.0,),
             Row(
                 children: const [
-                  Text ("Phone:"),
+                  Text ("Số điện thoại:"),
                   Spacer(),
                   Text ("0914276398"),
                 ]
@@ -25,7 +25,7 @@ class Customer extends StatelessWidget {
             const SizedBox(height: 5.0,),
             Row(
                 children: const [
-                  Text ("Address:"),
+                  Text ("Địa chỉ:"),
                   Spacer(),
                   Text ("1332 Kha Van Can, Linh Trung"),
                 ]

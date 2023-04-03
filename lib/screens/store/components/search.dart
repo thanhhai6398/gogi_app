@@ -25,7 +25,7 @@ class Search extends StatelessWidget {
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
-            hintText: "Search store",
+            hintText: "Tìm kiếm cửa hàng",
             prefixIcon: Icon(Icons.search)),
       ),
     );

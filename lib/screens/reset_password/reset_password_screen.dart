@@ -10,7 +10,7 @@ class ResetPasswordScreen extends StatelessWidget {
     SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Reset password"),
+        title: Text("Đặt lại mật khẩu"),
       ),
       body: Body(),
     );

@@ -18,7 +18,7 @@ class Categories extends StatelessWidget {
         children: [
           CategoryCard(
             icon: "assets/icons/Shop Icon.svg",
-            text: "Store",
+            text: "Cửa hàng",
             press: () {
               Navigator.pushNamed(context, StoreScreen.routeName);
             },
@@ -32,14 +32,14 @@ class Categories extends StatelessWidget {
           ),
           CategoryCard(
             icon: "assets/icons/Gift Icon.svg",
-            text: "About",
+            text: "Giới thiệu",
             press: () {
               Navigator.pushNamed(context, AboutScreen.routeName);
             },
           ),
           CategoryCard(
             icon: "assets/icons/Contact Icon.svg",
-            text: "contact",
+            text: "Liên hệ",
             press: () {
               Navigator.pushNamed(context, ContactScreen.routeName);
             },

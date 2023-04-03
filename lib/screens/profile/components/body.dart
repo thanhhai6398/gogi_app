@@ -14,17 +14,17 @@ class Body extends StatelessWidget {
           ProfilePic(),
           SizedBox(height: 20),
           ProfileMenu(
-            text: "My Account",
+            text: "Tài khoản",
             icon: "assets/icons/User Icon.svg",
             press: () => {},
           ),
           ProfileMenu(
-            text: "Forgot Password",
+            text: "Quên mật khẩu",
             icon: "assets/icons/Settings.svg",
             press: () {},
           ),
           ProfileMenu(
-            text: "Log Out",
+            text: "Đăng xuất",
             icon: "assets/icons/Log out.svg",
             press: () {
               Navigator.pushNamed(context, SplashScreen.routeName);

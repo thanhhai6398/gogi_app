@@ -18,7 +18,7 @@ class CheckoutCard extends StatefulWidget {
 class _StateCheckoutCard extends State<CheckoutCard> {
   final List<String> items = [
     'Trực tiếp',
-    'Online',
+    'Giao hàng',
   ];
   String? selectedValue;
 
@@ -53,12 +53,12 @@ class _StateCheckoutCard extends State<CheckoutCard> {
               children: [
                 Container(
                   padding: EdgeInsets.all(10),
-                  width: getProportionateScreenWidth(100),
+                  width: getProportionateScreenWidth(110),
                   decoration: BoxDecoration(
                     color: Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Text("SubTotal"),
+                  child: Text("Thành tiền"),
                 ),
                 Spacer(),
                 Text(
@@ -72,18 +72,18 @@ class _StateCheckoutCard extends State<CheckoutCard> {
               children: [
                 Container(
                   padding: EdgeInsets.all(10),
-                  width: getProportionateScreenWidth(100),
+                  width: getProportionateScreenWidth(110),
                   decoration: BoxDecoration(
                     color: Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Text("Payment"),
+                  child: Text("Hình thức giao hàng"),
                 ),
                 Spacer(),
                 DropdownButtonHideUnderline(
                   child: DropdownButton(
                     hint: Text(
-                      'Select',
+                      'Chọn',
                       style: TextStyle(
                         fontSize: 14,
                         color: Theme
@@ -119,7 +119,7 @@ class _StateCheckoutCard extends State<CheckoutCard> {
               children: [
                 const Text.rich(
                   TextSpan(
-                    text: "Total:\n",
+                    text: "Tổng cộng:\n",
                     children: [
                       TextSpan(
                         text: "\$337.15",
@@ -131,7 +131,7 @@ class _StateCheckoutCard extends State<CheckoutCard> {
                 SizedBox(
                   width: getProportionateScreenWidth(190),
                   child: DefaultButton(
-                    text: "Continue",
+                    text: "Tiếp tục",
                     press: () {
                       Navigator.pushNamed(context, CustomerProfileScreen.routeName);
                     },

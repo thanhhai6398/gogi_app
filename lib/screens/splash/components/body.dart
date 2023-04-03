@@ -16,15 +16,15 @@ class _BodyState extends State<Body> {
   int currentPage = 0;
   List<Map<String, String>> splashData = [
     {
-      "text": "Welcome to Gogi milk tea \nLet’s start!",
+      "text": "Chào mừng đến với trà sữa GOGI \nLet’s start!",
       "image": "assets/images/logo.png"
     },
     {
-      "text": "We help people connect with store \naround United State of Vietnam",
+      "text": "Kết nối khách hàng với cửa hàng \ntrên khắp Việt Nam",
       "image": "assets/images/splash2.png"
     },
     {
-      "text": "We show the easy way to shop. \nJust stay at home with us",
+      "text": "Dễ dàng tìm kiếm và đặt hàng \nkhi ở bất cứ đâu",
       "image": "assets/images/splash3.png"
     },
   ];
@@ -67,7 +67,7 @@ class _BodyState extends State<Body> {
                     ),
                     Spacer(flex: 1),
                     DefaultButton(
-                      text: "Continue",
+                      text: "Tiếp tục",
                       press: () {
                         Navigator.pushNamed(context, SignInScreen.routeName);
                       },

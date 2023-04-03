@@ -8,7 +8,7 @@ class ContactScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Contact", style: TextStyle(color: Colors.black),),
+        title: const Text("Liên hệ", style: TextStyle(color: Colors.black),),
       ),
       body: Body(),
     );

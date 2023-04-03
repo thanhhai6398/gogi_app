@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gogi/components/socal_card.dart';
+import 'package:gogi/components/social_card.dart';
 import 'package:gogi/constants.dart';
 import 'package:gogi/size_config.dart';
 
@@ -18,37 +18,34 @@ class Body extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: SizeConfig.screenHeight * 0.04), // 4%
-                Text("Register Account", style: headingStyle),
-                Text(
-                  "Complete your details or continue \nwith social media",
-                  textAlign: TextAlign.center,
-                ),
+                Text("Đăng ký tài khoản", style: headingStyle),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 SignUpForm(),
-                SizedBox(height: SizeConfig.screenHeight * 0.08),
+                SizedBox(height: SizeConfig.screenHeight * 0.03),
+                Text(
+                  'Điền đầy đủ thông tin hoặc \ntiếp tục với',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.03),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SocalCard(
+                    SocialCard(
                       icon: "assets/icons/google-icon.svg",
                       press: () {},
                     ),
-                    SocalCard(
+                    SocialCard(
                       icon: "assets/icons/facebook-2.svg",
                       press: () {},
                     ),
-                    SocalCard(
+                    SocialCard(
                       icon: "assets/icons/twitter.svg",
                       press: () {},
                     ),
                   ],
                 ),
-                SizedBox(height: getProportionateScreenHeight(20)),
-                Text(
-                  'By continuing your confirm that you agree \nwith our Term and Condition',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.caption,
-                )
+
               ],
             ),
           ),

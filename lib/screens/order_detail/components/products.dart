@@ -33,77 +33,6 @@ class ProductOrder extends StatelessWidget {
       color: Colors.white,
       child: Row(
         children: <Widget>[
-          // Expanded(
-          //   child: Container(
-          //     padding: const EdgeInsets.all(5.0),
-          //     alignment: Alignment.topCenter,
-          //     child: Row(
-          //       children: [
-          //         Align(
-          //           alignment: Alignment.topLeft,
-          //           child: Text(
-          //             "x ${detail.quantity}",
-          //           ),
-          //         ),
-          //         SizedBox(
-          //           width: 5.0,
-          //         ),
-          //         Container(
-          //           padding:
-          //               EdgeInsets.all(getProportionateScreenWidth(10)),
-          //           decoration: BoxDecoration(
-          //             color: Color(0xFFF5F6F9),
-          //             borderRadius: BorderRadius.circular(15),
-          //           ),
-          //           //product.image
-          //           child: Image.asset(
-          //             'assets/images/1.jpg',
-          //             height: getProportionateScreenHeight(80),
-          //             width: getProportionateScreenWidth(50),
-          //           ),
-          //         ),
-          //         SizedBox(
-          //           width: 5.0,
-          //         ),
-          //         Column(
-          //           children: [
-          //             Container(
-          //               alignment: Alignment.topLeft,
-          //               //detail.product_id.toString()
-          //               child: Text(
-          //                 'Trà sữa trân châu',
-          //                 style: TextStyle(
-          //                   fontSize: getProportionateScreenWidth(18),
-          //                   fontWeight: FontWeight.w400,
-          //                   color: kPrimaryColor,
-          //                 ),
-          //                 maxLines: 2,
-          //               ),
-          //             ),
-          //             SizedBox(height: getProportionateScreenHeight(5)),
-          //             Container(
-          //               alignment: Alignment.topLeft,
-          //               child: Text(
-          //                 "Size: ${detail.size}",
-          //               ),
-          //             ),
-          //             SizedBox(height: getProportionateScreenHeight(5)),
-          //             Container(
-          //               alignment: Alignment.topRight,
-          //               child: Text(
-          //                 "${detail.price}đ",
-          //                 style: const TextStyle(
-          //                   fontWeight: FontWeight.w600,
-          //                   color: kPrimaryColor,
-          //                 ),
-          //               ),
-          //             )
-          //           ],
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
           Container(
             alignment: Alignment.center,
             child: Text(
@@ -140,7 +69,7 @@ class ProductOrder extends StatelessWidget {
                       style: TextStyle(
                         fontSize: getProportionateScreenWidth(18),
                         fontWeight: FontWeight.w400,
-                        color: kPrimaryColor,
+                        color: Colors.black,
                       ),
                       maxLines: 2,
                     ),

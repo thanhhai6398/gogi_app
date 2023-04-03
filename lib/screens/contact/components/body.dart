@@ -17,7 +17,7 @@ class Body extends StatelessWidget {
               children: [
                 SizedBox(height: SizeConfig.screenHeight * 0.04),
                 Text(
-                  "Contact us",
+                  "Liên hệ chúng tôi",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: getProportionateScreenWidth(28),
@@ -45,8 +45,8 @@ class ContactForm extends StatelessWidget{
           TextFormField(
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-                label: Text('Your name'),
-                hintText: 'Enter your name...',
+                label: Text('Tên'),
+                hintText: 'Tên của bạn...',
                 border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 32.0),
                     borderRadius: BorderRadius.circular(5.0)
@@ -64,8 +64,8 @@ class ContactForm extends StatelessWidget{
           TextFormField(
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-                label: Text("Your email"),
-                hintText: 'Enter your email...',
+                label: Text("Email"),
+                hintText: 'Email của bạn...',
                 border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 32.0),
                     borderRadius: BorderRadius.circular(5.0)
@@ -84,8 +84,8 @@ class ContactForm extends StatelessWidget{
             maxLines: null,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-                label: Text('Comment:'),
-                hintText: 'Enter your comment...',
+                label: Text('Nhận xét:'),
+                hintText: 'Hãy gửi feedback cho chúng tôi...',
                 border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 32.0),
                     borderRadius: BorderRadius.circular(5.0)
@@ -101,7 +101,7 @@ class ContactForm extends StatelessWidget{
           ),
           SizedBox(height: getProportionateScreenHeight(30)),
           DefaultButton(
-            text: "Send",
+            text: "Gửi",
             press: () {},
           ),
         ],

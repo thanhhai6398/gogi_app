@@ -5,7 +5,6 @@ import 'package:gogi/screens/customer_profile/customer_profile_screen.dart';
 import 'package:gogi/screens/details/details_screen.dart';
 import 'package:gogi/screens/forgot_password/forgot_password_screen.dart';
 import 'package:gogi/screens/home/home_screen.dart';
-import 'package:gogi/screens/login_success/login_success_screen.dart';
 import 'package:gogi/screens/menu/menu_screen.dart';
 import 'package:gogi/screens/order_detail/order_detail_screen.dart';
 import 'package:gogi/screens/profile/profile_screen.dart';
@@ -24,7 +23,6 @@ final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => SplashScreen(),
   SignInScreen.routeName: (context) => SignInScreen(),
   ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
-  LoginSuccessScreen.routeName: (context) => LoginSuccessScreen(),
   SignUpScreen.routeName: (context) => SignUpScreen(),
   CustomerProfileScreen.routeName: (context) => CustomerProfileScreen(),
   ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
