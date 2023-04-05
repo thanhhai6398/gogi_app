@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+
 
 class Store {
   final int id;
@@ -15,16 +16,6 @@ class Store {
     required this.name,
   });
 
-  // factory Store.fromJson(Map<String, dynamic> json) {
-  //   Map<String, dynamic> data = json['data'];
-  //   return Store(
-  //     id: data['id'] as int,
-  //     name: data['storeName'] as String,
-  //     address: data['address'] as String,
-  //     district_id: data['districtId'] as int,
-  //     province_id: data['provinceId'] as int,
-  //   );
-  // }
   factory Store.fromJson(Map<String, dynamic> json) {
     return Store(
       id: json['id'] as int,
@@ -35,7 +26,10 @@ class Store {
     );
   }
 }
-
+List<Store> parseStores(String responseBody) {
+  final parsed = jsonDecode(responseBody)["data"].cast<Map<String, dynamic>>();
+  return parsed.map<Store>((json) => Store.fromJson(json)).toList();
+}
 List<Store> demoStores = [
   Store(
     id:1,

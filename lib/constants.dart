@@ -51,3 +51,5 @@ OutlineInputBorder outlineInputBorder() {
     borderSide: BorderSide(color: kTextColor),
   );
 }
+
+var url = 'http://192.168.1.47:8089';

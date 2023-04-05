@@ -6,29 +6,42 @@ import '../../../size_config.dart';
 import '../../details/details_screen.dart';
 
 class Products extends StatelessWidget {
+  List<Product> products = [];
+
+  Products({super.key, required this.products});
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      padding: const EdgeInsets.all(20.0),
-      children: List.generate(demoProducts.length, (index) {
-        return Center(
-          child: ProductCardMenu(product: demoProducts[index]),
-        );
-      }),
-    );
+    if (products.isEmpty) {
+      return const Center(
+        child: Text(
+          "Không có sản phẩm",
+          style: TextStyle(color: Colors.black),
+        ),
+      );
+    } else {
+      return ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(20.0),
+        children: List.generate(products.length, (index) {
+          if (products[index].status == true) {
+            return Center(
+              child: ProductCardMenu(product: products[index]),
+            );
+          }
+          return const SizedBox.shrink();
+        }),
+      );
+    }
   }
 }
 
 class ProductCardMenu extends StatelessWidget {
   const ProductCardMenu({
     Key? key,
-    this.width = 140,
-    this.aspectRetio = 1.02,
     required this.product,
   }) : super(key: key);
 
-  final double width, aspectRetio;
   final Product product;
 
   @override
@@ -36,8 +49,7 @@ class ProductCardMenu extends StatelessWidget {
     return Card(
         color: Colors.white,
         child: GestureDetector(
-            onTap: () =>
-                Navigator.pushNamed(
+            onTap: () => Navigator.pushNamed(
                   context,
                   DetailsScreen.routeName,
                   arguments: ProductDetailsArguments(product: product),
@@ -48,66 +60,65 @@ class ProductCardMenu extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(5.0),
                   alignment: Alignment.topCenter,
-                  child: Image.asset(
-                    product.image,
+                  child: Image(
+                    image: NetworkImage(product.image),
                     height: 120,
                     width: 80,
                   ),
                 ),
                 Expanded(
                     child: Container(
-                      padding: const EdgeInsets.all(5.0),
-                      alignment: Alignment.topCenter,
-                      child: Column(children: [
-                        Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              product.title,
-                              style: TextStyle(
-                                fontSize: getProportionateScreenWidth(18),
-                                fontWeight: FontWeight.w400,
-                                color: kPrimaryColor,
-                              ),
-                              maxLines: 2,
-                            ),
+                  padding: const EdgeInsets.all(5.0),
+                  alignment: Alignment.topCenter,
+                  child: Column(children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        product.name,
+                        style: TextStyle(
+                          fontSize: getProportionateScreenWidth(18),
+                          fontWeight: FontWeight.w400,
+                          color: kPrimaryColor,
                         ),
-                        SizedBox(height: getProportionateScreenHeight(5)),
-                        Align(
-                          alignment:  Alignment.topLeft,
+                        maxLines: 2,
+                      ),
+                    ),
+                    SizedBox(height: getProportionateScreenHeight(5)),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        product.description,
+                        textAlign: TextAlign.justify,
+                        maxLines: 2,
+                      ),
+                    ),
+                    SizedBox(height: getProportionateScreenHeight(10)),
+                    Row(
+                      children: [
+                        const Align(
+                          alignment: Alignment.topLeft,
                           child: Text(
-                            product.description,
-                            textAlign: TextAlign.justify,
-                            maxLines: 2,
+                            "35.000đ",
+                            style: TextStyle(
+                                decoration: TextDecoration.lineThrough),
                           ),
                         ),
-                        SizedBox(height: getProportionateScreenHeight(10)),
-                        Row(children: [
-                          const Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "35.000đ",
-                              style: TextStyle(
-                                decoration: TextDecoration.lineThrough
-                              ),
+                        SizedBox(width: getProportionateScreenWidth(5)),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "${product.price}đ",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: kPrimaryColor,
                             ),
                           ),
-                          SizedBox(width: getProportionateScreenWidth(5)),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "${product.price}đ",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: kPrimaryColor,
-                              ),
-                            ),
-                          )
-                        ],)
-                      ]),
-                    )),
+                        )
+                      ],
+                    )
+                  ]),
+                )),
               ],
-            )
-        )
-    );
+            )));
   }
 }

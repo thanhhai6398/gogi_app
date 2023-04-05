@@ -1,4 +1,4 @@
-import 'package:gogi/screens/Contact/contact_screen.dart';
+import 'package:gogi/screens/contact/contact_screen.dart';
 import 'package:gogi/screens/about/about_screen.dart';
 import 'package:gogi/screens/cart/cart_screen.dart';
 import 'package:gogi/screens/customer_profile/customer_profile_screen.dart';

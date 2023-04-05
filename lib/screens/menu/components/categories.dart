@@ -4,6 +4,10 @@ import '../../../models/Category.dart';
 import '../../../size_config.dart';
 
 class Categories extends StatelessWidget {
+  List<CategoryModel> categoies = [];
+
+  Categories({super.key, required this.categoies});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -13,13 +17,15 @@ class Categories extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: List.generate(
-            demoCategory.length,
-            (index) => CategoryCard(
-              category: demoCategory[index],
-              press: () {},
-            ),
-          ),
+          children: List.generate(categoies.length, (index) {
+            if (categoies[index].status == true) {
+              return CategoryCard(
+                category: categoies[index],
+                press: () {},
+              );
+            }
+            return const SizedBox.shrink();
+          }),
         ),
       ),
     );
@@ -33,7 +39,7 @@ class CategoryCard extends StatelessWidget {
     required this.press,
   }) : super(key: key);
 
-  final Category category;
+  final CategoryModel category;
   final GestureTapCallback press;
 
   @override

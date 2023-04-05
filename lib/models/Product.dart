@@ -1,85 +1,80 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'Category.dart';
 
 class Product {
   final int id;
-  final String title, description;
-  final String image;
-  final double rating, price;
-  final bool isFavourite, isPopular;
+  final String name, image, description;
+  final double price;
+  final bool status;
+  final CategoryModel category;
+
 
   Product({
     required this.id,
+    required this.name,
     required this.image,
-    this.rating = 0.0,
-    this.isFavourite = false,
-    this.isPopular = false,
-    required this.title,
     required this.price,
+    required this.status,
     required this.description,
+    required this.category,
   });
-}
 
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      category: CategoryModel.fromJson(json["category"]),
+      price: json['price'],
+      status: json['status'],
+      description: json['description'],
+      image: json['img_url'],
+    );
+  }
+}
+List<Product> parseProducts(String responseBody) {
+  final parsed =
+  jsonDecode(responseBody)["data"].cast<Map<String, dynamic>>();
+  return parsed.map<Product>((json) => Product.fromJson(json)).toList();
+}
+List<Product> parseOtherProducts(String responseBody) {
+  final parsed =
+  jsonDecode(responseBody)["data"]["content"].cast<Map<String, dynamic>>();
+  return parsed.map<Product>((json) => Product.fromJson(json)).toList();
+}
 // Our demo Products
 
 List<Product> demoProducts = [
   Product(
     id: 1,
     image: "assets/images/1.jpg",
-    title: "Trà sữa trân châu",
+    name: "Trà sữa trân châu",
     price: 30000,
-    description: description,
-    rating: 4.8,
-    isFavourite: true,
-    isPopular: true,
+    description: "description",
+    status: true,
+    category: CategoryModel(id: 1, name: "Coffee", status: true),
   ),
   Product(
     id: 2,
-    image:  "assets/images/2.jpg",
-    title: "Trà sữa nướng",
-    price: 25000,
-    description: description,
-    rating: 4.1,
-    isPopular: true,
+    image: "assets/images/1.jpg",
+    name: "Trà sữa trân châu",
+    price: 30000,
+    description: "description",
+    status: true,
+    category: CategoryModel(id: 1, name: "Coffee", status: true),
   ),
   Product(
     id: 3,
-    image: "assets/images/3.jpg",
-    title: "Trà dâu tằm",
-    price: 28000,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-    isPopular: true,
-  ),
-  Product(
-    id: 4,
-    image: "assets/images/4.jpg",
-    title: "Trà Nhài",
-    price: 22000,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-  ),
-  Product(
-    id: 5,
-    image: "assets/images/3.jpg",
-    title: "Trà dâu",
+    image: "assets/images/1.jpg",
+    name: "Trà sữa trân châu",
     price: 30000,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-    isPopular: true,
-  ),
-  Product(
-    id: 6,
-    image: "assets/images/4.jpg",
-    title: "Trà Nhài",
-    price: 20000,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
+    description: "description",
+    status: true,
+    category: CategoryModel(id: 1, name: "Coffee", status: true),
   ),
 ];
-
-const String description =
-    "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
+//
+// const String description =
+//     "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";

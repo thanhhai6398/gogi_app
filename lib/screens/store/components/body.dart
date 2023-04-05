@@ -1,14 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gogi/screens/store/components/stores.dart';
 import 'package:gogi/screens/store/components/search.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
+import '../../../apiServices/StoreService.dart';
 import '../../../models/Store.dart';
 import '../../../size_config.dart';
 
 class Body extends StatelessWidget {
+  StoreService storeService = StoreService();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -17,9 +16,9 @@ class Body extends StatelessWidget {
           Search(),
           SizedBox(height: getProportionateScreenHeight(20)),
           Expanded(
-            child: FutureBuilder<List<Store>>(
-                future: fetchStores(http.Client()),
-                builder: (context, snapshot) {
+            child: FutureBuilder(
+                future: storeService.getAllStore(),
+                builder: (context, AsyncSnapshot<List<Store>> snapshot) {
                   if (snapshot.hasError) {
                     return const Center(
                       child: Text('An error...'),
@@ -38,16 +37,16 @@ class Body extends StatelessWidget {
     );
   }
 
-  Future<List<Store>> fetchStores(http.Client client) async {
-    final response =
-        await client.get(Uri.parse('http:///stores'));
-    print(response.body);
-    return compute(parseStores, response.body);
-  }
+  // Future<List<Store>> fetchStores(http.Client client) async {
+  //   final response =
+  //       await client.get(Uri.parse('$url/stores'));
+  //   print(response.body);
+  //   return compute(parseStores, response.body);
+  // }
 
-  List<Store> parseStores(String responseBody) {
-    final parsed =
-        jsonDecode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<Store>((json) => Store.fromJson(json)).toList();
-  }
+  // List<Store> parseStores(String responseBody) {
+  //   final parsed =
+  //       jsonDecode(responseBody)["data"].cast<Map<String, dynamic>>();
+  //   return parsed.map<Store>((json) => Store.fromJson(json)).toList();
+  // }
 }

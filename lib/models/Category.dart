@@ -1,38 +1,62 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
-class Category {
+class CategoryModel {
   final int id;
   final String name;
+  final bool status;
 
-  Category({
+  CategoryModel({
     required this.id,
     required this.name,
+    required this.status,
   });
+
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    return CategoryModel(
+        id: json['id'] as int,
+        name: json['name'] as String,
+        status: json['status']);
+  }
 }
 
-List<Category> demoCategory = [
-  Category(
-    id:1,
+List<CategoryModel> parseCategories(String responseBody) {
+  final parsed = jsonDecode(responseBody)["data"].cast<Map<String, dynamic>>();
+  return parsed
+      .map<CategoryModel>((json) => CategoryModel.fromJson(json))
+      .toList();
+}
+
+List<CategoryModel> demoCategory = [
+  CategoryModel(
+    id: 1,
     name: "Trà sữa",
+    status: true,
   ),
-  Category(
-    id:2,
+  CategoryModel(
+    id: 2,
     name: "Smoothies",
+    status: true,
   ),
-  Category(
-    id:3,
+  CategoryModel(
+    id: 3,
     name: "Coffe",
+    status: true,
   ),
-  Category(
-    id:4,
+  CategoryModel(
+    id: 4,
     name: "Đá xay",
+    status: true,
   ),
-  Category(
-    id:5,
+  CategoryModel(
+    id: 5,
     name: "Sinh tố",
+    status: true,
   ),
-  Category(
-    id:4,
+  CategoryModel(
+    id: 4,
     name: "Trà",
+    status: true,
   ),
 ];

@@ -37,8 +37,8 @@ class ProductCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     child: Hero(
                       tag: product.id.toString(),
-                      child: Image.asset(
-                        product.image,
+                      child: Image(
+                        image: NetworkImage(product.image),
                         fit: BoxFit.fill,
                       ),
                     )),
@@ -47,7 +47,7 @@ class ProductCard extends StatelessWidget {
               Container(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  product.title,
+                  product.name,
                   style: TextStyle(color: Colors.black),
                   overflow: TextOverflow.ellipsis,
                 ),
