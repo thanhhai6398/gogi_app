@@ -4,6 +4,8 @@ import 'package:gogi/screens/sign_in/sign_in_screen.dart';
 import 'package:gogi/size_config.dart';
 
 // This is the best practice
+import '../../../SharedPref.dart';
+import '../../home/home_screen.dart';
 import '../components/splash_content.dart';
 import '../../../components/default_button.dart';
 
@@ -13,6 +15,13 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  SharedPref sharedPref = SharedPref();
+  bool login = false;
+  _BodyState() {
+    sharedPref.containsKey("username").then((value) => setState(() {
+      login = value;
+    }));
+  }
   int currentPage = 0;
   List<Map<String, String>> splashData = [
     {
@@ -69,7 +78,13 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Tiếp tục",
                       press: () {
-                        Navigator.pushNamed(context, SignInScreen.routeName);
+                        //Navigator.pushNamed(context, SignInScreen.routeName);
+                        if (login == false) {
+                          Navigator.pushNamed(context, SignInScreen.routeName);
+                        }
+                        else {
+                          Navigator.pushNamed(context, HomeScreen.routeName);
+                        }
                       },
                     ),
                     Spacer(),

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gogi/components/custom_surfix_icon.dart';
 import 'package:gogi/components/default_button.dart';
 import 'package:gogi/components/form_error.dart';
+import 'package:gogi/models/Account.dart';
+import 'package:gogi/screens/sign_in/sign_in_screen.dart';
 
+import '../../../apiServices/AuthService.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
@@ -13,27 +16,41 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  AuthService authService = AuthService();
+
+  final TextEditingController _controllerUsername = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
-  String? conform_password;
+  String? confirmPassword;
   String? phoneNumber;
 
   bool remember = false;
-  final List<String?> errors = [];
+  late final List<String?> errors = [];
 
   void addError({String? error}) {
-    if (!errors.contains(error))
+    if (!errors.contains(error)) {
       setState(() {
         errors.add(error);
       });
+    }
   }
 
   void removeError({String? error}) {
-    if (errors.contains(error))
+    if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
       });
+    }
+  }
+
+  void clearError() {
+   setState(() {
+     errors.clear();
+   });
   }
 
   @override
@@ -54,8 +71,24 @@ class _SignUpFormState extends State<SignUpForm> {
           DefaultButton(
             text: "Đăng ký",
             press: () {
+              String username = _controllerUsername.text.toString();
+              String password = _controllerPassword.text.toString();
+              String email = _controllerEmail.text.toString();
+              AccountRegister accountRegister = AccountRegister(username: username, password: password, email: email);
+
+              clearError(); //Xoa errors lan kiem tra truoc
+
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
+
+                authService.register(accountRegister).then((value) {
+                  if(value.errMsg == 'null') {
+                    Navigator.pushNamed(context, SignInScreen.routeName);
+                  }
+                  else {
+                    addError(error: value.errMsg.toString());
+                  }
+                });
               }
             }
           ),
@@ -64,8 +97,19 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
+  register() {
+    String username = _controllerUsername.text.toString();
+    String password = _controllerPassword.text.toString();
+    String email = _controllerEmail.text.toString();
+    AccountRegister accountRegister = AccountRegister(username: username, password: password, email: email);
+    authService.register(accountRegister).then((value) => setState(() {
+      AccountRes accountRes = AccountRes(errCode: value.errCode, errMsg: value.errMsg);
+    }));
+  }
+
   TextFormField buildPhoneNumberFormField() {
     return TextFormField(
+      controller: _controllerUsername,
       keyboardType: TextInputType.phone,
       onSaved: (newValue) => phoneNumber = newValue,
       onChanged: (value) {
@@ -97,12 +141,13 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
+      controller: _controllerPassword,
       obscureText: true,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
+        } else if (value.length >= 6) {
           removeError(error: kShortPassError);
         }
         password = value;
@@ -111,7 +156,7 @@ class _SignUpFormState extends State<SignUpForm> {
         if (value!.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if (value.length < 8) {
+        } else if (value.length < 6) {
           addError(error: kShortPassError);
           return "";
         }
@@ -132,14 +177,14 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildConformPassFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => conform_password = newValue,
+      onSaved: (newValue) => confirmPassword = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.isNotEmpty && password == conform_password) {
+        } else if (value.isNotEmpty && password == confirmPassword) {
           removeError(error: kMatchPassError);
         }
-        conform_password = value;
+        confirmPassword = value;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -164,6 +209,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
+      controller: _controllerEmail,
       keyboardType: TextInputType.emailAddress,
       onSaved: (newValue) => email = newValue,
       onChanged: (value) {

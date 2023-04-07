@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/SharedPref.dart';
+import 'package:gogi/apiServices/AuthService.dart';
 import 'package:gogi/components/custom_surfix_icon.dart';
 import 'package:gogi/components/form_error.dart';
 import 'package:gogi/helper/keyboard.dart';
@@ -6,6 +8,7 @@ import 'package:gogi/screens/forgot_password/forgot_password_screen.dart';
 
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
+import '../../../models/Account.dart';
 import '../../../size_config.dart';
 import '../../home/home_screen.dart';
 
@@ -15,6 +18,12 @@ class SignForm extends StatefulWidget {
 }
 
 class _SignFormState extends State<SignForm> {
+  AuthService authService = AuthService();
+  SharedPref sharedPref = SharedPref();
+
+  final TextEditingController _controllerUsername = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   String? phone;
   String? password;
@@ -22,17 +31,25 @@ class _SignFormState extends State<SignForm> {
   final List<String?> errors = [];
 
   void addError({String? error}) {
-    if (!errors.contains(error))
+    if (!errors.contains(error)) {
       setState(() {
         errors.add(error);
       });
+    }
   }
 
   void removeError({String? error}) {
-    if (errors.contains(error))
+    if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
       });
+    }
+  }
+
+  void clearError() {
+    setState(() {
+      errors.clear();
+    });
   }
 
   @override
@@ -61,7 +78,7 @@ class _SignFormState extends State<SignForm> {
               GestureDetector(
                 onTap: () => Navigator.pushNamed(
                     context, ForgotPasswordScreen.routeName),
-                child: Text(
+                child: const Text(
                   "Quên mật khẩu",
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),
@@ -71,16 +88,29 @@ class _SignFormState extends State<SignForm> {
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
-            text: "Tiếp tục",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, HomeScreen.routeName);
-              }
-            },
-          ),
+              text: "Tiếp tục",
+              press: () {
+                String username = _controllerUsername.text.toString();
+                String password = _controllerPassword.text.toString();
+                AccountLogin accountLogin = AccountLogin(username: username, password: password);
+
+                clearError();
+
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  // if all are valid then go to success screen
+                  KeyboardUtil.hideKeyboard(context);
+                  authService.login(accountLogin).then((isSuccess) {
+                    if (isSuccess) {
+                      sharedPref.save("username", username);
+                      Navigator.pushNamed(context, HomeScreen.routeName);
+                    } else {
+                      addError(error: "Số điện thoại hoặc mật khẩu chưa đúng");
+                      return "";
+                    }
+                  });
+                }
+              }),
         ],
       ),
     );
@@ -88,12 +118,13 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
+      controller: _controllerPassword,
       obscureText: true,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
+        } else if (value.length >= 6) {
           removeError(error: kShortPassError);
         }
         return null;
@@ -102,7 +133,7 @@ class _SignFormState extends State<SignForm> {
         if (value!.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if (value.length < 8) {
+        } else if (value.length < 6) {
           addError(error: kShortPassError);
           return "";
         }
@@ -121,6 +152,7 @@ class _SignFormState extends State<SignForm> {
 
   TextFormField buildPhoneFormField() {
     return TextFormField(
+      controller: _controllerUsername,
       keyboardType: TextInputType.phone,
       onSaved: (newValue) => phone = newValue,
       onChanged: (value) {

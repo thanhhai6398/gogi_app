@@ -59,8 +59,11 @@ class CustomBottomNavBar extends StatelessWidget {
                       ? kPrimaryColor
                       : inActiveIconColor,
                 ),
-                onPressed: () =>
-                    Navigator.pushNamed(context, MenuScreen.routeName),
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  MenuScreen.routeName,
+                  arguments: Arguments(id: 0),
+                ),
               ),
               IconButton(
                 icon: SvgPicture.asset(

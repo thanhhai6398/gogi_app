@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gogi/components/default_button.dart';
 import 'package:gogi/models/Product.dart';
+import 'package:gogi/screens/details/components/product_rating.dart';
 import 'package:gogi/size_config.dart';
 
 import 'count.dart';
@@ -32,22 +33,42 @@ class Body extends StatelessWidget {
                 child: Column(
                   children: [
                     Size(),
-                    Count(),
-                    TopRoundedContainer(
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: SizeConfig.screenWidth * 0.15,
-                          right: SizeConfig.screenWidth * 0.15,
-                          bottom: getProportionateScreenWidth(40),
-                          top: getProportionateScreenWidth(15),
-                        ),
-                        child: DefaultButton(
-                          text: "Thêm vào giỏ hàng",
-                          press: () {},
-                        ),
-                      ),
+                    SizedBox(height: getProportionateScreenHeight(10)),
+                    Row(
+                      children: [
+                        Count(),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: SizeConfig.screenWidth * 0.05,
+                              right: SizeConfig.screenWidth * 0.05,
+                            ),
+                            child: DefaultButton(
+                              text: "Đặt hàng",
+                              press: () {},
+                            ),
+                          ),
+                        )
+                      ],
                     ),
+                    TopRoundedContainer(
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                          Container(
+                          alignment: Alignment.topLeft,
+                          padding: const EdgeInsets.only(left: 15),
+                          child: const Text(
+                            "Đánh giá",
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            ProductRating(product: product),
+                          ],
+                        )),
                   ],
                 ),
               ),
