@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gogi/components/custom_surfix_icon.dart';
 import 'package:gogi/components/default_button.dart';
 import 'package:gogi/components/form_error.dart';
-import 'package:gogi/models/Account.dart';
+import 'package:gogi/models/Request/AccountRequest.dart';
 import 'package:gogi/screens/sign_in/sign_in_screen.dart';
 
 import '../../../apiServices/AuthService.dart';

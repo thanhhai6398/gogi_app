@@ -1,52 +1,16 @@
-import 'dart:convert';
-
-class AccountLogin {
+class Account {
   final String username;
-  final String password;
+  final String accessToken;
+  final Set<String> roles;
 
-  AccountLogin({
-    required this.username,
-    required this.password,
-  });
+  Account(
+      {required this.username, required this.accessToken, required this.roles});
 
-  Map<String, dynamic> toJson() {
-    return {"username": username, "password": password};
-  }
-}
-
-String accountLoginToJson(AccountLogin data) {
-  final jsonData = data.toJson();
-  return json.encode(jsonData);
-}
-
-class AccountRegister {
-  final String username;
-  final String password;
-  final String email;
-
-  AccountRegister({
-    required this.username,
-    required this.password,
-    required this.email,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {"username": username, "password": password, "email": email};
-  }
-}
-
-String accountRegisterToJson(AccountRegister data) {
-  final jsonData = data.toJson();
-  return json.encode(jsonData);
-}
-
-class AccountRes {
-  final String errCode;
-  final String errMsg;
-
-  AccountRes({
-    required this.errCode,
-    required this.errMsg,
-  });
-
+  // factory Account.fromJson(Map<String, dynamic> json) {
+  //   Set<String> roles = json["roles"].map((role) => role.authority);
+  //   return Account(
+  //       username: json["username"],
+  //       accessToken: json["accessToken"],
+  //       roles: roles);
+  // }
 }

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 import '../constants.dart';
-import '../models/Account.dart';
+import '../models/Request/AccountRequest.dart';
 
 class AuthService {
   Client client = Client();
@@ -15,6 +15,7 @@ class AuthService {
         body: accountLoginToJson(data),
     );
     var res = json.decode(response.body);
+    print(res);
     if (res["errCode"] == '200') {
       return true;
     } else {

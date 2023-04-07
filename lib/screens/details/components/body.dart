@@ -44,7 +44,7 @@ class Body extends StatelessWidget {
                               right: SizeConfig.screenWidth * 0.05,
                             ),
                             child: DefaultButton(
-                              text: "Đặt hàng",
+                              text: "Đặt ngay",
                               press: () {},
                             ),
                           ),
@@ -60,7 +60,7 @@ class Body extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 15),
                           child: const Text(
                             "Đánh giá",
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
                           ),
                         ),
                             const SizedBox(

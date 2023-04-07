@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gogi/models/Request/ContactRequest.dart';
+import 'package:gogi/models/Request/FeedbackRequest.dart';
 
 import '../../../components/default_button.dart';
 import '../../../size_config.dart';
@@ -43,7 +43,7 @@ class ContactForm extends StatefulWidget {
 }
 
 class _ContactFormState extends State<ContactForm> {
-  ContactRequest contactRequest = ContactRequest(fullName: '', email: '', content: '');
+  FeedbackRequest feedback =FeedbackRequest(fullName: '', email: '', content: '');
   late String fullName, email, content;
   @override
   Widget build(BuildContext context) {
@@ -111,8 +111,8 @@ class _ContactFormState extends State<ContactForm> {
           DefaultButton(
             text: "Gửi",
             press: () {
-              contactRequest = ContactRequest(fullName: fullName, email: email, content: content);
-              print(contactRequest.toString());
+              feedback = FeedbackRequest(fullName: fullName, email: email, content: content);
+
             },
           ),
         ],
