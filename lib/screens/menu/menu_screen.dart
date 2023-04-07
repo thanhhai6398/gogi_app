@@ -10,12 +10,19 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Arguments agrs =
+    ModalRoute.of(context)!.settings.arguments as Arguments;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Menu", style: TextStyle(color: Colors.black)),
       ),
-      body: Body(),
+      body: Body(id: agrs.id),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.menu),
     );
   }
+}
+class Arguments {
+  late int id;
+
+  Arguments({required this.id});
 }

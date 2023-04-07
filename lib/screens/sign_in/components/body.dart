@@ -25,7 +25,7 @@ class Body extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
+                const Text(
                   "Đăng nhập với số điện thoại và mật khẩu",
                   textAlign: TextAlign.center,
                 ),

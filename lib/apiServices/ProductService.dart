@@ -9,7 +9,6 @@ class ProductService {
 
   Future<List<Product>> getAllProduct() async {
     final response = await client.get(Uri.parse('$url/products/all'));
-    print(response.body);
     return compute(parseProducts, response.body);
   }
 
@@ -30,7 +29,7 @@ class ProductService {
   }
 
   Future<List<Product>> getProductByCategoryId(int id) async {
-    final response = await client.get(Uri.parse('$url/products/category/$id'));
+    final response = await client.get(Uri.parse('$url/products/categoryId/$id'));
     return compute(parseProducts, response.body);
   }
 

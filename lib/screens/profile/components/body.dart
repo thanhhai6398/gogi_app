@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gogi/SharedPref.dart';
 import 'package:gogi/screens/splash/splash_screen.dart';
 
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
 class Body extends StatelessWidget {
+  SharedPref sharedPref = SharedPref();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -27,7 +31,11 @@ class Body extends StatelessWidget {
             text: "Đăng xuất",
             icon: "assets/icons/Log out.svg",
             press: () {
-              Navigator.pushNamed(context, SplashScreen.routeName);
+              sharedPref.clear();
+              Navigator.of(context).pushAndRemoveUntil(
+                CupertinoPageRoute(builder: (context) => SplashScreen()),
+                (_) => false,
+              );
             },
           ),
         ],

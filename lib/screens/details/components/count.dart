@@ -21,10 +21,7 @@ class _StateCount extends State<Count>{
   }
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-      EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-      child: Row(children: [
+    return Row(children: [
         ElevatedButton(
           onPressed: minus,
           child: Icon(Icons.remove, color: Colors.deepOrange),
@@ -49,7 +46,7 @@ class _StateCount extends State<Count>{
               primary: Colors.white,
             ),
         ),
-      ]),
+      ]
     );
   }
 }

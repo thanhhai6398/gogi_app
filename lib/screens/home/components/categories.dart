@@ -27,7 +27,11 @@ class Categories extends StatelessWidget {
             icon: "assets/icons/Menu Icon.svg",
             text: "Menu",
             press: () {
-              Navigator.pushNamed(context, MenuScreen.routeName);
+              Navigator.pushNamed(
+                context,
+                MenuScreen.routeName,
+                arguments: Arguments(id: 0),
+              );
             },
           ),
           CategoryCard(

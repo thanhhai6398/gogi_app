@@ -26,16 +26,16 @@ const defaultDuration = Duration(milliseconds: 250);
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 final RegExp phoneValidatorRegExp =
-    RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
-const String kEmailNullError = "Please Enter your email";
-const String kInvalidEmailError = "Please Enter Valid email";
-const String kPassNullError = "Please Enter your password";
-const String kShortPassError = "Password is too short";
-const String kMatchPassError = "Passwords don't match";
-const String kNameNullError = "Please Enter your name";
-const String kPhoneNumberNullError = "Please Enter your phone number";
-const String kInvalidPhoneNumberError = "Please Enter Valid phone number";
-const String kAddressNullError = "Please Enter your address";
+    RegExp(r'(^84|0[3|5|7|8|9])+([0-9]{8}$)');
+const String kEmailNullError = "Vui lòng nhập Email";
+const String kInvalidEmailError = "Email chưa chính xác";
+const String kPassNullError = "Vui lòng nhập mật khẩu";
+const String kShortPassError = "Mật khẩu quá ngắn";
+const String kMatchPassError = "Mật khẩu không trùng khớp";
+const String kNameNullError = "Vui lòng nhập tên";
+const String kPhoneNumberNullError = "Vui lòng nhập số điện thoại";
+const String kInvalidPhoneNumberError = "Số điện thoại chưa chính xác";
+const String kAddressNullError = "Vui lòng nhập địa chỉ";
 
 final otpInputDecoration = InputDecoration(
   contentPadding:
@@ -52,4 +52,4 @@ OutlineInputBorder outlineInputBorder() {
   );
 }
 
-var url = 'http://192.168.1.47:8089';
+var url = 'http://192.168.1.64:8089';

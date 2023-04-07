@@ -27,6 +27,7 @@ class ProductDescription extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
+        SizedBox(height: getProportionateScreenHeight(10)),
         Padding(
           padding: EdgeInsets.only(
             left: getProportionateScreenWidth(20),
@@ -41,6 +42,7 @@ class ProductDescription extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(height: getProportionateScreenHeight(10)),
         Padding(
           padding: EdgeInsets.only(
             left: getProportionateScreenWidth(20),

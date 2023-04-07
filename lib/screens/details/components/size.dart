@@ -13,13 +13,10 @@ class _SizeState extends State<Size> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-      child: Row(
+    return Row(
         children: [
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Row(
               children: [
                 Radio(
@@ -38,7 +35,7 @@ class _SizeState extends State<Size> {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 1,
             child: Row(
               children: [
                 Radio(
@@ -55,7 +52,7 @@ class _SizeState extends State<Size> {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 1,
             child: Row(
               children: [
                 Radio(
@@ -72,7 +69,6 @@ class _SizeState extends State<Size> {
             ),
           ),
         ],
-      ),
     );
   }
 }
