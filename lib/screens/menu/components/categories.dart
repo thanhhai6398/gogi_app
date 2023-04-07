@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../../models/Category.dart';
 import '../../../size_config.dart';
+import '../menu_screen.dart';
 
 class Categories extends StatelessWidget {
   List<CategoryModel> categoies = [];
+  int id;
 
-  Categories({super.key, required this.categoies});
+  Categories({super.key, required this.categoies, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,13 @@ class Categories extends StatelessWidget {
           children: List.generate(categoies.length, (index) {
             if (categoies[index].status == true) {
               return CategoryCard(
+                id: id,
                 category: categoies[index],
-                press: () {},
+                press: () => Navigator.pushNamed(
+                  context,
+                  MenuScreen.routeName,
+                  arguments: Arguments(id: categoies[index].id),
+                ),
               );
             }
             return const SizedBox.shrink();
@@ -37,10 +44,12 @@ class CategoryCard extends StatelessWidget {
     Key? key,
     required this.category,
     required this.press,
+    required this.id,
   }) : super(key: key);
 
   final CategoryModel category;
   final GestureTapCallback press;
+  final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +65,7 @@ class CategoryCard extends StatelessWidget {
               height: getProportionateScreenWidth(55),
               width: getProportionateScreenWidth(100),
               decoration: BoxDecoration(
-                color: Color(0xFFFFECDF),
+                  color: id == category.id ? Colors.deepOrangeAccent : Color(0xFFFFECDF),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(category.name!,
