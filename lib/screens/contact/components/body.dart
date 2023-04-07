@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/models/Request/ContactRequest.dart';
 
 import '../../../components/default_button.dart';
 import '../../../size_config.dart';
@@ -36,7 +37,14 @@ class Body extends StatelessWidget {
   }
 }
 
-class ContactForm extends StatelessWidget{
+class ContactForm extends StatefulWidget {
+  @override
+  State<ContactForm> createState() => _ContactFormState();
+}
+
+class _ContactFormState extends State<ContactForm> {
+  ContactRequest contactRequest = ContactRequest(fullName: '', email: '', content: '');
+  late String fullName, email, content;
   @override
   Widget build(BuildContext context) {
     return Form (
@@ -57,7 +65,7 @@ class ContactForm extends StatelessWidget{
                 )
             ),
             onChanged: (value) {
-              //Do something with this value
+              fullName = value;
             },
           ),
           SizedBox(height: getProportionateScreenHeight(20)),
@@ -76,7 +84,7 @@ class ContactForm extends StatelessWidget{
                 )
             ),
             onChanged: (value) {
-              //Do something with this value
+             email = value;
             },
           ),
           SizedBox(height: getProportionateScreenHeight(20)),
@@ -96,17 +104,19 @@ class ContactForm extends StatelessWidget{
                 )
             ),
             onChanged: (value) {
-              //Do something with this value
+              content = value;
             },
           ),
           SizedBox(height: getProportionateScreenHeight(30)),
           DefaultButton(
             text: "Gửi",
-            press: () {},
+            press: () {
+              contactRequest = ContactRequest(fullName: fullName, email: email, content: content);
+              print(contactRequest.toString());
+            },
           ),
         ],
     ),
-
     );
   }
 }
