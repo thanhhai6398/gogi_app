@@ -82,11 +82,11 @@ class _SignUpFormState extends State<SignUpForm> {
                 _formKey.currentState!.save();
 
                 authService.register(accountRegister).then((value) {
-                  if(value.errMsg == 'null') {
+                  if(value?.errCode == '200') {
                     Navigator.pushNamed(context, SignInScreen.routeName);
                   }
                   else {
-                    addError(error: value.errMsg.toString());
+                    addError(error: value?.errMsg.toString());
                   }
                 });
               }
@@ -95,16 +95,6 @@ class _SignUpFormState extends State<SignUpForm> {
         ],
       ),
     );
-  }
-
-  register() {
-    String username = _controllerUsername.text.toString();
-    String password = _controllerPassword.text.toString();
-    String email = _controllerEmail.text.toString();
-    AccountRegister accountRegister = AccountRegister(username: username, password: password, email: email);
-    authService.register(accountRegister).then((value) => setState(() {
-      AccountRes accountRes = AccountRes(errCode: value.errCode, errMsg: value.errMsg);
-    }));
   }
 
   TextFormField buildPhoneNumberFormField() {

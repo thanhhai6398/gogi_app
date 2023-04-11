@@ -100,11 +100,13 @@ class _SignFormState extends State<SignForm> {
                   _formKey.currentState!.save();
                   // if all are valid then go to success screen
                   KeyboardUtil.hideKeyboard(context);
-                  authService.login(accountLogin).then((isSuccess) {
-                    if (isSuccess) {
+                  authService.login(accountLogin).then((value) {
+                    if(value?.errCode == '200') {
                       sharedPref.save("username", username);
+                      sharedPref.save("accessToken", value?.accessToken);
                       Navigator.pushNamed(context, HomeScreen.routeName);
-                    } else {
+                    }
+                    else {
                       addError(error: "Số điện thoại hoặc mật khẩu chưa đúng");
                       return "";
                     }

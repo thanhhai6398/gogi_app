@@ -7,7 +7,6 @@ import 'profile_menu.dart';
 import 'profile_pic.dart';
 
 class Body extends StatelessWidget {
-  SharedPref sharedPref = SharedPref();
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +30,12 @@ class Body extends StatelessWidget {
             text: "Đăng xuất",
             icon: "assets/icons/Log out.svg",
             press: () {
-              sharedPref.clear();
-              Navigator.of(context).pushAndRemoveUntil(
-                CupertinoPageRoute(builder: (context) => SplashScreen()),
-                (_) => false,
-              );
+              alertDialogLogout(context);
+              // sharedPref.clear();
+              // Navigator.of(context).pushAndRemoveUntil(
+              //   CupertinoPageRoute(builder: (context) => SplashScreen()),
+              //   (_) => false,
+              // );
             },
           ),
         ],
@@ -43,3 +43,44 @@ class Body extends StatelessWidget {
     );
   }
 }
+alertDialogLogout(BuildContext context) {
+  SharedPref sharedPref = SharedPref();
+// set up the buttons
+  Widget cancelButton = TextButton(
+    child: const Text("Hủy"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+  Widget continueButton = TextButton(
+    child: const Text("Đăng xuất"),
+    onPressed: () {
+      sharedPref.clear();
+      Navigator.of(context).pushAndRemoveUntil(
+        CupertinoPageRoute(builder: (context) => SplashScreen()),
+            (_) => false,
+      );
+    },
+  );
+
+// set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: const Text("Đăng xuất"),
+    content:
+    const Text("Bạn có chắc chắn muốn đăng xuất không?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+// show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+

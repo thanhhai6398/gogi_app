@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gogi/screens/order/components/orderCard.dart';
 
+import '../../../enums.dart';
 import '../../../models/Order.dart';
 import '../../../size_config.dart';
 
 class OrderContent extends StatefulWidget {
-  const OrderContent({
-    Key? key,
-  }) : super(key: key);
+  List<Order> orders = [];
+
+  OrderContent({Key? key, required this.orders}) : super(key: key);
 
   @override
   State<OrderContent> createState() => _OrderContentState();
@@ -21,7 +22,7 @@ class _OrderContentState extends State<OrderContent> {
     super.initState();
 
     setState(() {
-      _foundedOrders = demoOrders;
+      _foundedOrders = widget.orders;
     });
   }
 
@@ -32,46 +33,18 @@ class _OrderContentState extends State<OrderContent> {
   // }
 
   int? dropdownValue = 4;
-  List Status = [
-    {
-      "id": 0,
-      "name": 'Chờ xử lý',
-      "status": 'InProgress',
-    },
-    {
-      "id": 1,
-      "name": 'Đang giao',
-      "status": 'Delivering',
-    },
-    {
-      "id": 2,
-      "name": 'Thành công',
-      "status": 'Success',
-    },
-    {
-      "id": 3,
-      "name": 'Đã hủy',
-      "status": 'Canceled',
-    },
-    {
-      "id": 4,
-      "name": 'Tất cả',
-      "status": 'All',
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: getProportionateScreenHeight(10.0)),
-        InputDecorator(
+        Padding(padding: EdgeInsets.all(10), child: InputDecorator(
           decoration: InputDecoration(
             contentPadding:
-                EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
+            EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
             labelText: 'Chọn',
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+            OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<int>(
@@ -83,17 +56,17 @@ class _OrderContentState extends State<OrderContent> {
                 setState(() {
                   dropdownValue = newValue!;
                   if (dropdownValue == 4) {
-                    _foundedOrders = demoOrders;
+                    _foundedOrders = widget.orders;
                   } else {
-                    _foundedOrders = demoOrders
+                    _foundedOrders = widget.orders
                         .where((order) => order.status
-                            .toString()
-                            .contains(dropdownValue.toString()))
+                        .toString()
+                        .contains(dropdownValue.toString()))
                         .toList();
                   }
                 });
               },
-              items: Status.map((item) {
+              items: orderStatus.map((item) {
                 return DropdownMenuItem<int>(
                   value: item["id"],
                   child: Text(item["name"]),
@@ -101,17 +74,18 @@ class _OrderContentState extends State<OrderContent> {
               }).toList(),
             ),
           ),
-        ),
-        SizedBox(height: getProportionateScreenHeight(10)),
-        Expanded(child: ListView(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(20.0),
-          children: List.generate(_foundedOrders.length, (index) {
-            return Center(
-              child: OrderCard(order: _foundedOrders[index]),
-            );
-          }),
-        ),
+        ))
+        ,
+        Expanded(
+          child: ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(10.0),
+            children: List.generate(_foundedOrders.length, (index) {
+              return Center(
+                child: OrderCard(order: _foundedOrders[index]),
+              );
+            }),
+          ),
         )
       ],
     );
