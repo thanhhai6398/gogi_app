@@ -19,6 +19,18 @@ String accountLoginToJson(AccountLogin data) {
   return json.encode(jsonData);
 }
 
+class AccountLoginRes {
+  final String errCode;
+  final String username;
+  final String accessToken;
+
+  AccountLoginRes({
+    required this.errCode,
+    required this.username,
+    required this.accessToken,
+  });
+}
+
 class AccountRegister {
   final String username;
   final String password;
@@ -40,13 +52,12 @@ String accountRegisterToJson(AccountRegister data) {
   return json.encode(jsonData);
 }
 
-class AccountRes {
+class AccountRegisterRes {
   final String errCode;
   final String errMsg;
 
-  AccountRes({
+  AccountRegisterRes({
     required this.errCode,
     required this.errMsg,
   });
-
 }

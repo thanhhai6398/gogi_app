@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gogi/screens/order_detail/components/customer.dart';
+import 'package:gogi/screens/order_detail/components/customer_inf.dart';
 
 import '../../../constants.dart';
 import '../../../models/Order.dart';
@@ -12,6 +12,8 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var formattedDate = "${order.createdDate.day}-${order.createdDate.month}-${order.createdDate.year}";
+    var formatTime = "${order.createdDate.hour}:${order.createdDate.minute}:${order.createdDate.second}";
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.only(right: 10.0, left: 10.0),
@@ -20,7 +22,7 @@ class Body extends StatelessWidget {
             Align(
               alignment: Alignment.topCenter,
               child: Text(
-                order.store_name,
+                order.store.name,
                 style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 20.0,
@@ -29,12 +31,12 @@ class Body extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.topCenter,
-              child: Text(order.created_date),
+              child: Text('$formattedDate $formatTime'),
             ),
             const SizedBox(
               height: 5.0,
             ),
-            Expanded(child: Products()),
+            Expanded(child: Products(details: order.orderDetails)),
             const SizedBox(
               height: 5.0,
             ),
@@ -58,7 +60,7 @@ class Body extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 5.0),
-            Customer(),
+            CustomerInf(customer: order.customer),
           ],
         ),
       ),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
-import '../../../constants.dart';
-import '../../../constants.dart';
-import '../../../constants.dart';
+import '../../../enums.dart';
 import '../../../models/Order.dart';
 import '../../../size_config.dart';
 import '../../order_detail/order_detail_screen.dart';
@@ -18,17 +16,24 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String status = '';
+    for (var e in orderStatus) {
+      if(e["id"] == order.status) {
+        status = e["name"];
+      }
+    }
+    var formattedDate = "${order.createdDate.day}-${order.createdDate.month}-${order.createdDate.year}";
     return Card(
         color: Colors.white,
         child: Row(
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.all(5.0),
               alignment: Alignment.center,
-              child: const Image(
-                image: AssetImage('assets/images/Order.png'),
+              child: Image(
+                image: NetworkImage(order.orderDetails[0].img_url),
+                fit: BoxFit.contain,
                 width: 80,
-                height: 80,
+                height: 100,
               ),
             ),
             Expanded(
@@ -39,7 +44,7 @@ class OrderCard extends StatelessWidget {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    order.store_name,
+                    order.store.name,
                     style: TextStyle(
                       fontSize: getProportionateScreenWidth(18),
                       fontWeight: FontWeight.w600,
@@ -50,7 +55,7 @@ class OrderCard extends StatelessWidget {
                 Align(
                   alignment: Alignment.topRight,
                   child: Text(
-                    order.created_date,
+                    formattedDate,
                   ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(5)),
@@ -68,7 +73,7 @@ class OrderCard extends StatelessWidget {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Status: ${order.status.toString()}",
+                        "Status: $status",
                         maxLines: 2,
                       ),
                     ),

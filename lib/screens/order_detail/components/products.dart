@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../models/Order_detail.dart';
+import '../../../models/Product.dart';
 import '../../../size_config.dart';
 
 class Products extends StatelessWidget {
+  List<OrderDetail> details = [];
+
+  Products({super.key, required this.details});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.all(5.0),
-      children: List.generate(demoOrderDetails.length, (index) {
+      children: List.generate(details.length, (index) {
         return Center(
-          child: ProductOrder(detail: demoOrderDetails[index]),
+          child: ProductOrder(detail: details[index]),
         );
       }),
     );
@@ -36,7 +41,7 @@ class ProductOrder extends StatelessWidget {
           Container(
             alignment: Alignment.center,
             child: Text(
-              "x ${detail.quantity}",
+              "x${detail.quantity}",
             ),
           ),
           SizedBox(
@@ -49,8 +54,9 @@ class ProductOrder extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
             //product.image
-            child: Image.asset(
-              'assets/images/1.jpg',
+            child: Image(
+              image: NetworkImage(detail.img_url),
+              fit: BoxFit.contain,
               height: getProportionateScreenHeight(80),
               width: getProportionateScreenWidth(50),
             ),
@@ -60,38 +66,38 @@ class ProductOrder extends StatelessWidget {
           ),
           Expanded(
               child: Column(
-                children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    //detail.product_id.toString()
-                    child: Text(
-                      'Trà sữa trân châu',
-                      style: TextStyle(
-                        fontSize: getProportionateScreenWidth(18),
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
-                      maxLines: 2,
-                    ),
+            children: [
+              Container(
+                alignment: Alignment.topLeft,
+                //detail.product_id.toString()
+                child: Text(
+                  detail.product_name,
+                  style: TextStyle(
+                    fontSize: getProportionateScreenWidth(18),
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
                   ),
-                  SizedBox(height: getProportionateScreenHeight(5)),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Size: ${detail.size}",
-                    ),
+                  maxLines: 2,
+                ),
+              ),
+              SizedBox(height: getProportionateScreenHeight(5)),
+              Container(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Size: ${detail.size}",
+                ),
+              ),
+              SizedBox(height: getProportionateScreenHeight(5)),
+              Container(
+                alignment: Alignment.topRight,
+                child: Text(
+                  "${detail.price}đ",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: kPrimaryColor,
                   ),
-                  SizedBox(height: getProportionateScreenHeight(5)),
-                  Container(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      "${detail.price}đ",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: kPrimaryColor,
-                      ),
-                    ),
-                  )
+                ),
+              )
             ],
           )),
         ],
