@@ -1,53 +1,142 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:gogi/apiServices/AccountService.dart';
 
 import '../constants.dart';
 import '../models/Product.dart';
 import '../screens/details/details_screen.dart';
 import '../size_config.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   const ProductCard({
     Key? key,
     this.width = 140,
-    this.aspectRetio = 1.02,
     required this.product,
   }) : super(key: key);
 
-  final double width, aspectRetio;
+  final double width;
   final Product product;
+  @override
+  State<ProductCard> createState() => _ProductCardState();
+}
 
+class _ProductCardState extends State<ProductCard>{
+  AccountService accountService = AccountService();
+
+  bool isLike = false;
+
+  void handleUnlike() {
+    accountService
+        .unlike(widget.product.id)
+        .then((value) {
+      if (value == true) {
+        setState(() {
+          isLike = false;
+        });
+      }
+    });
+  }
+  void handleLike() {
+    accountService
+        .like(widget.product.id)
+        .then((value) {
+      if (value == true) {
+        setState(() {
+          isLike = true;
+        });
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
       child: SizedBox(
-        width: getProportionateScreenWidth(width),
+        width: getProportionateScreenWidth(widget.width),
         child: GestureDetector(
           onTap: () => Navigator.pushNamed(
             context,
             DetailsScreen.routeName,
-            arguments: ProductDetailsArguments(product: product),
+            arguments: ProductDetailsArguments(product: widget.product),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AspectRatio(
-                aspectRatio: 2/3,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Hero(
-                      tag: product.id.toString(),
-                      child: Image(
-                        image: NetworkImage(product.image),
-                        fit: BoxFit.fill,
-                      ),
-                    )),
+              Stack(
+                children: [
+                  AspectRatio(
+                    aspectRatio: 2 / 3,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Hero(
+                          tag: widget.product.id.toString(),
+                          child: Image(
+                            image: NetworkImage(widget.product.image),
+                            fit: BoxFit.fill,
+                          ),
+                        )),
+                  ),
+                  FutureBuilder(
+                      future: accountService.getProductLiked(),
+                      builder:
+                          (context, AsyncSnapshot<List<Product>> snapshot) {
+                        if (snapshot.hasError) {
+                          return const Center(
+                            child: Text('An error...'),
+                          );
+                        } else if (snapshot.hasData) {
+                          List<Product>? listProductLiked = snapshot.data;
+                          for (var e in listProductLiked!) {
+                            if (e.id == widget.product.id) {
+                              isLike = true;
+                            }
+                          }
+                          return Positioned(
+                            top: 5,
+                            right: 5,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(50),
+                              onTap: () {
+                                if (isLike == true) {
+                                  handleUnlike();
+                                }
+                                else {
+                                  handleLike();
+                                }
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(
+                                    getProportionateScreenWidth(8)),
+                                height: getProportionateScreenWidth(40),
+                                width: getProportionateScreenWidth(40),
+                                decoration: BoxDecoration(
+                                  color: isLike
+                                      ? kPrimaryColor.withOpacity(0.15)
+                                      : kSecondaryColor.withOpacity(0.1),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: SvgPicture.asset(
+                                  "assets/icons/Heart Icon_2.svg",
+                                  color: isLike
+                                      ? Color(0xFFFF4848)
+                                      : Color(0xFFDBDEE4),
+                                ),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      }),
+                ],
               ),
               const SizedBox(height: 10),
               Container(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  product.name,
+                  widget.product.name,
                   style: TextStyle(color: Colors.black),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -55,7 +144,7 @@ class ProductCard extends StatelessWidget {
               Container(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  "${product.price}đ",
+                  "${widget.product.price}đ",
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     fontWeight: FontWeight.w600,
@@ -70,3 +159,4 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+

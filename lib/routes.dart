@@ -3,6 +3,7 @@ import 'package:gogi/screens/about/about_screen.dart';
 import 'package:gogi/screens/cart/cart_screen.dart';
 import 'package:gogi/screens/customer_profile/customer_profile_screen.dart';
 import 'package:gogi/screens/details/details_screen.dart';
+import 'package:gogi/screens/favourite/favourite_screen.dart';
 import 'package:gogi/screens/forgot_password/forgot_password_screen.dart';
 import 'package:gogi/screens/home/home_screen.dart';
 import 'package:gogi/screens/menu/menu_screen.dart';
@@ -36,5 +37,6 @@ final Map<String, WidgetBuilder> routes = {
   ContactScreen.routeName: (context) => ContactScreen(),
   OrderScreen.routeName:(context) => OrderScreen(),
   OrderDetailScreen.routeName: (context) => OrderDetailScreen(),
+  FavouriteScreen.routeName: (context) => FavouriteScreen(),
 };
 

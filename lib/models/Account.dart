@@ -61,3 +61,20 @@ class AccountRegisterRes {
     required this.errMsg,
   });
 }
+
+class Password {
+  final String password;
+
+  Password({
+    required this.password,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {"password": password,};
+  }
+}
+
+String passwordToJson(Password data) {
+  final jsonData = data.toJson();
+  return json.encode(jsonData);
+}

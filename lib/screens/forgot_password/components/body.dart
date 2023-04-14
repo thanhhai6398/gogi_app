@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/apiServices/AccountService.dart';
 import 'package:gogi/components/custom_surfix_icon.dart';
 import 'package:gogi/components/default_button.dart';
 import 'package:gogi/components/form_error.dart';
-import 'package:gogi/components/no_account_text.dart';
 import 'package:gogi/screens/reset_password/reset_password_screen.dart';
 import 'package:gogi/size_config.dart';
 
@@ -50,22 +50,27 @@ class ForgotPassForm extends StatefulWidget {
 }
 
 class _ForgotPassFormState extends State<ForgotPassForm> {
+  AccountService accountService = AccountService();
+  final TextEditingController _controllerEmail = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   String? email;
   final List<String?> errors = [];
 
   void addError({String? error}) {
-    if (!errors.contains(error))
+    if (!errors.contains(error)) {
       setState(() {
         errors.add(error);
       });
+    }
   }
 
   void removeError({String? error}) {
-    if (errors.contains(error))
+    if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
       });
+    }
   }
 
   @override
@@ -75,6 +80,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       child: Column(
         children: [
           TextFormField(
+            controller: _controllerEmail,
             keyboardType: TextInputType.emailAddress,
             onSaved: (newValue) => email = newValue,
             onChanged: (value) {
@@ -110,10 +116,20 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           DefaultButton(
             text: "Tiếp tục",
             press: () {
+              String email = _controllerEmail.text.toString();
+
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, ResetPasswordScreen.routeName);
+                accountService.forgotPassword(email).then((value) {
+                  if (value == true) {
+                    Navigator.pushNamed(context, ResetPasswordScreen.routeName);
+                  }
+                  else {
+                    addError(error: "Vui lòng thử lại sau");
+                    return "";
+                  }
+                });
               }
             },
           ),
