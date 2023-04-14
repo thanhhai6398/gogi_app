@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gogi/apiServices/AccountService.dart';
 import 'package:gogi/constants.dart';
 import 'package:gogi/size_config.dart';
 
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/default_button.dart';
 import '../../../components/form_error.dart';
+import '../../../models/Account.dart';
+import '../../sign_in/sign_in_screen.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -46,7 +50,7 @@ class Body extends StatelessWidget {
 
 class ResetPassForm extends StatefulWidget{
   @override
-  _ResetPassFormState createState() => _ResetPassFormState();
+  State<ResetPassForm> createState() => _ResetPassFormState();
 }
 
 class _ResetPassFormState extends State<ResetPassForm>{
@@ -55,18 +59,37 @@ class _ResetPassFormState extends State<ResetPassForm>{
   String? conform_password;
   final List<String?> errors = [];
 
+  AccountService accountService = AccountService();
+  final TextEditingController _controllerPassword = TextEditingController();
+
   void addError({String? error}) {
-    if (!errors.contains(error))
+    if (!errors.contains(error)) {
       setState(() {
         errors.add(error);
       });
+    }
   }
 
   void removeError({String? error}) {
-    if (errors.contains(error))
+    if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
       });
+    }
+  }
+
+  void clearError() {
+    setState(() {
+      errors.clear();
+    });
+  }
+
+  bool _obscureText = true;
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
   }
 
   @override
@@ -83,8 +106,23 @@ class _ResetPassFormState extends State<ResetPassForm>{
           DefaultButton(
               text: "Đặt lại",
               press: () {
+                String password = _controllerPassword.text.toString();
+                Password dataReq = Password(password: password);
+
+                clearError(); //Xoa errors lan kiem tra truoc
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
+                  accountService.resetPassword( dataReq ).then((value) {
+                    if(value == true) {
+                      Navigator.of(context).pushAndRemoveUntil(
+                        CupertinoPageRoute(builder: (context) => SignInScreen()),
+                            (_) => false,
+                      );
+                    }
+                    else {
+                      addError(error: "Vui lòng thử lại sau");
+                    }
+                  });
                 }
               }
           ),
@@ -94,12 +132,13 @@ class _ResetPassFormState extends State<ResetPassForm>{
   }
   TextFormField buildPasswordFormField() {
     return TextFormField(
-      obscureText: true,
+      controller: _controllerPassword,
+      obscureText: _obscureText,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
+        } else if (value.length >= 6) {
           removeError(error: kShortPassError);
         }
         password = value;
@@ -108,19 +147,22 @@ class _ResetPassFormState extends State<ResetPassForm>{
         if (value!.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if (value.length < 8) {
+        } else if (value.length < 6) {
           addError(error: kShortPassError);
           return "";
         }
         return null;
       },
-      decoration: const InputDecoration(
-        labelText: "Password",
-        hintText: "Enter your password",
+      decoration: InputDecoration(
+        labelText: "Mật khẩu",
+        hintText: "Mật khẩu",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: GestureDetector(
+          onTap: _toggle,
+          child: const CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        ),
       ),
     );
   }
@@ -128,7 +170,7 @@ class _ResetPassFormState extends State<ResetPassForm>{
 
   TextFormField buildConformPassFormField() {
     return TextFormField(
-      obscureText: true,
+      obscureText: _obscureText,
       onSaved: (newValue) => conform_password = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
@@ -148,13 +190,14 @@ class _ResetPassFormState extends State<ResetPassForm>{
         }
         return null;
       },
-      decoration: const InputDecoration(
-        labelText: "Confirm Password",
-        hintText: "Re-enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
+      decoration: InputDecoration(
+        labelText: "Nhập lại mật khẩu",
+        hintText: "Mật khẩu",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: GestureDetector(
+          onTap: _toggle,
+          child: const CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        ),
       ),
     );
   }

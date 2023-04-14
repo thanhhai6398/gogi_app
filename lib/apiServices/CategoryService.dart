@@ -10,7 +10,6 @@ class CategoryService {
 
   Future<List<CategoryModel>> getAllCategory() async {
     final response = await client.get(Uri.parse('$url/categories'));
-    print(response.body);
     return compute(parseCategories, response.body);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/apiServices/AccountService.dart';
 import 'package:gogi/components/default_button.dart';
 import 'package:gogi/models/Product.dart';
 import 'package:gogi/screens/details/components/product_rating.dart';
@@ -11,9 +12,10 @@ import 'top_rounded_container.dart';
 import 'product_images.dart';
 
 class Body extends StatelessWidget {
+  AccountService accountService = AccountService();
   final Product product;
 
-  const Body({Key? key, required this.product}) : super(key: key);
+  Body({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +26,35 @@ class Body extends StatelessWidget {
           color: Colors.white,
           child: Column(
             children: [
-              ProductDescription(
-                product: product,
-                pressOnSeeMore: () {},
-              ),
+              FutureBuilder(
+                  future: accountService.getProductLiked(),
+                  builder: (context, AsyncSnapshot<List<Product>> snapshot) {
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Text('An error...'),
+                      );
+                    } else if (snapshot.hasData) {
+                      bool isLike = false;
+                      List<Product>? listProductLiked = snapshot.data;
+                      for (var e in listProductLiked!) {
+                        if (e.id == product.id) {
+                          isLike = true;
+                        }
+                      }
+                      return ProductDescription(
+                        isLike: isLike,
+                        product: product,
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }),
+              // ProductDescription(
+              //   isLike: false,
+              //   product: product,
+              // ),
               TopRoundedContainer(
                 color: Color(0xFFF6F7F9),
                 child: Column(
@@ -55,14 +82,16 @@ class Body extends StatelessWidget {
                         color: Colors.white,
                         child: Column(
                           children: [
-                          Container(
-                          alignment: Alignment.topLeft,
-                          padding: const EdgeInsets.only(left: 15),
-                          child: const Text(
-                            "Đánh giá",
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              padding: const EdgeInsets.only(left: 15),
+                              child: const Text(
+                                "Đánh giá",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
                             const SizedBox(
                               height: 10,
                             ),

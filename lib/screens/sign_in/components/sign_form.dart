@@ -52,6 +52,14 @@ class _SignFormState extends State<SignForm> {
     });
   }
 
+  bool _obscureText = true;
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -121,7 +129,7 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       controller: _controllerPassword,
-      obscureText: true,
+      obscureText: _obscureText,
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
@@ -141,14 +149,17 @@ class _SignFormState extends State<SignForm> {
         }
         return null;
       },
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: "Mật khẩu",
         hintText: "Mật khẩu",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
-      ),
+        suffixIcon: GestureDetector(
+          onTap: _toggle,
+          child: const CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+          ),
+        ),
     );
   }
 
