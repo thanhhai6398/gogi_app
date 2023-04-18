@@ -6,8 +6,9 @@ import '../models/Order.dart';
 
 class OrderService {
   Client client = Client();
-  Future<List<Order>> getOrderByAccountId(String username) async {
+  Future<List<Order>> getOrderByAccount(String username) async {
     final response = await client.get(Uri.parse('$url/orders/account/$username'));
+    print(response.body);
     return compute(parseOrders, response.body);
   }
 }

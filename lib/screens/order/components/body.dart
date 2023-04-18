@@ -22,13 +22,12 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child:
-      FutureBuilder(
-          future: orderService.getOrderByAccountId(username),
+      child: FutureBuilder(
+          future: orderService.getOrderByAccount(username),
           builder: (context, AsyncSnapshot<List<Order>> snapshot) {
             if (snapshot.hasError) {
-              return const Center(
-                child: Text('An error...'),
+              return Center(
+                child: Text('ERROR: ${snapshot.error.toString()}'),
               );
             } else if (snapshot.hasData) {
               return OrderContent(orders: snapshot.data!);

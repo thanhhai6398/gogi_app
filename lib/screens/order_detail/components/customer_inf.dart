@@ -29,8 +29,9 @@ class CustomerInf extends StatelessWidget {
             Row(
                 children:[
                   const Text ("Địa chỉ:"),
-                  const Spacer(),
-                  Text (customer.address),
+                  const Spacer(), Expanded(
+                    child: Text (customer.address, maxLines: 2,),)
+
                 ]
             ),
           ],

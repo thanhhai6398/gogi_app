@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/format.dart';
 
 import '../../../constants.dart';
 import '../../../models/Order_detail.dart';
@@ -91,7 +92,7 @@ class ProductOrder extends StatelessWidget {
               Container(
                 alignment: Alignment.topRight,
                 child: Text(
-                  "${detail.price}đ",
+                  formatPrice(detail.price),
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     color: kPrimaryColor,

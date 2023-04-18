@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gogi/screens/order_detail/components/customer_inf.dart';
 
 import '../../../constants.dart';
+import '../../../format.dart';
 import '../../../models/Order.dart';
 import '../../order_detail/components/products.dart';
 
@@ -12,8 +13,6 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var formattedDate = "${order.createdDate.day}-${order.createdDate.month}-${order.createdDate.year}";
-    var formatTime = "${order.createdDate.hour}:${order.createdDate.minute}:${order.createdDate.second}";
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.only(right: 10.0, left: 10.0),
@@ -31,7 +30,8 @@ class Body extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.topCenter,
-              child: Text('$formattedDate $formatTime'),
+              child: Text(
+                  '${formatDate(order.createdDate)} ${formatTime(order.createdDate)}'),
             ),
             const SizedBox(
               height: 5.0,
@@ -51,7 +51,7 @@ class Body extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  "${order.total}đ",
+                  formatPrice(order.total),
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     color: kPrimaryColor,

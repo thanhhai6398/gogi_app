@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Customer {
   final int id;
   final String name, phone, address;
@@ -26,12 +28,16 @@ class Customer {
     );
   }
 }
-Customer customerDemo =
-Customer(
-    id: 1,
-    name: "Thu",
-    phone: "0797005740",
-    address: "1332 Kha Vạn Cân",
-    districtId: 79,
-    provinceId: 769,
-    isDefault: false);
+List<Customer> parseCustomers(String responseBody) {
+  final parsed = jsonDecode(responseBody)["data"].cast<Map<String, dynamic>>();
+  return parsed.map<Customer>((json) => Customer.fromJson(json)).toList();
+}
+// Customer customerDemo =
+// Customer(
+//     id: 1,
+//     name: "Thu",
+//     phone: "0797005740",
+//     address: "1332 Kha Vạn Cân",
+//     districtId: 79,
+//     provinceId: 769,
+//     isDefault: false);

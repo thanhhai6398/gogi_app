@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 import 'package:http/http.dart' show Client;
@@ -12,8 +13,24 @@ class ProductService {
     return compute(parseProducts, response.body);
   }
 
-  Future<List<Product>> getProductPopular() async {
-    final response = await client.get(Uri.parse('$url/products/all'));
+  Future<List<Product>> getBestSeller() async {
+    final response = await client.get(Uri.parse('$url/products/bestSeller'));
+    return compute(parseProducts, response.body);
+  }
+
+  Future<List<Product>> getProductsForYou() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
+
+    final response =
+    await client.get(Uri.parse('$url/products/forYou'), headers: {
+      'Authorization': 'Bearer $token',
+    });
+    return compute(parseProducts, response.body);
+  }
+
+  Future<List<Product>> getCombo() async {
+    final response = await client.get(Uri.parse('$url/products/combo'));
     return compute(parseProducts, response.body);
   }
 
