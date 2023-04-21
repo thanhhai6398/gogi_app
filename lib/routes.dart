@@ -1,7 +1,10 @@
+import 'package:gogi/screens/checkout/checkout_screen.dart';
 import 'package:gogi/screens/contact/contact_screen.dart';
 import 'package:gogi/screens/about/about_screen.dart';
 import 'package:gogi/screens/cart/cart_screen.dart';
 import 'package:gogi/screens/customer_profile/customer_profile_screen.dart';
+import 'package:gogi/screens/customers/components/customer_form.dart';
+import 'package:gogi/screens/customers/customers_screen.dart';
 import 'package:gogi/screens/details/details_screen.dart';
 import 'package:gogi/screens/favourite/favourite_screen.dart';
 import 'package:gogi/screens/forgot_password/forgot_password_screen.dart';
@@ -15,6 +18,7 @@ import 'package:gogi/screens/sign_in/sign_in_screen.dart';
 import 'package:gogi/screens/splash/splash_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gogi/screens/store/store_screen.dart';
+import 'package:gogi/screens/voucher/voucher_screen.dart';
 
 import 'screens/sign_up/sign_up_screen.dart';
 
@@ -38,5 +42,9 @@ final Map<String, WidgetBuilder> routes = {
   OrderScreen.routeName:(context) => OrderScreen(),
   OrderDetailScreen.routeName: (context) => OrderDetailScreen(),
   FavouriteScreen.routeName: (context) => FavouriteScreen(),
+  VoucherScreen.routeName: (context) => VoucherScreen(),
+  CustomersScreen.routeName: (context) => CustomersScreen(),
+  CustomerFormScreen.routeName: (context) => CustomerFormScreen(),
+  CheckoutScreen.routeName: (context) => CheckoutScreen()
 };
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/constants.dart';
 
 import '../../../size_config.dart';
 
@@ -17,18 +18,26 @@ class SectionTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: getProportionateScreenWidth(18),
-            color: Colors.black,
-          ),
+        Row(
+          children: [
+            const Icon(
+              Icons.bolt,
+              color: kPrimaryColor,
+            ),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: getProportionateScreenWidth(18),
+                color: Colors.black,
+              ),
+            ),
+          ],
         ),
         GestureDetector(
           onTap: press,
-          child: Text(
+          child: const Text(
             "Xem thêm",
-            style: TextStyle(color: Color(0xFFBBBBBB)),
+            style: TextStyle(color: kPrimaryColor),
           ),
         ),
       ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/format.dart';
 
 import '../../../constants.dart';
 import '../../../models/Order_detail.dart';
@@ -39,18 +40,19 @@ class ProductOrder extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Container(
+            padding: const EdgeInsets.symmetric(horizontal: 2.0),
             alignment: Alignment.center,
             child: Text(
               "x${detail.quantity}",
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 5.0,
           ),
           Container(
             padding: EdgeInsets.all(getProportionateScreenWidth(10)),
             decoration: BoxDecoration(
-              color: Color(0xFFF5F6F9),
+              color: const Color(0xFFF5F6F9),
               borderRadius: BorderRadius.circular(15),
             ),
             //product.image
@@ -61,7 +63,7 @@ class ProductOrder extends StatelessWidget {
               width: getProportionateScreenWidth(50),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 5.0,
           ),
           Expanded(
@@ -69,9 +71,8 @@ class ProductOrder extends StatelessWidget {
             children: [
               Container(
                 alignment: Alignment.topLeft,
-                //detail.product_id.toString()
                 child: Text(
-                  detail.product_name,
+                  totTitle(detail.product_name),
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     fontWeight: FontWeight.w400,
@@ -89,9 +90,10 @@ class ProductOrder extends StatelessWidget {
               ),
               SizedBox(height: getProportionateScreenHeight(5)),
               Container(
+                padding: const EdgeInsets.only(right: 5.0),
                 alignment: Alignment.topRight,
                 child: Text(
-                  "${detail.price}đ",
+                  formatPrice(detail.price),
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     color: kPrimaryColor,

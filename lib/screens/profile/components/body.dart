@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gogi/SharedPref.dart';
+import 'package:gogi/screens/customers/customers_screen.dart';
 import 'package:gogi/screens/favourite/favourite_screen.dart';
 import 'package:gogi/screens/forgot_password/forgot_password_screen.dart';
 import 'package:gogi/screens/splash/splash_screen.dart';
+import 'package:gogi/screens/voucher/voucher_screen.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -55,14 +57,18 @@ class _BodyState extends State<Body> {
           ProfileMenu(
             text: "Mã giảm giá",
             icon: "assets/icons/Cash.svg",
-            press: () =>
-            {},
+            press: ()
+            {
+              Navigator.pushNamed(context, VoucherScreen.routeName);
+            },
           ),
           ProfileMenu(
             text: "Sổ địa chỉ",
             icon: "assets/icons/Address.svg",
-            press: () =>
-            {},
+            press: ()
+            {
+              Navigator.pushNamed(context, CustomersScreen.routeName);
+            },
           ),
           ProfileMenu(
             text: "Quên mật khẩu",

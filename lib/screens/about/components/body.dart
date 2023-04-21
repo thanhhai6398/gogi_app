@@ -6,7 +6,8 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: SingleChildScrollView(
+        child:
+        SingleChildScrollView(
           padding: EdgeInsets.all(10),
             child: Column(
               children: [

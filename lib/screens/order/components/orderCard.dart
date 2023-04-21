@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../enums.dart';
+import '../../../format.dart';
 import '../../../models/Order.dart';
 import '../../../size_config.dart';
 import '../../order_detail/order_detail_screen.dart';
@@ -22,7 +23,6 @@ class OrderCard extends StatelessWidget {
         status = e["name"];
       }
     }
-    var formattedDate = "${order.createdDate.day}-${order.createdDate.month}-${order.createdDate.year}";
     return Card(
         color: Colors.white,
         child: Row(
@@ -55,14 +55,14 @@ class OrderCard extends StatelessWidget {
                 Align(
                   alignment: Alignment.topRight,
                   child: Text(
-                    formattedDate,
+                    formatDate(order.createdDate),
                   ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(5)),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    "${order.total.toString()}đ",
+                    formatPrice(order.total),
                     style: const TextStyle(
                         color: Colors.black, fontWeight: FontWeight.w600),
                   ),

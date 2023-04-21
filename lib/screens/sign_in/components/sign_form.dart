@@ -112,7 +112,9 @@ class _SignFormState extends State<SignForm> {
                     if(value?.errCode == '200') {
                       sharedPref.save("username", username);
                       sharedPref.save("accessToken", value?.accessToken);
-                      Navigator.pushNamed(context, HomeScreen.routeName);
+                      //Navigator.pushNamed(context, HomeScreen.routeName);
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => HomeScreen()));
                     }
                     else {
                       addError(error: "Số điện thoại hoặc mật khẩu chưa đúng");
