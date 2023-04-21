@@ -1,7 +1,9 @@
+import 'package:gogi/screens/checkout/checkout_screen.dart';
 import 'package:gogi/screens/contact/contact_screen.dart';
 import 'package:gogi/screens/about/about_screen.dart';
 import 'package:gogi/screens/cart/cart_screen.dart';
 import 'package:gogi/screens/customer_profile/customer_profile_screen.dart';
+import 'package:gogi/screens/customers/components/customer_form.dart';
 import 'package:gogi/screens/customers/customers_screen.dart';
 import 'package:gogi/screens/details/details_screen.dart';
 import 'package:gogi/screens/favourite/favourite_screen.dart';
@@ -42,5 +44,7 @@ final Map<String, WidgetBuilder> routes = {
   FavouriteScreen.routeName: (context) => FavouriteScreen(),
   VoucherScreen.routeName: (context) => VoucherScreen(),
   CustomersScreen.routeName: (context) => CustomersScreen(),
+  CustomerFormScreen.routeName: (context) => CustomerFormScreen(),
+  CheckoutScreen.routeName: (context) => CheckoutScreen()
 };
 

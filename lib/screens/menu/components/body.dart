@@ -21,7 +21,7 @@ class Body extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: [
-          SizedBox(height: getProportionateScreenHeight(20)),
+          SizedBox(height: getProportionateScreenHeight(10)),
           FutureBuilder(
               future: categoryService.getAllCategory(),
               builder: (context, AsyncSnapshot<List<CategoryModel>> snapshot) {

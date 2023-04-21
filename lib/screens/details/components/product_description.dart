@@ -53,7 +53,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: Text(
-            widget.product.name,
+            totTitle(widget.product.name),
             style: Theme.of(context).textTheme.headline6,
           ),
         ),

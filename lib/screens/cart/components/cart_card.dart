@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/format.dart';
 
 import '../../../constants.dart';
 import '../../../models/Cart.dart';
@@ -14,7 +15,7 @@ class CartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Card(child: Row(
       children: [
         SizedBox(
           width: 88,
@@ -35,19 +36,23 @@ class CartCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              cart.product.name,
+              totTitle(cart.product.name),
               style: TextStyle(color: Colors.black, fontSize: 16),
               maxLines: 2,
             ),
             SizedBox(height: 10),
+            Text(
+              "Size: ${cart.size}",
+            ),
+            SizedBox(height: 10),
             Text.rich(
               TextSpan(
-                text: "\$${cart.product.price}",
-                style: TextStyle(
+                text: formatDouble(cart.product.price),
+                style: const TextStyle(
                     fontWeight: FontWeight.w600, color: kPrimaryColor),
                 children: [
                   TextSpan(
-                      text: " x${cart.numOfItem}",
+                      text: " x ${cart.numOfItem}",
                       style: Theme.of(context).textTheme.bodyText1),
                 ],
               ),
@@ -55,6 +60,6 @@ class CartCard extends StatelessWidget {
           ],
         )
       ],
-    );
+    ));
   }
 }

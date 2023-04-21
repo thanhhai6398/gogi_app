@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/constants.dart';
 import 'package:gogi/screens/order/components/orderCard.dart';
 
 import '../../../models/Order.dart';
@@ -40,6 +41,9 @@ class _OrderContentState extends State<OrderContent>
       children: [
         TabBar(
           controller: _tabController,
+          isScrollable: true,
+          indicatorColor: kPrimaryColor,
+          labelPadding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           tabs: const [
             Text("Chở xử lí", style: TextStyle(color: Colors.black)),
             Text("Đang giao", style: TextStyle(color: Colors.black)),

@@ -2,12 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gogi/apiServices/CustomerService.dart';
 import 'package:gogi/components/default_button.dart';
+import 'package:gogi/screens/customers/components/customer_form.dart';
 import 'package:gogi/screens/customers/components/customers.dart';
 import '../../../models/Customer.dart';
 import '../../../size_config.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  @override
+  State<Body> createState() => BodyState();
+}
+
+class BodyState extends State<Body> {
   CustomerService customerService = CustomerService();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,14 +43,31 @@ class Body extends StatelessWidget {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: DefaultButton(
-                text: "Thêm địa chỉ mới",
-                press: () => {},
-              ),
+                  text: "Thêm địa chỉ mới",
+                  press: () => {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                insetPadding: EdgeInsets.all(10),
+                                scrollable: true,
+                                content: Padding(
+                                    padding: EdgeInsets.all(5.0),
+                                    child: CustomerForm(action: 'add')),
+                                actions: [
+                                  TextButton(
+                                      child: const Text("Đóng"),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      })
+                                ],
+                              );
+                            })
+                      }),
             ),
           )
         ],
       ),
     );
   }
-
 }

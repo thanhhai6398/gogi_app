@@ -7,13 +7,12 @@ import 'package:gogi/models/Rate.dart';
 import '../../../models/Product.dart';
 
 class ProductRating extends StatelessWidget {
-  final Product product;
+  final List<Rate> rates;
 
-  const ProductRating({super.key, required this.product});
+  const ProductRating({super.key, required this.rates});
 
   @override
   Widget build(BuildContext context) {
-    List<Rate> rates = product.rates.toList();
 
     if (rates.isEmpty) {
       return const Center(

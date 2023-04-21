@@ -139,7 +139,7 @@ class _ProductCardState extends State<ProductCard> {
                   Container(
                     alignment: Alignment.topCenter,
                     child: Text(
-                      widget.product.name,
+                      totTitle(widget.product.name),
                       style: TextStyle(color: Colors.black),
                       overflow: TextOverflow.ellipsis,
                     ),

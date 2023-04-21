@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:gogi/constants.dart';
 import 'package:gogi/size_config.dart';
 
+import '../../../models/Store.dart';
 import 'customer_profile_form.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  @override
+  State<Body> createState() => StateBody();
+}
+
+class StateBody extends State<Body>{
+  int? dropdownValue = 1;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -33,6 +40,36 @@ class Body extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+  InputDecorator buildStoreFormField() {
+    return InputDecorator(
+      decoration: InputDecoration(
+        contentPadding:
+        EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
+        labelText: 'Cửa hàng',
+        border:
+        OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<int>(
+          value: dropdownValue,
+          icon: const Icon(Icons.arrow_drop_down),
+          iconSize: 24,
+          elevation: 16,
+          onChanged: (int? newValue) {
+            setState(() {
+              dropdownValue = newValue!;
+            });
+          },
+          items: demoStores.map((store) {
+            return DropdownMenuItem<int>(
+              value: store.id,
+              child: Text(store.name),
+            );
+          }).toList(),
         ),
       ),
     );

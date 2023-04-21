@@ -15,7 +15,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+        padding: const EdgeInsets.only(right: 5, left: 5),
         child: Column(
           children: [
             Align(

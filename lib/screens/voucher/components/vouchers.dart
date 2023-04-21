@@ -23,7 +23,7 @@ class Vouchers extends StatelessWidget {
     } else {
       return ListView(
         shrinkWrap: true,
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(10.0),
         children: List.generate(vouchers.length, (index) {
           return Center(
             child: VoucherCard(voucher: vouchers[index]),
