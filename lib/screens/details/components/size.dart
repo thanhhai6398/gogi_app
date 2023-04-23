@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../../../size_config.dart';
 
 class Size extends StatefulWidget {
+  final notifyParent;
+  Size({super.key, required this.notifyParent});
+
   @override
   State<Size> createState() => _SizeState();
 }
@@ -23,10 +26,8 @@ class _SizeState extends State<Size> {
                   value: size.s,
                   groupValue: _size,
                   onChanged: (size? value) {
-                    setState(() {
-                      _size = value;
-                    });
-                  },
+                    widget.notifyParent(size: value);
+                  }
                 ),
                 const Expanded(
                   child: Text('Nhỏ 0đ'),

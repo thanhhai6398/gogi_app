@@ -26,6 +26,7 @@ class Body extends StatelessWidget {
                 future: productService.getProductPopular(),
                 builder: (context, AsyncSnapshot<List<Product>> snapshot) {
                   if (snapshot.hasError) {
+                    print(snapshot.error);
                     return const Center(
                       child: Text('An error...'),
                     );
