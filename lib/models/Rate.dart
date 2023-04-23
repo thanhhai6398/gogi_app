@@ -25,6 +25,10 @@ class Rate {
     );
   }
 }
+List<Rate> parseRates(String responseBody) {
+  final parsed = jsonDecode(responseBody)["data"].cast<Map<String, dynamic>>();
+  return parsed.map<Rate>((json) => Rate.fromJson(json)).toList();
+}
 List<Rate> demoRates = [
   Rate(
     id: 1,

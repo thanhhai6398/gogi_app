@@ -48,7 +48,7 @@ class ProductCardGrid extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
         width: getProportionateScreenWidth(width),
         child: GestureDetector(
@@ -68,7 +68,7 @@ class ProductCardGrid extends StatelessWidget{
                           tag: product.id.toString(),
                           child: Image(
                             image: NetworkImage(product.image),
-                            fit: BoxFit.fill,
+                            fit: BoxFit.contain,
                           ),
                         )),
                   ),

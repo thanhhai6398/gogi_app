@@ -78,7 +78,6 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Tiếp tục",
                       press: () {
-                        //Navigator.pushNamed(context, SignInScreen.routeName);
                         if (login == false) {
                           Navigator.pushNamed(context, SignInScreen.routeName);
                         }

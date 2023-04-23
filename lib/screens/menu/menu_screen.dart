@@ -17,7 +17,7 @@ class MenuScreen extends StatelessWidget {
         title: const Text("Menu", style: TextStyle(color: Colors.black)),
       ),
       body: Body(id: agrs.id),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.menu),
+      bottomNavigationBar: const CustomBottomNavBar(selectedMenu: MenuState.menu),
     );
   }
 }

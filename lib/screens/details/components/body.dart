@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gogi/apiServices/AccountService.dart';
+import 'package:gogi/apiServices/ProductService.dart';
 import 'package:gogi/components/default_button.dart';
 import 'package:gogi/models/Product.dart';
 import 'package:gogi/screens/details/components/product_rating.dart';
@@ -8,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../../../models/CartItem.dart';
 import '../../../providers/CartProvider.dart';
+import '../../../models/Rate.dart';
 import 'count.dart';
 import 'size.dart';
 import 'product_description.dart';
@@ -121,7 +123,25 @@ class _DetailState extends State<Body>{
                             const SizedBox(
                               height: 10,
                             ),
-                            ProductRating(product: product),
+                            FutureBuilder(
+                                  future: productService
+                                      .getRateByProductId(product.id),
+                                  builder: (context,
+                                      AsyncSnapshot<List<Rate>> snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Center(
+                                        child: Text(
+                                            'ERROR: ${snapshot.error.toString()}'),
+                                      );
+                                    } else if (snapshot.hasData) {
+                                      return ProductRating(
+                                          rates: snapshot.data!);
+                                    } else {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                  }),
                           ],
                         )),
                   ],

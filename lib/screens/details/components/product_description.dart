@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gogi/format.dart';
 import 'package:gogi/models/Product.dart';
 
 import '../../../apiServices/AccountService.dart';
@@ -52,7 +53,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: Text(
-            widget.product.name,
+            totTitle(widget.product.name),
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
@@ -65,7 +66,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 right: getProportionateScreenWidth(64),
               ),
               child: Text(
-                "\$${widget.product.price}",
+                "${formatDouble(widget.product.price)}đ",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(18),
                   fontWeight: FontWeight.w600,

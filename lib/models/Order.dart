@@ -4,6 +4,7 @@ import 'package:gogi/models/Customer.dart';
 
 import 'Order_detail.dart';
 import 'Store.dart';
+import 'Voucher.dart';
 
 class Order {
   final int id;
@@ -11,10 +12,11 @@ class Order {
   final int status, orderType;
   final bool pay;
   final double total;
-  final String account_username, employee_name;
+  final String account_username;
   final Customer customer;
   final Store store;
   final List<OrderDetail> orderDetails;
+  // final Voucher voucher;
 
   Order({
     required this.id,
@@ -22,12 +24,13 @@ class Order {
     required this.status,
     required this.total,
     required this.account_username,
-    required this.employee_name,
+    //required this.employee_name,
     required this.orderType,
     required this.pay,
     required this.store,
     required this.customer,
     required this.orderDetails,
+    // required this.voucher,
   });
   factory Order.fromJson(Map<String, dynamic> json) {
     var detailList = json['details'] as List;
@@ -38,12 +41,13 @@ class Order {
         status: json['status'],
         total: json['total'],
         account_username: json['account_username'],
-        employee_name: json['employee_name'],
+        //employee_name: json['employee_name'],
         orderType: json['orderType'],
         pay: json['pay'],
         store: Store.fromJson(json['store']),
         customer: Customer.fromJson(json['customer']),
-        orderDetails: details
+        orderDetails: details,
+        //voucher: Voucher.fromJson(json['voucher']),
     );
   }
 }

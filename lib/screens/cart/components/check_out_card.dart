@@ -1,3 +1,5 @@
+import 'package:gogi/format.dart';
+import 'package:gogi/screens/checkout/checkout_screen.dart';
 import 'package:gogi/screens/customer_profile/customer_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,21 +8,10 @@ import '../../../components/default_button.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-class CheckoutCard extends StatefulWidget {
+class CheckoutCard extends StatelessWidget {
   const CheckoutCard({
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<CheckoutCard> createState() => _StateCheckoutCard();
-}
-
-class _StateCheckoutCard extends State<CheckoutCard> {
-  final List<String> items = [
-    'Trực tiếp',
-    'Giao hàng',
-  ];
-  String? selectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +23,7 @@ class _StateCheckoutCard extends State<CheckoutCard> {
       // height: 174,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
         ),
@@ -50,90 +41,25 @@ class _StateCheckoutCard extends State<CheckoutCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  width: getProportionateScreenWidth(110),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF5F6F9),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text("Thành tiền"),
-                ),
-                Spacer(),
-                Text(
-                  "\$337.15",
-                  style: TextStyle(fontSize: 16, color: Colors.black),
-                ),
-              ],
-            ),
-            SizedBox(height: getProportionateScreenHeight(20)),
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  width: getProportionateScreenWidth(110),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF5F6F9),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text("Hình thức giao hàng"),
-                ),
-                Spacer(),
-                DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    hint: Text(
-                      'Chọn',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme
-                            .of(context)
-                            .hintColor,
-                      ),
-                    ),
-                    items: items
-                        .map((item) =>
-                        DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                        .toList(),
-                    value: selectedValue,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedValue = value as String;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: getProportionateScreenHeight(20)),
-            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text.rich(
+                Text.rich(
                   TextSpan(
                     text: "Tổng cộng:\n",
                     children: [
                       TextSpan(
-                        text: "\$337.15",
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        text: formatPrice(120000),
+                        style: const TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  width: getProportionateScreenWidth(190),
+                  width: getProportionateScreenWidth(170),
                   child: DefaultButton(
                     text: "Tiếp tục",
                     press: () {
-                      Navigator.pushNamed(context, CustomerProfileScreen.routeName);
+                      Navigator.pushNamed(context, CheckoutScreen.routeName);
                     },
                   ),
                 ),

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:gogi/SharedPref.dart';
 import 'package:gogi/models/Account.dart';
+import 'package:gogi/models/Customer.dart';
+import 'package:gogi/models/Voucher.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -94,4 +96,22 @@ class AccountService {
       return false;
     }
   }
+
+  Future<List<Voucher>> getVoucher() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
+
+    final response =
+    await client.get(Uri.parse('$url/vouchers/account'), headers: {
+      'Authorization': 'Bearer $token',
+    });
+    return compute(parseVouchers, response.body);
+  }
+
+  Future<Voucher> searchVoucher(String code) async {
+    final response = await client.get(Uri.parse('$url/vouchers/search?code=$code'));
+    print(response.body);
+    return compute(parseVoucher, response.body);
+  }
+
 }

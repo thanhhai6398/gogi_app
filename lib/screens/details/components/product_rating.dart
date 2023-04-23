@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:gogi/format.dart';
 import 'package:gogi/models/Rate.dart';
 
 import '../../../models/Product.dart';
 
 class ProductRating extends StatelessWidget {
-  final Product product;
+  final List<Rate> rates;
 
-  const ProductRating({super.key, required this.product});
+  const ProductRating({super.key, required this.rates});
 
   @override
   Widget build(BuildContext context) {
-    List<Rate> rates = product.rates.toList();
 
     if (rates.isEmpty) {
       return const Center(
@@ -42,8 +42,6 @@ class RateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var formattedDate = "${rate.createdDate.day}-${rate.createdDate.month}-${rate.createdDate.year}";
-    var formatTime = "${rate.createdDate.hour}:${rate.createdDate.minute}";
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       margin: EdgeInsets.symmetric(vertical: 1),
@@ -90,9 +88,9 @@ class RateCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Row(children: [
-              Text(formattedDate),
+              Text(formatDate(rate.createdDate)),
               SizedBox(width: 10,),
-              Text(formatTime),
+              Text(formatTime(rate.createdDate)),
             ]),
           ),
 

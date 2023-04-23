@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/format.dart';
 import 'package:gogi/models/Product.dart';
 
 import '../../../constants.dart';
@@ -22,7 +23,7 @@ class Products extends StatelessWidget {
     } else {
       return ListView(
         shrinkWrap: true,
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(10.0),
         children: List.generate(products.length, (index) {
           if (products[index].status == true) {
             return Center(
@@ -74,7 +75,7 @@ class ProductCardMenu extends StatelessWidget {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        product.name,
+                        totTitle(product.name),
                         style: TextStyle(
                           fontSize: getProportionateScreenWidth(18),
                           fontWeight: FontWeight.w400,

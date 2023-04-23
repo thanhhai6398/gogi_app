@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
 import 'Category.dart';
 import 'Rate.dart';
 
@@ -11,7 +9,7 @@ class Product {
   final double price;
   final bool status;
   final CategoryModel category;
-  final List<Rate> rates;
+  final double avgPoint;
 
   Product({
     required this.id,
@@ -21,12 +19,10 @@ class Product {
     required this.status,
     required this.description,
     required this.category,
-    required this.rates,
+    required this.avgPoint,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
-    var rateList = json['rates'] as List;
-    List<Rate> rates = rateList.map((r) => Rate.fromJson(r)).toList();
     return Product(
       id: json['id'] as int,
       name: json['name'] as String,
@@ -35,14 +31,56 @@ class Product {
       status: json['status'],
       description: json['description'],
       image: json['img_url'],
+      avgPoint: json['avgPoint'],
+    );
+  }
+}
+
+List<Product> parseProducts(String responseBody) {
+  final parsed = jsonDecode(responseBody)["data"].cast<Map<String, dynamic>>();
+  return parsed.map<Product>((json) => Product.fromJson(json)).toList();
+}
+
+class ProductDetail {
+  final int id;
+  final String name, image, description;
+  final double price;
+  final bool status;
+  final CategoryModel category;
+  final double avgPoint;
+  final List<Rate> rates;
+
+  ProductDetail({
+    required this.id,
+    required this.name,
+    required this.image,
+    required this.price,
+    required this.status,
+    required this.description,
+    required this.category,
+    required this.avgPoint,
+    required this.rates,
+  });
+
+  factory ProductDetail.fromJson(Map<String, dynamic> json) {
+    var rateList = json['rates'] as List;
+    List<Rate> rates = rateList.map((r) => Rate.fromJson(r)).toList();
+    return ProductDetail(
+      id: json["product"]['id'] as int,
+      name: json["product"]['name'] as String,
+      category: CategoryModel.fromJson(json["product"]["category"]),
+      price: json["product"]['price'],
+      status: json["product"]['status'],
+      description: json["product"]['description'],
+      image: json["product"]['img_url'],
+      avgPoint: json["product"]['avgPoint'],
       rates: rates,
     );
   }
 }
-List<Product> parseProducts(String responseBody) {
-  final parsed =
-  jsonDecode(responseBody)["data"].cast<Map<String, dynamic>>();
-  return parsed.map<Product>((json) => Product.fromJson(json)).toList();
+
+ProductDetail parseProductDetail(String responseBody) {
+  return ProductDetail.fromJson(jsonDecode(responseBody)["data"]);
 }
 // Our demo Products
 
@@ -55,7 +93,7 @@ List<Product> demoProducts = [
     description: "description",
     status: true,
     category: CategoryModel(id: 1, name: "Coffee", status: true),
-    rates: [],
+    avgPoint: 3,
   ),
   Product(
     id: 2,
@@ -65,7 +103,7 @@ List<Product> demoProducts = [
     description: "description",
     status: true,
     category: CategoryModel(id: 1, name: "Coffee", status: true),
-    rates: [],
+    avgPoint: 3,
   ),
   Product(
     id: 3,
@@ -75,9 +113,9 @@ List<Product> demoProducts = [
     description: "description",
     status: true,
     category: CategoryModel(id: 1, name: "Coffee", status: true),
-    rates: [],
+    avgPoint: 3,
   ),
 ];
-//
+
 // const String description =
 //     "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
