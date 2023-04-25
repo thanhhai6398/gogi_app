@@ -50,9 +50,7 @@ class Body extends StatelessWidget {
                 future: productService.getProductsForYou(),
                 builder: (context, AsyncSnapshot<List<Product>> snapshot) {
                   if (snapshot.hasError) {
-                    return const Center(
-                      child: Text('An error...'),
-                    );
+                    return Text('An error...');
                   } else if (snapshot.hasData) {
                     return PopularProducts(products: snapshot.data!);
                   } else {

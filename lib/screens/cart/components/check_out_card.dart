@@ -3,9 +3,11 @@ import 'package:gogi/screens/checkout/checkout_screen.dart';
 import 'package:gogi/screens/customer_profile/customer_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
+import '../../../providers/CartProvider.dart';
 import '../../../size_config.dart';
 
 class CheckoutCard extends StatelessWidget {
@@ -15,6 +17,7 @@ class CheckoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context);
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: getProportionateScreenWidth(15),
@@ -48,7 +51,7 @@ class CheckoutCard extends StatelessWidget {
                     text: "Tổng cộng:\n",
                     children: [
                       TextSpan(
-                        text: formatPrice(120000),
+                        text: formatPrice(cart.getTotalPrice()),
                         style: const TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],

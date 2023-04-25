@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:io' as io;
@@ -7,7 +8,7 @@ import 'models/CartItem.dart';
 
 class DBHelper {
   static const _databaseName = "gogi.db";
-  static const tableName = 'cart';
+  static const _tableName = 'cart';
 
   static Database? _database;
 
@@ -29,33 +30,49 @@ class DBHelper {
   // creating database table
   _onCreate(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE cart(id INTEGER PRIMARY KEY AUTOINCREMENT, product_id INTEGER, name TEXT, image TEXT, size TEXT, quantity INTEGER, price  REAL)');
+        'CREATE TABLE $_tableName(id INTEGER PRIMARY KEY AUTOINCREMENT, product_id INTEGER, name TEXT, image TEXT, size TEXT, quantity INTEGER, price  REAL)');
   }
+
 // inserting data into the table
   Future<CartItem> insert(CartItem item) async {
     var dbClient = await database;
-    await dbClient!.insert(tableName, item.toMap());
+    await dbClient?.rawInsert(
+        "INSERT INTO $_tableName (product_id, name, image, size, quantity, price) VALUES(?, ?, ?, ?, ?, ?)",
+        [
+          item.product_id,
+          item.name,
+          item.image,
+          item.size,
+          item.quantity?.value,
+          item.price
+        ]);
     return item;
   }
+
+  Future<CartItem?> getCartItem(int productId, String size) async {
+    var dbClient = await database;
+    final List<Map<String, Object?>> queryResult = await dbClient!.rawQuery(
+        'SELECT * FROM $_tableName WHERE product_id=? AND size = ?',
+        [productId, size]);
+    return queryResult.length > 0 ? CartItem.fromMap(queryResult[0]) : null;
+  }
+
 // getting all the items in the list from the database
   Future<List<CartItem>> getCartList() async {
     var dbClient = await database;
     final List<Map<String, Object?>> queryResult =
-    await dbClient!.query('cart');
+        await dbClient!.query(_tableName);
     return queryResult.map((result) => CartItem.fromMap(result)).toList();
   }
-  Future<int> updateQuantity(CartItem cart) async {
+
+  Future<int?> update(int id, CartItem cartItem) async {
     var dbClient = await database;
-    Map<String, dynamic> row = {
-      'quantity': cart.quantity
-    };
-    return await dbClient!.update('cart', row,
-        where: "id = ?", whereArgs: [cart.id]);
+    return await dbClient?.rawUpdate("UPDATE $_tableName SET quantity = ? WHERE id = ?",[ cartItem.quantity!.value, id]);
   }
 
 // deleting an item from the cart screen
   Future<int> deleteCartItem(int id) async {
     var dbClient = await database;
-    return await dbClient!.delete('cart', where: 'id = ?', whereArgs: [id]);
+    return await dbClient!.delete(_tableName, where: 'id = ?', whereArgs: [id]);
   }
 }

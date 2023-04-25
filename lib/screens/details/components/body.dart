@@ -7,7 +7,6 @@ import 'package:gogi/screens/details/components/product_rating.dart';
 import 'package:gogi/size_config.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/CartItem.dart';
 import '../../../providers/CartProvider.dart';
 import '../../../models/Rate.dart';
 import 'count.dart';
@@ -16,7 +15,6 @@ import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
 
-enum size { s, m, l }
 
 class Body extends StatefulWidget {
   final Product product;
@@ -27,11 +25,12 @@ class Body extends StatefulWidget {
 }
 class _DetailState extends State<Body>{
   AccountService accountService = AccountService();
-  size? _size = size.s;
+  ProductService productService = ProductService();
+  String _size = 's';
   int _quantity = 1;
-  setSize(size? value) {
+  setSize(String size) {
     setState(() {
-      _size = value;
+      _size = size;
     });
     return null;
   }
@@ -89,7 +88,7 @@ class _DetailState extends State<Body>{
                     SizedBox(height: getProportionateScreenHeight(10)),
                     Row(
                       children: [
-                        Count(),
+                        Count(notifyParent: setQuantity,),
                         Expanded(
                           child: Padding(
                             padding: EdgeInsets.only(
@@ -99,7 +98,7 @@ class _DetailState extends State<Body>{
                             child: DefaultButton(
                               text: "Đặt hàng",
                               press: () {
-                                cart.addToCart(product, _size.toString(),_quantity);
+                                cart.addToCart(product, _size,_quantity);
                               },
                             ),
                           ),

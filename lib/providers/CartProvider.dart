@@ -5,7 +5,7 @@ import '../DBHelper.dart';
 import '../models/CartItem.dart';
 import '../models/Product.dart';
 
-class CartProvider with ChangeNotifier{
+class CartProvider with ChangeNotifier {
   DBHelper dbHelper = DBHelper();
   int _counter = 0;
   int _quantity = 1;
@@ -17,22 +17,51 @@ class CartProvider with ChangeNotifier{
 
   List<CartItem> cart = [];
 
-  void addToCart(Product product, String size, int quantity) {
-    dbHelper
-        .insert(
-      CartItem(
-        product_id: product.id,
-        name: product.name,
-        image: product.image,
-        size: size,
-        quantity: ValueNotifier(quantity),
-        price: product.price,
-      ),
-    )
-        .then((value) {
-      addTotalPrice(product.price);
-      addCounter();
-      print('Product Added to cart');
+  CartProvider() {
+    _setPrefsItems();
+  }
+
+  Future<void> addToCart(Product product, String size, int quantity) async {
+    double surCharge = size == 's'
+        ? 0
+        : size == 'm'
+            ? 6000
+            : 10000;
+    CartItem cartItem = CartItem(
+      product_id: product.id,
+      name: product.name,
+      image: product.image,
+      size: size,
+      quantity: ValueNotifier(quantity),
+      price: product.price + surCharge,
+    );
+    CartItem? existCartItem = await dbHelper.getCartItem(product.id, size);
+    if (existCartItem != null) {
+      int newQuanity = quantity + existCartItem.quantity!.value;
+      cartItem.quantity = ValueNotifier<int>(newQuanity);
+      dbHelper.update(existCartItem.id, cartItem).then((value) {
+        print('Update quantity');
+      }).onError((error, stackTrace) {
+        print(error.toString());
+        return;
+      });
+    } else {
+      dbHelper.insert(cartItem).then((value) {
+        print('Product Added to cart');
+      }).onError((error, stackTrace) {
+        print(error.toString());
+        return;
+      });
+    }
+    addTotalPrice(cartItem.price*quantity);
+    addCounter(quantity);
+  }
+
+  Future<void> removeFromCart(int id) async {
+    dbHelper.deleteCartItem(id).then((value) {
+      if (value > 0) {
+        removeItem(id);
+      }
     }).onError((error, stackTrace) {
       print(error.toString());
     });
@@ -59,14 +88,14 @@ class CartProvider with ChangeNotifier{
     _totalPrice = prefs.getDouble('total_price') ?? 0;
   }
 
-  void addCounter() {
-    _counter++;
+  void addCounter(int quanity) {
+    _counter += quantity;
     _setPrefsItems();
     notifyListeners();
   }
 
-  void removeCounter() {
-    _counter--;
+  void removeCounter(int quantity) {
+    _counter -= quantity;
     _setPrefsItems();
     notifyListeners();
   }
@@ -97,7 +126,10 @@ class CartProvider with ChangeNotifier{
 
   void removeItem(int id) {
     final index = cart.indexWhere((element) => element.id == id);
+    CartItem deleted = cart[index];
     cart.removeAt(index);
+    removeCounter(deleted.quantity!.value);
+    removeTotalPrice(deleted.price * deleted.quantity!.value);
     _setPrefsItems();
     notifyListeners();
   }
@@ -123,6 +155,4 @@ class CartProvider with ChangeNotifier{
     _getPrefsItems();
     return _totalPrice;
   }
-
-
 }
