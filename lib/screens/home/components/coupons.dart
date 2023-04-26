@@ -14,15 +14,16 @@ class Coupons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey[300],
+      color: Colors.grey[200],
       child: Column(
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-              vertical: getProportionateScreenHeight(10),
+              vertical: getProportionateScreenHeight(20),
                 horizontal: getProportionateScreenWidth(20)),
             child: SectionTitle(
               title: "Mã khuyến mãi",
+              icon: Icons.redeem,
               press: () {},
             ),
           ),

@@ -6,14 +6,22 @@ import '../../../constants.dart';
 import '../../../models/Voucher.dart';
 import '../../../size_config.dart';
 
-class Vouchers extends StatelessWidget {
+class Vouchers extends StatefulWidget {
   List<Voucher> vouchers = [];
 
   Vouchers({super.key, required this.vouchers});
 
   @override
+  State<Vouchers> createState() => StateVouchers();
+}
+
+class StateVouchers extends State<Vouchers>{
+  int selectedIndex = -1;
+  int? id;
+
+  @override
   Widget build(BuildContext context) {
-    if (vouchers.isEmpty) {
+    if (widget.vouchers.isEmpty) {
       return const Center(
         child: Text(
           "Không có mã giảm giá",
@@ -24,9 +32,17 @@ class Vouchers extends StatelessWidget {
       return ListView(
         shrinkWrap: true,
         padding: const EdgeInsets.all(10.0),
-        children: List.generate(vouchers.length, (index) {
+        children: List.generate(widget.vouchers.length, (index) {
           return Center(
-            child: VoucherCard(voucher: vouchers[index]),
+            child: InkWell(
+              onTap: () => setState(() =>
+              {selectedIndex = index, id = widget.vouchers[index].id}),
+              child: Container(
+                color:
+                (selectedIndex == index) ? Colors.deepOrange : Colors.white,
+                child: VoucherCard(voucher: widget.vouchers[index]),
+              ),
+            ),
           );
         }),
       );
@@ -45,6 +61,7 @@ class VoucherCard extends StatelessWidget {
         shadowColor: Colors.deepOrange,
         elevation: 3.0,
         color: Colors.white,
+        margin: const EdgeInsets.all(3.0),
         child: Row(
           children: <Widget>[
             Container(

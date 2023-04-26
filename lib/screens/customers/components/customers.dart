@@ -25,12 +25,6 @@ class StateCustomers extends State<Customers> {
 
   @override
   Widget build(BuildContext context) {
-    // for (Customer e in widget.customers) {
-    //   if (e.isDefault == true) {
-    //     int index = widget.customers.indexWhere((item) => item.id == e.id);
-    //     selectedIndex = index;
-    //   }
-    // }
     if (widget.customers.isEmpty) {
       return const Center(
         child: Text(
@@ -205,12 +199,6 @@ class CustomerCard extends StatelessWidget {
                               );
                             })
                       },
-                  // Navigator.pushNamed(
-                  //   context,
-                  //   CustomerFormScreen.routeName,
-                  //   arguments: CustomerArguments(
-                  //       customer: customer, action: 'update'),
-                  // ),
                   child: const Icon(
                     Icons.more_vert,
                     color: kPrimaryColor,

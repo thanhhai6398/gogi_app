@@ -25,26 +25,11 @@ class Body extends StatelessWidget {
             const HomeHeader(),
             SizedBox(height: getProportionateScreenWidth(5)),
             const BannerHome(),
-            FutureBuilder(
-                future: accountService.getVoucher(),
-                builder: (context, AsyncSnapshot<List<Voucher>> snapshot) {
-                  if (snapshot.hasError) {
-                    return const Center(
-                      child: Text('An error...'),
-                    );
-                  } else if (snapshot.hasData) {
-                    return Coupons(vouchers: snapshot.data!);
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }),
             SizedBox(height: getProportionateScreenWidth(20)),
             Padding(
               padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-              child: SectionTitle(title: "Dành cho bạn", press: () {}),
+              child: SectionTitle(title: "Dành cho bạn", icon: Icons.ac_unit, press: () {}),
             ),
             FutureBuilder(
                 future: productService.getProductsForYou(),
@@ -65,7 +50,7 @@ class Body extends StatelessWidget {
             Padding(
               padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-              child: SectionTitle(title: "Best seller", press: () {}),
+              child: SectionTitle(title: "Best seller", icon: Icons.bolt, press: () {}),
             ),
             FutureBuilder(
                 future: productService.getBestSeller(),
@@ -82,11 +67,26 @@ class Body extends StatelessWidget {
                     );
                   }
                 }),
+            FutureBuilder(
+                future: accountService.getVoucher(),
+                builder: (context, AsyncSnapshot<List<Voucher>> snapshot) {
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text('An error...'),
+                    );
+                  } else if (snapshot.hasData) {
+                    return Coupons(vouchers: snapshot.data!);
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
             SizedBox(height: getProportionateScreenWidth(20)),
             Padding(
               padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-              child: SectionTitle(title: "Combo siêu HOT", press: () {}),
+              child: SectionTitle(title: "Combo siêu HOT", icon: Icons.local_fire_department, press: () {}),
             ),
             FutureBuilder(
                 future: productService.getCombo(),

@@ -51,9 +51,4 @@ class ProductService {
     return compute(parseProducts, response.body);
   }
 
-  Future<List<Rate>> getRateByProductId(int id) async {
-    final response = await client.get(Uri.parse('$url/rates/product/$id'));
-    return compute(parseRates, response.body);
-  }
-
 }

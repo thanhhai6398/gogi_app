@@ -36,7 +36,7 @@ class Body extends StatelessWidget {
             const SizedBox(
               height: 5.0,
             ),
-            Expanded(child: Products(details: order.orderDetails)),
+            Expanded(child: Products(details: order.orderDetails, state: order.status,)),
             const SizedBox(
               height: 5.0,
             ),

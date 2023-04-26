@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:gogi/apiServices/RateService.dart';
 import 'package:gogi/format.dart';
+import 'package:gogi/models/Rate.dart';
 
+import '../../../components/default_button.dart';
 import '../../../constants.dart';
 import '../../../models/Order_detail.dart';
-import '../../../models/Product.dart';
 import '../../../size_config.dart';
+import '../../details/details_screen.dart';
 
 class Products extends StatelessWidget {
   List<OrderDetail> details = [];
+  int state;
 
-  Products({super.key, required this.details});
+  Products({super.key, required this.details, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,10 @@ class Products extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       children: List.generate(details.length, (index) {
         return Center(
-          child: ProductOrder(detail: details[index]),
+          child: ProductOrder(
+            product: details[index],
+            state: state,
+          ),
         );
       }),
     );
@@ -26,12 +34,16 @@ class Products extends StatelessWidget {
 }
 
 class ProductOrder extends StatelessWidget {
-  const ProductOrder({
+  RateService rateService = RateService();
+
+  ProductOrder({
     Key? key,
-    required this.detail,
+    required this.product,
+    required this.state,
   }) : super(key: key);
 
-  final OrderDetail detail;
+  final OrderDetail product;
+  final int state;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +55,7 @@ class ProductOrder extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 2.0),
             alignment: Alignment.center,
             child: Text(
-              "x${detail.quantity}",
+              "x${product.quantity}",
             ),
           ),
           const SizedBox(
@@ -57,7 +69,7 @@ class ProductOrder extends StatelessWidget {
             ),
             //product.image
             child: Image(
-              image: NetworkImage(detail.img_url),
+              image: NetworkImage(product.img_url),
               fit: BoxFit.contain,
               height: getProportionateScreenHeight(80),
               width: getProportionateScreenWidth(50),
@@ -72,7 +84,7 @@ class ProductOrder extends StatelessWidget {
               Container(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  totTitle(detail.product_name),
+                  totTitle(product.product_name),
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     fontWeight: FontWeight.w400,
@@ -85,7 +97,7 @@ class ProductOrder extends StatelessWidget {
               Container(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Size: ${detail.size}",
+                  "Size: ${product.size}",
                 ),
               ),
               SizedBox(height: getProportionateScreenHeight(5)),
@@ -93,17 +105,176 @@ class ProductOrder extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 5.0),
                 alignment: Alignment.topRight,
                 child: Text(
-                  formatPrice(detail.price),
+                  formatPrice(product.price),
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     color: kPrimaryColor,
                   ),
                 ),
+              ),
+              SizedBox(height: getProportionateScreenHeight(5)),
+              IsRated(
+                state: state,
+                product_id: product.product_id,
               )
             ],
           )),
         ],
       ),
+    );
+  }
+}
+
+class IsRated extends StatefulWidget {
+  int state;
+  int product_id;
+
+  IsRated({super.key, required this.state, required this.product_id});
+
+  @override
+  State<IsRated> createState() => StateIsRated();
+}
+
+class StateIsRated extends State<IsRated> {
+  RateService rateService = RateService();
+
+  bool? isExisted;
+
+  @override
+  void initState() {
+    super.initState();
+    rateService.checkExisted(widget.product_id).then((value) {
+      setState(() {
+        isExisted = value;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (isExisted == false) {
+      if (widget.state == 2) {
+        return Align(
+          alignment: Alignment.bottomRight,
+          child: TextButton(
+            onPressed: () => {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      insetPadding: EdgeInsets.all(10),
+                      scrollable: true,
+                      content: Padding(
+                          padding: EdgeInsets.all(5.0), child: RateForm(product_id: widget.product_id,)),
+                      actions: [
+                        TextButton(
+                            child: const Text("Đóng"),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            })
+                      ],
+                    );
+                  })
+            },
+            style: const ButtonStyle(
+                backgroundColor:
+                    MaterialStatePropertyAll<Color>(kPrimaryColor)),
+            child: const Text(
+              "Đánh giá",
+              style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.white),
+            ),
+          ),
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
+    } else {
+      return Align(
+        alignment: Alignment.bottomRight,
+        child: TextButton(
+          onPressed: () => {},
+          style: const ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll<Color>(kPrimaryColor)),
+          child: const Text(
+            "Đã đánh giá",
+            style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontStyle: FontStyle.italic,
+                color: Colors.white),
+          ),
+        ),
+      );
+    }
+  }
+}
+
+class RateForm extends StatefulWidget {
+  int product_id;
+
+  RateForm({super.key, required this.product_id});
+  @override
+  State<RateForm> createState() => StateRateForm();
+}
+
+class StateRateForm extends State<RateForm> {
+  RateService rateService = RateService();
+  TextEditingController textarea = TextEditingController();
+  double point = 1.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        RatingBar.builder(
+          initialRating: point.toDouble(),
+          minRating: 1,
+          direction: Axis.horizontal,
+          allowHalfRating: true,
+          itemCount: 5,
+          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+          itemBuilder: (context, _) => const Icon(
+            Icons.star,
+            color: Colors.deepOrangeAccent,
+          ),
+          onRatingUpdate: (rating) {
+            setState(() {
+              point = rating;
+            });
+          },
+        ),
+        const SizedBox(
+          height: 5.0,
+        ),
+        TextField(
+          controller: textarea,
+          keyboardType: TextInputType.multiline,
+          maxLines: 4,
+          decoration: const InputDecoration(
+              hintText: "Bạn thấy sản phẩm như thế nào?",
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.redAccent))),
+        ),
+        const SizedBox(
+          height: 10.0,
+        ),
+        DefaultButton(text: "Gửi", press: () {
+          String content = textarea.text.toString();
+          RateReq data = RateReq(id: widget.product_id, point: point.toInt(), content: content);
+          rateService.postRate(data).then((value) {
+            if (value == true) {
+              // Navigator.pop(context);
+              setState(() {
+
+              });
+            } else {
+              print("error post rate");
+            }
+          });
+        })
+      ],
     );
   }
 }

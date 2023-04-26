@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gogi/apiServices/AccountService.dart';
-import 'package:gogi/apiServices/ProductService.dart';
+import 'package:gogi/apiServices/RateService.dart';
 import 'package:gogi/components/default_button.dart';
 import 'package:gogi/models/Product.dart';
 import 'package:gogi/screens/details/components/product_rating.dart';
@@ -15,7 +15,7 @@ import 'product_images.dart';
 
 class Body extends StatelessWidget {
   AccountService accountService = AccountService();
-  ProductService productService = ProductService();
+  RateService rateService = RateService();
   final Product product;
 
   Body({Key? key, required this.product}) : super(key: key);
@@ -59,7 +59,7 @@ class Body extends StatelessWidget {
               //   product: product,
               // ),
               TopRoundedContainer(
-                color: Color(0xFFF6F7F9),
+                color: const Color(0xFFF6F7F9),
                 child: Column(
                   children: [
                     Size(),
@@ -99,7 +99,7 @@ class Body extends StatelessWidget {
                               height: 10,
                             ),
                             FutureBuilder(
-                                  future: productService
+                                  future: rateService
                                       .getRateByProductId(product.id),
                                   builder: (context,
                                       AsyncSnapshot<List<Rate>> snapshot) {
