@@ -22,6 +22,17 @@ class CustomerService {
     return compute(parseCustomers, response.body);
   }
 
+  Future<Customer> getCustomerDefault() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
+
+    final response =
+    await client.get(Uri.parse('$url/accounts/customers/default'),
+        headers: {'Authorization': 'Bearer $token',
+        });
+    return compute(parseCustomer, response.body);
+  }
+
   Future<bool> postCustomer(CustomerReq data) async {
     final response =
     await client.post(Uri.parse('$url/customers'),

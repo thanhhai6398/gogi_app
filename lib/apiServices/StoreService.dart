@@ -12,5 +12,8 @@ class StoreService {
     final response = await client.get(Uri.parse('$url/stores'));
     return compute(parseStores, response.body);
   }
-
+  Future<List<Store>> getStoreByAddress(int provinceId, districtId) async {
+    final response = await client.get(Uri.parse('$url/stores/address/$provinceId/$districtId'));
+    return compute(parseStores, response.body);
+  }
 }

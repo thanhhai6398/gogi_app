@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gogi/format.dart';
 
 import '../../../constants.dart';
 import '../../../models/Store.dart';
@@ -71,7 +72,7 @@ class StoreCard extends StatelessWidget {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    store.address,
+                    totTitle(store.address),
                     maxLines: 2,
                   ),
                 ),

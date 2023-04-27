@@ -34,6 +34,10 @@ List<Customer> parseCustomers(String responseBody) {
   return parsed.map<Customer>((json) => Customer.fromJson(json)).toList();
 }
 
+Customer parseCustomer(String responseBody) {
+  return Customer.fromJson(jsonDecode(responseBody)["data"]);
+}
+
 class CustomerReq {
   final String name, phone, address, accountUsername;
   final int provinceId, districtId;
