@@ -39,6 +39,7 @@ class Product {
 List<Product> parseProducts(String responseBody) {
   final parsed = jsonDecode(responseBody)["data"].cast<Map<String, dynamic>>();
   return parsed.map<Product>((json) => Product.fromJson(json)).toList();
+
 }
 
 class ProductDetail {
@@ -87,7 +88,7 @@ ProductDetail parseProductDetail(String responseBody) {
 List<Product> demoProducts = [
   Product(
     id: 1,
-    image: "assets/images/1.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/gogi-images.appspot.com/o/files%2Fzmnc2yp?alt=media&token=3307075b-e83f-4916-abe0-443fc2d78464",
     name: "Trà sữa trân châu",
     price: 30000,
     description: "description",
@@ -97,7 +98,7 @@ List<Product> demoProducts = [
   ),
   Product(
     id: 2,
-    image: "assets/images/1.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/gogi-images.appspot.com/o/files%2Fzmnc2yp?alt=media&token=3307075b-e83f-4916-abe0-443fc2d78464",
     name: "Trà sữa trân châu",
     price: 30000,
     description: "description",
@@ -107,7 +108,7 @@ List<Product> demoProducts = [
   ),
   Product(
     id: 3,
-    image: "assets/images/1.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/gogi-images.appspot.com/o/files%2Fzmnc2yp?alt=media&token=3307075b-e83f-4916-abe0-443fc2d78464",
     name: "Trà sữa trân châu",
     price: 30000,
     description: "description",
