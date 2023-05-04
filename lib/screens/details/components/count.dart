@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import '../../../size_config.dart';
 
 class Count extends StatefulWidget {
+  final Function(int) notifyParent;
+  final int quantity;
+  Count({super.key, required this.notifyParent, required this.quantity});
+
   @override
   State<Count> createState() => _StateCount();
 }
 
 class _StateCount extends State<Count>{
-  int _n = 0;
   void add() {
-    setState(() {
-      _n++;
-    });
+    widget.notifyParent(widget.quantity+1);
   }
   void minus() {
     setState(() {
-      if (_n != 0)
-        _n--;
+      if (widget.quantity != 0)
+        widget.notifyParent(widget.quantity - 1);
     });
+
   }
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class _StateCount extends State<Count>{
         ),
         SizedBox(width: getProportionateScreenWidth(20)),
         Text(
-          '${_n}',
+          '${widget.quantity}',
           style: TextStyle(fontSize: 18.0),
         ),
         SizedBox(width: getProportionateScreenWidth(20)),

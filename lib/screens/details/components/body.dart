@@ -5,7 +5,10 @@ import 'package:gogi/components/default_button.dart';
 import 'package:gogi/models/Product.dart';
 import 'package:gogi/screens/details/components/product_rating.dart';
 import 'package:gogi/size_config.dart';
+import 'package:gogi/utils/size.dart';
+import 'package:provider/provider.dart';
 
+import '../../../providers/CartProvider.dart';
 import '../../../models/Rate.dart';
 import 'count.dart';
 import 'size.dart';
@@ -13,15 +16,33 @@ import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
 
-class Body extends StatelessWidget {
-  AccountService accountService = AccountService();
-  RateService rateService = RateService();
+class Body extends StatefulWidget {
   final Product product;
-
   Body({Key? key, required this.product}) : super(key: key);
 
   @override
+  State<StatefulWidget> createState() => _DetailState();
+}
+class _DetailState extends State<Body>{
+  AccountService accountService = AccountService();
+  RateService rateService = RateService();
+  SIZE _size = SIZE.s;
+  int _quantity = 1;
+  setSize( size) {
+    setState(() {
+      _size = size;
+    });
+  }
+  setQuantity(int quantity){
+    setState(() {
+      _quantity = quantity;
+    });
+  }
+  @override
   Widget build(BuildContext context) {
+    Product product = widget.product;
+    final cart = Provider.of<CartProvider>(context);
+
     return ListView(
       children: [
         ProductImages(product: product),
@@ -62,11 +83,11 @@ class Body extends StatelessWidget {
                 color: const Color(0xFFF6F7F9),
                 child: Column(
                   children: [
-                    Size(),
+                    Size(notifyParent: setSize,size: _size,),
                     SizedBox(height: getProportionateScreenHeight(10)),
                     Row(
                       children: [
-                        Count(),
+                       Count(notifyParent: setQuantity,quantity: _quantity,),
                         Expanded(
                           child: Padding(
                             padding: EdgeInsets.only(
@@ -75,7 +96,13 @@ class Body extends StatelessWidget {
                             ),
                             child: DefaultButton(
                               text: "Đặt hàng",
-                              press: () {},
+                              press: () {
+                                cart.addToCart(product, _size,_quantity);
+                                setState(() {
+                                  _quantity = 1;
+                                  _size = SIZE.s;
+                                });
+                              },
                             ),
                           ),
                         )
