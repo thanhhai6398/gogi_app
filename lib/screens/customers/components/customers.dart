@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gogi/format.dart';
+import 'package:gogi/screens/checkout/checkout_screen.dart';
+import 'package:gogi/screens/checkout/components/body.dart';
 import 'package:gogi/screens/customers/components/customer_form.dart';
 
+import '../../../SharedPref.dart';
 import '../../../apiServices/CustomerService.dart';
 import '../../../constants.dart';
 import '../../../models/Customer.dart';
@@ -20,6 +23,7 @@ class Customers extends StatefulWidget {
 }
 
 class StateCustomers extends State<Customers> {
+  SharedPref sharedPref = SharedPref();
   int selectedIndex = -1;
   int? id;
 
@@ -39,8 +43,16 @@ class StateCustomers extends State<Customers> {
         children: List.generate(widget.customers.length, (index) {
           return Center(
             child: InkWell(
-              onTap: () => setState(() =>
-                  {selectedIndex = index, id = widget.customers[index].id}),
+              onTap: () {
+                setState(() =>
+                    {selectedIndex = index, id = widget.customers[index].id});
+                sharedPref.saveId("customerId", id);
+                Navigator.of(context).pushAndRemoveUntil(
+                  CupertinoPageRoute(
+                      builder: (context) => const CheckoutScreen()),
+                  (_) => false,
+                );
+              },
               child: Container(
                 color:
                     (selectedIndex == index) ? Colors.deepOrange : Colors.white,

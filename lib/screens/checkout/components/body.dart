@@ -7,6 +7,7 @@ import 'package:gogi/screens/checkout/components/customerInfor.dart';
 import 'package:gogi/screens/checkout/components/detailInfor.dart';
 import 'package:gogi/screens/checkout/components/listProducts.dart';
 
+import '../../../SharedPref.dart';
 import '../../../models/Store.dart';
 import '../../../size_config.dart';
 import '../../customers/customers_screen.dart';
@@ -17,11 +18,31 @@ class Body extends StatefulWidget {
 }
 
 class StateBody extends State<Body> {
+  SharedPref sharedPref = SharedPref();
   CustomerService customerService = CustomerService();
   StoreService storeService = StoreService();
   List<Store> stores = [];
   int? dropdownValue;
 
+  bool customer = false;
+  int customerId = 0;
+  bool voucher = false;
+  int voucherId = 0;
+  StateBody() {
+    sharedPref.containsKey("customerId").then((value) => setState(() {
+      customer = value;
+    }));
+    sharedPref.readId("customerId").then((value) => setState((){
+      customerId = value!;
+    }));
+
+    sharedPref.containsKey("voucherId").then((value) => setState(() {
+      voucher = value;
+    }));
+    sharedPref.readId("voucherId").then((value) => setState((){
+      voucherId = value!;
+    }));
+  }
 
   // Customer customer = Customer(
   //     id: 1,
@@ -39,6 +60,7 @@ class StateBody extends State<Body> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         children: [
+          (customer == false) ?
           FutureBuilder(
               future: customerService.getCustomerDefault(),
               builder: (context, AsyncSnapshot<Customer> snapshot) {
@@ -85,18 +107,52 @@ class StateBody extends State<Body> {
                     child: CircularProgressIndicator(),
                   );
                 }
+              }) : FutureBuilder(
+              future: customerService.getCustomerById(customerId),
+              builder: (context, AsyncSnapshot<Customer> snapshot) {
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text('An error...'),
+                  );
+                } else if (snapshot.hasData) {
+                  storeService
+                      .getStoreByAddress(
+                      snapshot.data!.provinceId, snapshot.data?.districtId)
+                      .then((value) {
+                    setState(() {
+                      stores = value;
+                      dropdownValue = stores.first.id;
+                    });
+                  });
+                  return CustomerInfor(customer: snapshot.data!);
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
               }),
           SizedBox(height: getProportionateScreenHeight(20)),
           buildStoreFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
           ListProducts(),
           SizedBox(height: getProportionateScreenHeight(20)),
-          const DetailInfor(),
+          DetailInfor(id: voucherId,),
         ],
       ),
     );
   }
 
+  // setStore(Customer customer) {
+  //   storeService
+  //       .getStoreByAddress(
+  //       customer.provinceId, customer.districtId)
+  //       .then((value) {
+  //     setState(() {
+  //       stores = value;
+  //       dropdownValue = stores.first.id;
+  //     });
+  //   });
+  // }
   Padding buildStoreFormField() {
     if (stores.isEmpty) {
       return Padding(
@@ -149,6 +205,7 @@ class StateBody extends State<Body> {
                   setState(() {
                     dropdownValue = newValue!;
                   });
+                  sharedPref.saveId("storeId", dropdownValue);
                 },
                 items: stores.map((store) {
                   return DropdownMenuItem<int>(

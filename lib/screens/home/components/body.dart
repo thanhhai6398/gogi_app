@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/apiServices/VoucherService.dart';
 import 'package:gogi/screens/home/components/section_title.dart';
 
 import '../../../apiServices/AccountService.dart';
@@ -14,6 +15,7 @@ import 'coupons.dart';
 class Body extends StatelessWidget {
   ProductService productService = ProductService();
   AccountService accountService = AccountService();
+  VoucherService voucherService = VoucherService();
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class Body extends StatelessWidget {
                   }
                 }),
             FutureBuilder(
-                future: accountService.getVoucher(),
+                future: voucherService.getVoucher(),
                 builder: (context, AsyncSnapshot<List<Voucher>> snapshot) {
                   if (snapshot.hasError) {
                     return const Center(

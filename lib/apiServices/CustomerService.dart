@@ -33,6 +33,12 @@ class CustomerService {
     return compute(parseCustomer, response.body);
   }
 
+  Future<Customer> getCustomerById(int id) async {
+    final response =
+    await client.get(Uri.parse('$url/customers/$id'));
+    return compute(parseCustomer, response.body);
+  }
+
   Future<bool> postCustomer(CustomerReq data) async {
     final response =
     await client.post(Uri.parse('$url/customers'),

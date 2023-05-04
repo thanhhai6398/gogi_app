@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gogi/format.dart';
 
+import '../../../SharedPref.dart';
 import '../../../constants.dart';
 import '../../../models/Voucher.dart';
 import '../../../size_config.dart';
+import '../../checkout/checkout_screen.dart';
 
 class Vouchers extends StatefulWidget {
   List<Voucher> vouchers = [];
@@ -15,7 +17,8 @@ class Vouchers extends StatefulWidget {
   State<Vouchers> createState() => StateVouchers();
 }
 
-class StateVouchers extends State<Vouchers>{
+class StateVouchers extends State<Vouchers> {
+  SharedPref sharedPref = SharedPref();
   int selectedIndex = -1;
   int? id;
 
@@ -35,11 +38,19 @@ class StateVouchers extends State<Vouchers>{
         children: List.generate(widget.vouchers.length, (index) {
           return Center(
             child: InkWell(
-              onTap: () => setState(() =>
-              {selectedIndex = index, id = widget.vouchers[index].id}),
+              onTap: () {
+                setState(() =>
+                    {selectedIndex = index, id = widget.vouchers[index].id});
+                sharedPref.saveId("voucherId", id);
+                Navigator.of(context).pushAndRemoveUntil(
+                  CupertinoPageRoute(
+                      builder: (context) => const CheckoutScreen()),
+                  (_) => false,
+                );
+              },
               child: Container(
                 color:
-                (selectedIndex == index) ? Colors.deepOrange : Colors.white,
+                    (selectedIndex == index) ? Colors.deepOrange : Colors.white,
                 child: VoucherCard(voucher: widget.vouchers[index]),
               ),
             ),

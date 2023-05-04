@@ -16,6 +16,7 @@ class Order {
   final Customer customer;
   final Store store;
   final List<OrderDetail> orderDetails;
+
   // final Voucher voucher;
 
   Order({
@@ -32,31 +33,69 @@ class Order {
     required this.orderDetails,
     // required this.voucher,
   });
+
   factory Order.fromJson(Map<String, dynamic> json) {
     var detailList = json['details'] as List;
-    List<OrderDetail> details = detailList.map((o) => OrderDetail.fromJson(o)).toList();
+    List<OrderDetail> details =
+        detailList.map((o) => OrderDetail.fromJson(o)).toList();
     return Order(
-        id: json['id'],
-        createdDate: DateTime.parse(json['createdDate']),
-        status: json['status'],
-        total: json['total'],
-        account_username: json['account_username'],
-        //employee_name: json['employee_name'],
-        orderType: json['orderType'],
-        pay: json['pay'],
-        store: Store.fromJson(json['store']),
-        customer: Customer.fromJson(json['customer']),
-        orderDetails: details,
-        //voucher: Voucher.fromJson(json['voucher']),
+      id: json['id'],
+      createdDate: DateTime.parse(json['createdDate']),
+      status: json['status'],
+      total: json['total'],
+      account_username: json['account_username'],
+      //employee_name: json['employee_name'],
+      orderType: json['orderType'],
+      pay: json['pay'],
+      store: Store.fromJson(json['store']),
+      customer: Customer.fromJson(json['customer']),
+      orderDetails: details,
+      //voucher: Voucher.fromJson(json['voucher']),
     );
   }
 }
+
 List<Order> parseOrders(String responseBody) {
-  final parsed =
-  jsonDecode(responseBody)["data"].cast<Map<String, dynamic>>();
+  final parsed = jsonDecode(responseBody)["data"].cast<Map<String, dynamic>>();
   return parsed.map<Order>((json) => Order.fromJson(json)).toList();
 }
 
+class OrderReq {
+  final int orderType;
+  final double total;
+  final String account_username;
+  final int customer_id;
+  final int store_id, voucher_id;
+  final List<OrderDetailReq> details;
+
+  OrderReq(
+      {required this.customer_id,
+      required this.store_id,
+      required this.account_username,
+      required this.orderType,
+      required this.total,
+      required this.details,
+      required this.voucher_id});
+
+  Map<String, dynamic> toJson() {
+    return {
+      "customer": {
+        "id": customer_id
+      },
+      "store_id": store_id,
+      "account_username": account_username,
+      "orderType": orderType,
+      "total": total,
+      "details": OrderDetailReq.getListMap(details),
+      "voucher_id": voucher_id,
+    };
+  }
+}
+
+String orderReqToJson(OrderReq data) {
+  final jsonData = data.toJson();
+  return json.encode(jsonData);
+}
 // List<Order> demoOrders = [
 //   Order(
 //     id: 1,

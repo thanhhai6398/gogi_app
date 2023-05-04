@@ -36,4 +36,19 @@ class OrderService {
       return false;
     }
   }
+
+  Future<bool> postOrder(OrderReq data) async {
+    final response = await client.post(
+        Uri.parse('$url/orders'),
+        body: orderReqToJson(data));
+
+    var res = json.decode(response.body);
+    print(response.body);
+
+    if (res["errCode"] == '200') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
