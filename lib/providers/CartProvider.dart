@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../DBHelper.dart';
 import '../models/CartItem.dart';
 import '../models/Product.dart';
+import '../utils/size.dart';
 
 class CartProvider with ChangeNotifier {
   DBHelper dbHelper = DBHelper();
@@ -21,21 +22,22 @@ class CartProvider with ChangeNotifier {
     _setPrefsItems();
   }
 
-  Future<void> addToCart(Product product, String size, int quantity) async {
-    double surCharge = size == 's'
+  Future<void> addToCart(Product product, SIZE size, int quantity) async {
+    double surCharge = size == SIZE.s
         ? 0
-        : size == 'm'
+        : size == SIZE.m
             ? 6000
             : 10000;
+    String sizeName = size.name;
     CartItem cartItem = CartItem(
       product_id: product.id,
       name: product.name,
       image: product.image,
-      size: size,
+      size: sizeName,
       quantity: ValueNotifier(quantity),
       price: product.price + surCharge,
     );
-    CartItem? existCartItem = await dbHelper.getCartItem(product.id, size);
+    CartItem? existCartItem = await dbHelper.getCartItem(product.id, sizeName);
     if (existCartItem != null) {
       int newQuanity = quantity + existCartItem.quantity!.value;
       cartItem.quantity = ValueNotifier<int>(newQuanity);
@@ -88,14 +90,14 @@ class CartProvider with ChangeNotifier {
     _totalPrice = prefs.getDouble('total_price') ?? 0;
   }
 
-  void addCounter(int quanity) {
-    _counter += quantity;
+  void addCounter(int itemQuantity) {
+    _counter = _counter + itemQuantity;
     _setPrefsItems();
     notifyListeners();
   }
 
   void removeCounter(int quantity) {
-    _counter -= quantity;
+    _counter = _counter - quantity;
     _setPrefsItems();
     notifyListeners();
   }
@@ -130,8 +132,6 @@ class CartProvider with ChangeNotifier {
     cart.removeAt(index);
     removeCounter(deleted.quantity!.value);
     removeTotalPrice(deleted.price * deleted.quantity!.value);
-    _setPrefsItems();
-    notifyListeners();
   }
 
   int getQuantity(int quantity) {

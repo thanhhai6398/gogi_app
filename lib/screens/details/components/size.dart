@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import '../../../size_config.dart';
+import '../../../utils/size.dart';
 
 class Size extends StatefulWidget {
-  final Function(String) notifyParent;
-  Size({super.key, required this.notifyParent});
+  final Function(SIZE) notifyParent;
+  final SIZE size;
+  Size({super.key, required this.notifyParent, required this.size});
 
   @override
   State<Size> createState() => _SizeState();
 }
 
-enum SIZE { s, m, l }
+
 
 class _SizeState extends State<Size> {
-  SIZE? _size = SIZE.s;
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +25,9 @@ class _SizeState extends State<Size> {
               children: [
                 Radio(
                   value: SIZE.s,
-                  groupValue: _size,
+                  groupValue: widget.size,
                   onChanged: (SIZE? value) {
-                    setState(() {
-                      _size = value;
-                    });
-                    widget.notifyParent(SIZE.s.name);
+                    widget.notifyParent(value!);
                   }
                 ),
                 const Expanded(
@@ -44,12 +42,9 @@ class _SizeState extends State<Size> {
               children: [
                 Radio(
                   value: SIZE.m,
-                  groupValue: _size,
+                  groupValue: widget.size,
                   onChanged: (SIZE? value) {
-                    setState(() {
-                      _size = value;
-                    });
-                    widget.notifyParent(SIZE.m.name);
+                    widget.notifyParent(value!);
                   },
                 ),
                 const Expanded(child: Text('Vừa 6.000đ'))
@@ -62,12 +57,9 @@ class _SizeState extends State<Size> {
               children: [
                 Radio(
                   value: SIZE.l,
-                  groupValue: _size,
+                  groupValue: widget.size,
                   onChanged: (SIZE? value) {
-                    setState(() {
-                      _size = value;
-                    });
-                    widget.notifyParent(SIZE.l.name);
+                    widget.notifyParent(value!);
                   },
                 ),
                 const Expanded(child: Text('Lớn 10.000đ'))
