@@ -75,4 +75,9 @@ class DBHelper {
     var dbClient = await database;
     return await dbClient!.delete(_tableName, where: 'id = ?', whereArgs: [id]);
   }
+
+  Future<void> deleteAll() async {
+    var dbClient = await database;
+    await dbClient?.rawQuery("DELETE FROM $_tableName");
+  }
 }

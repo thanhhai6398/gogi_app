@@ -32,6 +32,7 @@ class CartCard extends StatelessWidget {
           ),
         ),
         SizedBox(width: 20),
+        Expanded(child:
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -58,7 +59,7 @@ class CartCard extends StatelessWidget {
               ),
             )
           ],
-        )
+        ))
       ],
     ));
   }

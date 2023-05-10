@@ -4,6 +4,7 @@ import 'package:gogi/screens/order/order_screen.dart';
 
 import '../constants.dart';
 import '../enums.dart';
+import '../screens/favourite/favourite_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/menu/menu_screen.dart';
 import '../screens/profile/profile_screen.dart';
@@ -68,12 +69,22 @@ class CustomBottomNavBar extends StatelessWidget {
               IconButton(
                 icon: SvgPicture.asset(
                   "assets/icons/Bill Icon2.svg",
-                  color: MenuState.receipt == selectedMenu
+                  color: MenuState.order == selectedMenu
                       ? kPrimaryColor
                       : inActiveIconColor,
                 ),
                 onPressed: () =>
                     Navigator.pushNamed(context, OrderScreen.routeName),
+              ),
+              IconButton(
+                icon: SvgPicture.asset(
+                  "assets/icons/Heart Icon.svg",
+                  color: MenuState.favorite == selectedMenu
+                      ? kPrimaryColor
+                      : inActiveIconColor,
+                ),
+                onPressed: () =>
+                    Navigator.pushNamed(context, FavouriteScreen.routeName),
               ),
               IconButton(
                 icon: SvgPicture.asset(

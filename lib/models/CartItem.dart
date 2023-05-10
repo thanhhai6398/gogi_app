@@ -31,11 +31,24 @@ class CartItem {
   Map<String, dynamic> toMap() {
     return {
       'product_id': product_id,
-      'name': name,
-      'image': image,
       'size': size,
       'quantity': quantity?.value,
       'price': price,
     };
+  }
+  static dynamic getListMap(List<dynamic> items) {
+    if (items == null) {
+      return null;
+    }
+    List<Map<String, dynamic>> list = [];
+    for (var element in items) {
+      list.add(element.toMap());
+    }
+    return list;
+  }
+
+  @override
+  String toString() {
+    return 'CartItem{product_id: $product_id, size: $size, quantity: $quantity, price: $price}';
   }
 }

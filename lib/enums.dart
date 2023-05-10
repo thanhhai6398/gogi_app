@@ -1,4 +1,4 @@
-enum MenuState { home, menu, receipt, profile }
+enum MenuState { home, menu, order, favorite, profile }
 List orderStatus = [
   {
     "id": 0,

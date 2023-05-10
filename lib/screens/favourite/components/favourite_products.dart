@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/format.dart';
 
 import '../../../constants.dart';
 import '../../../models/Product.dart';
@@ -48,7 +49,7 @@ class ProductCardGrid extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
         width: getProportionateScreenWidth(width),
         child: GestureDetector(
@@ -76,7 +77,7 @@ class ProductCardGrid extends StatelessWidget{
               Container(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  product.name,
+                  totTitle(product.name),
                   style: TextStyle(color: Colors.black),
                   overflow: TextOverflow.ellipsis,
                 ),

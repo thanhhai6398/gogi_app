@@ -34,38 +34,8 @@ List<Customer> parseCustomers(String responseBody) {
   return parsed.map<Customer>((json) => Customer.fromJson(json)).toList();
 }
 
-class CustomerReq {
-  final String name, phone, address, accountUsername;
-  final int provinceId, districtId;
-  final bool isDefault;
-
-  CustomerReq({
-    required this.name,
-    required this.phone,
-    required this.address,
-    required this.districtId,
-    required this.provinceId,
-    required this.isDefault,
-    required this.accountUsername,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      "name": name,
-      "phone": phone,
-      "address": address,
-      "provinceId": provinceId,
-      "districtId": districtId,
-      "isDefault": isDefault,
-      "accountUsername": accountUsername,
-    };
-  }
-}
-
-
-String customerReqToJson(CustomerReq data) {
-  final jsonData = data.toJson();
-  return json.encode(jsonData);
+Customer parseCustomer(String responseBody) {
+  return Customer.fromJson(jsonDecode(responseBody)["data"]);
 }
 // Customer customerDemo =
 // Customer(

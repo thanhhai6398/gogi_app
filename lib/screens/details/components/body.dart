@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gogi/apiServices/AccountService.dart';
-import 'package:gogi/apiServices/ProductService.dart';
+import 'package:gogi/apiServices/RateService.dart';
 import 'package:gogi/components/default_button.dart';
 import 'package:gogi/models/Product.dart';
 import 'package:gogi/screens/details/components/product_rating.dart';
@@ -9,13 +9,12 @@ import 'package:gogi/utils/size.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/CartProvider.dart';
-import '../../../models/Rate.dart';
+import '../../../models/Rating.dart';
 import 'count.dart';
 import 'size.dart';
 import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
-
 
 class Body extends StatefulWidget {
   final Product product;
@@ -26,7 +25,7 @@ class Body extends StatefulWidget {
 }
 class _DetailState extends State<Body>{
   AccountService accountService = AccountService();
-  ProductService productService = ProductService();
+  RateService rateService = RateService();
   SIZE _size = SIZE.s;
   int _quantity = 1;
   setSize( size) {
@@ -81,7 +80,7 @@ class _DetailState extends State<Body>{
               //   product: product,
               // ),
               TopRoundedContainer(
-                color: Color(0xFFF6F7F9),
+                color: const Color(0xFFF6F7F9),
                 child: Column(
                   children: [
                     Size(notifyParent: setSize,size: _size,),
@@ -127,10 +126,10 @@ class _DetailState extends State<Body>{
                               height: 10,
                             ),
                             FutureBuilder(
-                                  future: productService
+                                  future: rateService
                                       .getRateByProductId(product.id),
                                   builder: (context,
-                                      AsyncSnapshot<List<Rate>> snapshot) {
+                                      AsyncSnapshot<List<Rating>> snapshot) {
                                     if (snapshot.hasError) {
                                       return Center(
                                         child: Text(

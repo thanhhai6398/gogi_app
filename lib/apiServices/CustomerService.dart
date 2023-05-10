@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 import '../models/Customer.dart';
+import '../models/Request/CustomerRequest.dart';
 
 class CustomerService {
   Client client = Client();
@@ -22,7 +23,24 @@ class CustomerService {
     return compute(parseCustomers, response.body);
   }
 
-  Future<bool> postCustomer(CustomerReq data) async {
+  Future<Customer> getCustomerDefault() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
+
+    final response =
+    await client.get(Uri.parse('$url/accounts/customers/default'),
+        headers: {'Authorization': 'Bearer $token',
+        });
+    return compute(parseCustomer, response.body);
+  }
+
+  Future<Customer> getCustomerById(int id) async {
+    final response =
+    await client.get(Uri.parse('$url/customers/$id'));
+    return compute(parseCustomer, response.body);
+  }
+
+  Future<bool> postCustomer(CustomerRequest data) async {
     final response =
     await client.post(Uri.parse('$url/customers'),
       headers: {"content-type": "application/json; charset=UTF-8"},
@@ -35,7 +53,7 @@ class CustomerService {
     }
   }
 
-  Future<bool> putCustomer(CustomerReq data, int id) async {
+  Future<bool> putCustomer(CustomerRequest data, int id) async {
     final response =
     await client.put(Uri.parse('$url/customers/$id'),
       headers: {"content-type": "application/json; charset=UTF-8"},
@@ -55,7 +73,6 @@ class CustomerService {
     await client.put(Uri.parse('$url/accounts/customers/default/$id'),
       headers: {'Authorization': 'Bearer $token'});
     var res = json.decode(response.body);
-    print(response.body);
 
     if (res["errCode"] == '200') {
       return true;

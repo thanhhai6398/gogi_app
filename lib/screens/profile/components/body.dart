@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gogi/SharedPref.dart';
 import 'package:gogi/screens/customers/customers_screen.dart';
-import 'package:gogi/screens/favourite/favourite_screen.dart';
 import 'package:gogi/screens/forgot_password/forgot_password_screen.dart';
 import 'package:gogi/screens/splash/splash_screen.dart';
 import 'package:gogi/screens/voucher/voucher_screen.dart';
@@ -30,11 +29,11 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
-          ProfilePic(),
-          SizedBox(height: 10),
+          const ProfilePic(),
+          const SizedBox(height: 20),
           Container(
             alignment: Alignment.topCenter,
             child: Text(
@@ -47,13 +46,7 @@ class _BodyState extends State<Body> {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          SizedBox(height: 20),
-          ProfileMenu(
-            text: "Yêu thích",
-            icon: "assets/icons/Heart Icon.svg",
-            press: () =>
-                {Navigator.pushNamed(context, FavouriteScreen.routeName)},
-          ),
+          const SizedBox(height: 30),
           ProfileMenu(
             text: "Mã giảm giá",
             icon: "assets/icons/Cash.svg",

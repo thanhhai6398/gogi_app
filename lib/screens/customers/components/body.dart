@@ -49,11 +49,9 @@ class BodyState extends State<Body> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                insetPadding: EdgeInsets.all(10),
+                                insetPadding: const EdgeInsets.symmetric(horizontal: 10),
                                 scrollable: true,
-                                content: Padding(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: CustomerForm(action: 'add')),
+                                content: AddCustomerForm(),
                                 actions: [
                                   TextButton(
                                       child: const Text("Đóng"),

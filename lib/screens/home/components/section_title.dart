@@ -8,10 +8,12 @@ class SectionTitle extends StatelessWidget {
     Key? key,
     required this.title,
     required this.press,
+    required this.icon,
   }) : super(key: key);
 
   final String title;
   final GestureTapCallback press;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,8 @@ class SectionTitle extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(
-              Icons.bolt,
+            Icon(
+              icon,
               color: kPrimaryColor,
             ),
             Text(

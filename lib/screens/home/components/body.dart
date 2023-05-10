@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogi/apiServices/VoucherService.dart';
 import 'package:gogi/screens/home/components/section_title.dart';
 
 import '../../../apiServices/AccountService.dart';
@@ -14,6 +15,7 @@ import 'coupons.dart';
 class Body extends StatelessWidget {
   ProductService productService = ProductService();
   AccountService accountService = AccountService();
+  VoucherService voucherService = VoucherService();
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +27,48 @@ class Body extends StatelessWidget {
             const HomeHeader(),
             SizedBox(height: getProportionateScreenWidth(5)),
             const BannerHome(),
+            SizedBox(height: getProportionateScreenWidth(20)),
+            Padding(
+              padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              child: SectionTitle(title: "Dành cho bạn", icon: Icons.ac_unit, press: () {}),
+            ),
             FutureBuilder(
-                future: accountService.getVoucher(),
+                future: productService.getProductsForYou(),
+                builder: (context, AsyncSnapshot<List<Product>> snapshot) {
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text('An error...'),
+                    );
+                  } else if (snapshot.hasData) {
+                    return PopularProducts(products: snapshot.data!);
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
+            SizedBox(height: getProportionateScreenWidth(20)),
+            Padding(
+              padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              child: SectionTitle(title: "Best seller", icon: Icons.bolt, press: () {}),
+            ),
+            FutureBuilder(
+                future: productService.getBestSeller(),
+                builder: (context, AsyncSnapshot<List<Product>> snapshot) {
+                  if (snapshot.hasError) {
+                    return PopularProducts(products: demoProducts);
+                  } else if (snapshot.hasData) {
+                    return PopularProducts(products: snapshot.data!);
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
+            FutureBuilder(
+                future: voucherService.getVoucher(),
                 builder: (context, AsyncSnapshot<List<Voucher>> snapshot) {
                   if (snapshot.hasError) {
                     return const Center(
@@ -44,47 +86,7 @@ class Body extends StatelessWidget {
             Padding(
               padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-              child: SectionTitle(title: "Dành cho bạn", press: () {}),
-            ),
-            FutureBuilder(
-                future: productService.getProductsForYou(),
-                builder: (context, AsyncSnapshot<List<Product>> snapshot) {
-                  if (snapshot.hasError) {
-                    return PopularProducts(products: demoProducts);
-                  } else if (snapshot.hasData) {
-                    return PopularProducts(products: snapshot.data!);
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }),
-            SizedBox(height: getProportionateScreenWidth(20)),
-            Padding(
-              padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-              child: SectionTitle(title: "Best seller", press: () {}),
-            ),
-            FutureBuilder(
-                future: productService.getBestSeller(),
-                builder: (context, AsyncSnapshot<List<Product>> snapshot) {
-                  if (snapshot.hasError) {
-                    return const Center(
-                      child: Text('An error...'),
-                    );
-                  } else if (snapshot.hasData) {
-                    return PopularProducts(products: snapshot.data!);
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }),
-            SizedBox(height: getProportionateScreenWidth(20)),
-            Padding(
-              padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-              child: SectionTitle(title: "Combo siêu HOT", press: () {}),
+              child: SectionTitle(title: "Combo siêu HOT", icon: Icons.local_fire_department, press: () {}),
             ),
             FutureBuilder(
                 future: productService.getCombo(),

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:gogi/SharedPref.dart';
 import 'package:gogi/models/Account.dart';
-import 'package:gogi/models/Customer.dart';
+import 'package:gogi/models/Request/ContactRequest.dart';
 import 'package:gogi/models/Voucher.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -97,21 +97,19 @@ class AccountService {
     }
   }
 
-  Future<List<Voucher>> getVoucher() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString("accessToken");
+  Future<bool> postContact(ContactRequest data) async {
+    final response = await client.post(
+        Uri.parse('$url/sendFeedback'),
+        headers: {"content-type": "application/json; charset=UTF-8"},
+        body: contactRequestToJson(data));
 
-    final response =
-    await client.get(Uri.parse('$url/vouchers/account'), headers: {
-      'Authorization': 'Bearer $token',
-    });
-    return compute(parseVouchers, response.body);
-  }
-
-  Future<Voucher> searchVoucher(String code) async {
-    final response = await client.get(Uri.parse('$url/vouchers/search?code=$code'));
+    var res = json.decode(response.body);
     print(response.body);
-    return compute(parseVoucher, response.body);
-  }
 
+    if (res["errCode"] == '200') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

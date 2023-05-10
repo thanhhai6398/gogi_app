@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gogi/apiServices/CustomerService.dart';
 import 'package:gogi/components/custom_surfix_icon.dart';
@@ -10,35 +11,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../SharedPref.dart';
 import '../../../constants.dart';
+import '../../../models/Address.dart';
 import '../../../models/Customer.dart';
+import '../../../models/Request/CustomerRequest.dart';
 import '../../../size_config.dart';
+import '../../profile/profile_screen.dart';
+import '../../splash/splash_screen.dart';
 
-class CustomerFormScreen extends StatelessWidget {
-  static String routeName = "/addOrUpdateCustomer";
-
-  Widget build(BuildContext context) {
-    final CustomerArguments args =
-        ModalRoute.of(context)!.settings.arguments as CustomerArguments;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Menu", style: TextStyle(color: Colors.black)),
-      ),
-      body: Padding(padding: EdgeInsets.all(20),child: CustomerForm(action: args.action),),
-    );
-  }
-}
-
-class CustomerForm extends StatefulWidget {
-  // static String routeName = "/addOrUpdateCustomer";
-  String action;
-
-  CustomerForm({super.key, required this.action});
-
+class AddCustomerForm extends StatefulWidget {
   @override
-  State<CustomerForm> createState() => CustomerFormState();
+  State<AddCustomerForm> createState() => AddCustomerFormState();
 }
 
-class CustomerFormState extends State<CustomerForm> {
+class AddCustomerFormState extends State<AddCustomerForm> {
   SharedPref sharedPref = SharedPref();
   CustomerService customerService = CustomerService();
   String accountUsername = '';
@@ -119,27 +104,23 @@ class CustomerFormState extends State<CustomerForm> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.action != 'add') {
-      final CustomerArguments args =
-          ModalRoute.of(context)!.settings.arguments as CustomerArguments;
-      _controllerName.text = args.customer.name;
-      _controllerPhoneNumber.text = args.customer.phone;
-      _controllerAddress.text = args.customer.address;
-
-      getDistrictList(args.customer.provinceId);
-
-      setState(() {
-        id = args.customer.id;
-        provinceValue = args.customer.provinceId;
-        districtValue = args.customer.districtId;
-      });
-
-
-      provinceId = args.customer.provinceId;
-      getNameProvince(args.customer.provinceId);
-      districtId = args.customer.districtId;
-      getNameDistrict(args.customer.districtId);
-    }
+    // if (widget.action != 'add') {
+    //   Customer args = widget.customer;
+    //   _controllerName.text = args.name;
+    //   _controllerPhoneNumber.text = args.phone;
+    //   _controllerAddress.text = args.address;
+    //
+    //   getDistrictList(args.provinceId);
+    //
+    //   provinceId = args.provinceId;
+    //   getNameProvince(args.provinceId);
+    //   districtId = args.districtId;
+    //   getNameDistrict(args.districtId);
+    //
+    //   id = args.id;
+    //   //provinceValue = provinceId;
+    //   //districtValue = districtId;
+    // }
     return Form(
       key: _formKey,
       child: Column(
@@ -147,6 +128,11 @@ class CustomerFormState extends State<CustomerForm> {
           const Text(
             "Địa chỉ",
             textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+              color: kPrimaryColor,
+            ),
           ),
           SizedBox(height: getProportionateScreenHeight(20)),
           buildNameFormField(),
@@ -164,17 +150,11 @@ class CustomerFormState extends State<CustomerForm> {
                       borderRadius: BorderRadius.circular(5.0)),
                 ),
                 child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
+                  child: DropdownButton<int>(
                     isExpanded: true,
                     value: provinceValue,
                     hint: const Text("Chọn Tỉnh/TP"),
-                    items: provinces.map((p) {
-                      return DropdownMenuItem(
-                        value: p.code,
-                        child: Text(p.name), //value of item
-                      );
-                    }).toList(),
-                    onChanged: (value) {
+                    onChanged: (int? value) {
                       setState(() {
                         provinceValue = value!;
                         provinceId = value;
@@ -183,6 +163,12 @@ class CustomerFormState extends State<CustomerForm> {
                       });
                       getDistrictList(value!);
                     },
+                    items: provinces.map((p) {
+                      return DropdownMenuItem(
+                        value: p.code,
+                        child: Text(p.name), //value of item
+                      );
+                    }).toList(),
                   ),
                 ),
               ),
@@ -201,7 +187,7 @@ class CustomerFormState extends State<CustomerForm> {
                   child: DropdownButton(
                     isExpanded: true,
                     value: districtValue,
-                    hint: const Text("Chọn Quận/ Huyện"),
+                    hint: const Text("Chọn Quận/Huyện"),
                     items: districts.map((d) {
                       return DropdownMenuItem(
                         value: d.code,
@@ -232,7 +218,7 @@ class CustomerFormState extends State<CustomerForm> {
               String phone = _controllerPhoneNumber.text.toString();
               String address =
                   '${_controllerAddress.text}, $districtName, $provinceName';
-              CustomerReq customer = CustomerReq(
+              CustomerRequest customer = CustomerRequest(
                   name: name,
                   phone: phone,
                   address: address,
@@ -243,28 +229,19 @@ class CustomerFormState extends State<CustomerForm> {
               clearError();
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                (widget.action != 'add') ? {
-                  customerService.putCustomer(customer, id).then((value) {
-                    if (value == true) {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => CustomersScreen()));
-                    } else {
-                      addError(error: "Thêm địa chỉ không thành công");
-                      return "";
-                    }
-                  })
-                } : {
-                  customerService.postCustomer(customer).then((value) {
-                    if (value == true) {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => CustomersScreen()));
-                    } else {
-                      addError(error: "Thêm địa chỉ không thành công");
-                      return "";
-                    }
-                  })
-                };
 
+                customerService.postCustomer(customer).then((value) {
+                  if (value == true) {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      CupertinoPageRoute(builder: (context) => ProfileScreen()),
+                          (_) => false,
+                    );
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomersScreen()));
+                  } else {
+                    addError(error: "Thêm địa chỉ không thành công");
+                    return "";
+                  }
+                });
               }
             },
           ),
@@ -292,7 +269,7 @@ class CustomerFormState extends State<CustomerForm> {
       },
       decoration: const InputDecoration(
         labelText: "Địa chỉ",
-        hintText: "Địa chỉ",
+        hintText: "Số nhà, Tên đường, Phường/Xã",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon:
             CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
@@ -380,36 +357,348 @@ class CustomerFormState extends State<CustomerForm> {
   }
 }
 
-class District {
-  final String name;
-  final int code;
+class EditCustomerForm extends StatefulWidget {
+  Customer customer;
 
-  District({required this.name, required this.code});
+  EditCustomerForm({super.key, required this.customer});
 
-  factory District.fromJSON(Map<String, dynamic> json) {
-    return District(name: json["name"], code: json["code"]);
-  }
+  @override
+  State<EditCustomerForm> createState() => EditCustomerFormState();
 }
 
-class Province {
-  final String name;
-  final int code;
-  final List<District> districts;
+class EditCustomerFormState extends State<EditCustomerForm> {
+  SharedPref sharedPref = SharedPref();
+  CustomerService customerService = CustomerService();
 
-  Province({required this.name, required this.code, required this.districts});
+  final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerPhoneNumber = TextEditingController();
+  final TextEditingController _controllerAddress = TextEditingController();
 
-  factory Province.fromJSON(Map<String, dynamic> json) {
-    var districtList = json['districts'] as List;
-    List<District> districts =
-        districtList.map((d) => District.fromJSON(d)).toList();
-    return Province(
-        name: json["name"], code: json["code"], districts: districts);
+  Customer? customer;
+  var provinceId = 0, districtId = 0, id = 0;
+  String name = '', address = '', phone = '', accountUsername = '';
+  bool isDefault = false;
+  String provinceName = '', districtName = '';
+
+  @override
+  void initState() {
+    getProvinces();
+    loadUsername();
+    loadData();
+    setState(() {
+      _controllerName.text = widget.customer.name ?? '';
+      _controllerPhoneNumber.text = widget.customer.phone ?? '';
+      _controllerAddress.text = widget.customer.address ?? '';
+    });
+    //getDistrictList(widget.customer.provinceId);
+    super.initState();
   }
-}
 
-class CustomerArguments {
-  final Customer customer;
-  final String action;
+  loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      accountUsername = prefs.getString('username')!;
+    });
+  }
 
-  CustomerArguments({required this.customer, required this.action});
+  loadData() {
+    setState(() {
+      customer = widget.customer;
+      id = customer!.id;
+      phone = customer!.phone;
+      name = customer!.name;
+      address = customer!.address;
+      provinceId = customer!.provinceId;
+      districtId = customer!.districtId;
+      isDefault = customer!.isDefault;
+    });
+  }
+
+  //address
+  Client client = Client();
+  String host = "https://provinces.open-api.vn/api/?depth=2";
+  var data;
+  List<Province> provinces = [];
+  List<District> districts = [];
+
+  Future<void> getProvinces() async {
+    final res = await client.get(
+      Uri.parse(host),
+      headers: {"content-type": "application/json; charset=UTF-8"},
+    );
+    if (res.statusCode == 200) {
+      setState(() {
+        data = jsonDecode(utf8.decode(res.bodyBytes));
+        provinces = List<Province>.from(data.map((i) {
+          return Province.fromJSON(i);
+        }));
+      });
+    } else {
+      print("Error during fetching data");
+    }
+  }
+
+  final _formKey = GlobalKey<FormState>();
+  final List<String?> errors = [];
+
+  void addError({String? error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  void removeError({String? error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
+
+  void clearError() {
+    setState(() {
+      errors.clear();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    getDistrictList(widget.customer.provinceId);
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          const Text(
+            "Địa chỉ",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+              color: kPrimaryColor,
+            ),
+          ),
+          SizedBox(height: getProportionateScreenHeight(20)),
+          buildNameFormField(),
+          SizedBox(height: getProportionateScreenHeight(20)),
+          buildPhoneNumberFormField(),
+          SizedBox(height: getProportionateScreenHeight(20)),
+          Column(
+            children: [
+              InputDecorator(
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 40.0, vertical: 8.0),
+                  labelText: 'Chọn',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<int>(
+                    isExpanded: true,
+                    value: provinceId,
+                    hint: const Text("Chọn Tỉnh/TP"),
+                    onChanged: (int? value) {
+                      setState(() {
+                        provinceId = value!;
+                        getNameProvince(value);
+                      });
+                      getDistrictList(value!);
+                      districtId = districts.first.code;
+                    },
+                    items: provinces.map((p) {
+                      return DropdownMenuItem(
+                        value: p.code,
+                        child: Text(p.name), //value of item
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              InputDecorator(
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 40.0, vertical: 8.0),
+                  labelText: 'Chọn',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    isExpanded: true,
+                    value: districtId,
+                    hint: const Text("Chọn Quận/Huyện"),
+                    items: districts.map((d) {
+                      return DropdownMenuItem(
+                        value: d.code,
+                        child: Text(d.name), //value of item
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        districtId = value!;
+                        getNameDistrict(value);
+                      });
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
+          SizedBox(height: getProportionateScreenHeight(20)),
+          buildAddressFormField(),
+          SizedBox(height: getProportionateScreenHeight(20)),
+          FormError(errors: errors),
+          SizedBox(height: getProportionateScreenHeight(20)),
+          DefaultButton(
+            text: "Cập nhật",
+            press: () {
+              String name = _controllerName.text.toString();
+              String phone = _controllerPhoneNumber.text.toString();
+              String address =
+                  '${_controllerAddress.text}, $districtName, $provinceName';
+              CustomerRequest customer = CustomerRequest(
+                  name: name,
+                  phone: phone,
+                  address: address,
+                  districtId: districtId,
+                  provinceId: provinceId,
+                  isDefault: isDefault,
+                  accountUsername: accountUsername);
+              clearError();
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+
+                print(customer.toString());
+                customerService.putCustomer(customer, id).then((value) {
+                  if (value == true) {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      CupertinoPageRoute(builder: (context) => ProfileScreen()),
+                          (_) => false,
+                    );
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomersScreen()));
+                  } else {
+                    addError(error: "Thay đổi không thành công");
+                    return "";
+                  }
+                });
+              }
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  TextFormField buildAddressFormField() {
+    return TextFormField(
+      controller: _controllerAddress,
+      onSaved: (newValue) => address = newValue!,
+      onChanged: (value) {
+        getNameProvince(provinceId);
+        getNameDistrict(districtId);
+        if (value.isNotEmpty) {
+          removeError(error: kAddressNullError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kAddressNullError);
+          return "";
+        }
+        return null;
+      },
+      decoration: const InputDecoration(
+        labelText: "Địa chỉ",
+        hintText: "Số nhà, Tên đường, Phường/Xã",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon:
+            CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
+      ),
+    );
+  }
+
+  TextFormField buildPhoneNumberFormField() {
+    return TextFormField(
+      controller: _controllerPhoneNumber,
+      keyboardType: TextInputType.phone,
+      onSaved: (newValue) => phone = newValue!,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kPhoneNumberNullError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kPhoneNumberNullError);
+          return "";
+        }
+        return null;
+      },
+      decoration: const InputDecoration(
+        labelText: "Số điện thoại",
+        hintText: "Số điện thoại",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
+      ),
+    );
+  }
+
+  TextFormField buildNameFormField() {
+    return TextFormField(
+      controller: _controllerName,
+      onSaved: (newValue) => name = newValue!,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kNameNullError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kNameNullError);
+          return "";
+        }
+        return null;
+      },
+      decoration: const InputDecoration(
+        labelText: "Tên",
+        hintText: "Tên",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+      ),
+    );
+  }
+
+  //address
+  getDistrictList(int provinceId) {
+    Province province = provinces
+        .where((e) => e.code.toString().contains(provinceId.toString()))
+        .first;
+    setState(() {
+      districts = province.districts;
+    });
+  }
+
+  getNameProvince(int id) {
+    Province province =
+        provinces.where((e) => e.code.toString().contains(id.toString())).first;
+    setState(() {
+      provinceName = province.name;
+    });
+  }
+
+  getNameDistrict(int id) {
+    District district =
+        districts.where((e) => e.code.toString().contains(id.toString())).first;
+    setState(() {
+      districtName = district.name;
+    });
+  }
 }

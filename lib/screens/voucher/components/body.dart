@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gogi/apiServices/AccountService.dart';
 import 'package:gogi/screens/voucher/components/vouchers.dart';
 
+import '../../../apiServices/VoucherService.dart';
 import '../../../constants.dart';
 import '../../../models/Voucher.dart';
 import '../../../size_config.dart';
 
-AccountService accountService = AccountService();
+VoucherService voucherService = VoucherService();
 
 class Body extends StatefulWidget {
   @override
@@ -27,6 +27,7 @@ class _BodyState extends State<Body> {
     return SafeArea(
       child: Column(
         children: [
+          const SizedBox(height: 10.0,),
           Container(
               width: SizeConfig.screenWidth * 0.9,
               decoration: BoxDecoration(
@@ -78,7 +79,7 @@ class ListVoucher extends StatelessWidget {
     if (kw == 'all') {
       return Expanded(
         child: FutureBuilder(
-            future: accountService.getVoucher(),
+            future: voucherService.getVoucher(),
             builder: (context, AsyncSnapshot<List<Voucher>> snapshot) {
               if (snapshot.hasError) {
                 return const Center(
@@ -95,14 +96,14 @@ class ListVoucher extends StatelessWidget {
       );
     } else {
       return FutureBuilder(
-          future: accountService.searchVoucher(kw),
+          future: voucherService.searchVoucher(kw),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasError) {
               return const Center(
                 child: Text("Không có mã giảm giá"),
               );
             } else if (snapshot.hasData) {
-              return VoucherCard(voucher: snapshot.data);
+              return VoucherCard(voucher: snapshot.data, active: true,);
             } else {
               return const Center(
                 child: CircularProgressIndicator(),

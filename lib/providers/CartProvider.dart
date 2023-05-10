@@ -18,10 +18,6 @@ class CartProvider with ChangeNotifier {
 
   List<CartItem> cart = [];
 
-  CartProvider() {
-    _setPrefsItems();
-  }
-
   Future<void> addToCart(Product product, SIZE size, int quantity) async {
     double surCharge = size == SIZE.s
         ? 0
@@ -73,6 +69,14 @@ class CartProvider with ChangeNotifier {
     cart = await dbHelper.getCartList();
     notifyListeners();
     return cart;
+  }
+
+  void removeAll() async {
+    await dbHelper.deleteAll();
+    _totalPrice = 0;
+    _counter = 0;
+    cart.clear();
+    _setPrefsItems();
   }
 
   void _setPrefsItems() async {

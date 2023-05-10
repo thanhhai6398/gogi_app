@@ -28,6 +28,7 @@ class OrderDetail {
     );
   }
 }
+
 List<OrderDetail> demoOrderDetails = [
   OrderDetail(
     id: 1,

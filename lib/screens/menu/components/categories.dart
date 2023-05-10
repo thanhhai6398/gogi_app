@@ -13,7 +13,7 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 10.0),
+      padding: const EdgeInsets.only(left: 10.0),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -24,7 +24,7 @@ class Categories extends StatelessWidget {
               return CategoryCard(
                 id: id,
                 category: categoies[index],
-                press: () => Navigator.pushNamed(
+                press: () => Navigator.pushReplacementNamed(
                   context,
                   MenuScreen.routeName,
                   arguments: Arguments(id: categoies[index].id),
@@ -60,11 +60,11 @@ class CategoryCard extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(right: 5.0),
+              margin: const EdgeInsets.only(right: 5.0),
               padding: EdgeInsets.all(getProportionateScreenWidth(15)),
               height: getProportionateScreenWidth(55),
               decoration: BoxDecoration(
-                  color: id == category.id ? Colors.deepOrangeAccent : Color(0xFFFFECDF),
+                  color: id == category.id ? Colors.deepOrangeAccent : const Color(0xFFFFECDF),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(category.name!,

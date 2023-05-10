@@ -2,12 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gogi/format.dart';
+import 'package:gogi/screens/checkout/checkout_screen.dart';
+import 'package:gogi/screens/checkout/components/body.dart';
 import 'package:gogi/screens/customers/components/customer_form.dart';
 
+import '../../../SharedPref.dart';
 import '../../../apiServices/CustomerService.dart';
 import '../../../constants.dart';
 import '../../../models/Customer.dart';
 import '../../../size_config.dart';
+import '../../profile/profile_screen.dart';
 import '../customers_screen.dart';
 
 class Customers extends StatefulWidget {
@@ -20,17 +24,12 @@ class Customers extends StatefulWidget {
 }
 
 class StateCustomers extends State<Customers> {
+  SharedPref sharedPref = SharedPref();
   int selectedIndex = -1;
   int? id;
 
   @override
   Widget build(BuildContext context) {
-    // for (Customer e in widget.customers) {
-    //   if (e.isDefault == true) {
-    //     int index = widget.customers.indexWhere((item) => item.id == e.id);
-    //     selectedIndex = index;
-    //   }
-    // }
     if (widget.customers.isEmpty) {
       return const Center(
         child: Text(
@@ -45,8 +44,16 @@ class StateCustomers extends State<Customers> {
         children: List.generate(widget.customers.length, (index) {
           return Center(
             child: InkWell(
-              onTap: () => setState(() =>
-                  {selectedIndex = index, id = widget.customers[index].id}),
+              onTap: () {
+                setState(() =>
+                    {selectedIndex = index, id = widget.customers[index].id});
+                sharedPref.saveInt("customerId", id);
+                Navigator.of(context).pushAndRemoveUntil(
+                  CupertinoPageRoute(
+                      builder: (context) => const CheckoutScreen()),
+                  (_) => false,
+                );
+              },
               child: Container(
                 color:
                     (selectedIndex == index) ? Colors.deepOrange : Colors.white,
@@ -79,6 +86,10 @@ class CustomerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: const BorderSide(width: 1),
+        ),
         elevation: 5,
         margin: const EdgeInsets.all(3),
         color: Colors.white,
@@ -152,13 +163,25 @@ class CustomerCard extends StatelessWidget {
                                             fontWeight: FontWeight.w600),
                                       ),
                                       onPressed: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          CustomerFormScreen.routeName,
-                                          arguments: CustomerArguments(
-                                              customer: customer,
-                                              action: 'update'),
-                                        );
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                insetPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                scrollable: true,
+                                                content: EditCustomerForm(
+                                                    customer: customer),
+                                                actions: [
+                                                  TextButton(
+                                                      child: const Text("Đóng"),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      })
+                                                ],
+                                              );
+                                            });
                                       },
                                     ),
                                     const Divider(
@@ -183,10 +206,11 @@ class CustomerCard extends StatelessWidget {
                                             .putCustomerDefault(customer.id)
                                             .then((value) {
                                           if (value == true) {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        CustomersScreen()));
+                                            Navigator.of(context).pushAndRemoveUntil(
+                                              CupertinoPageRoute(builder: (context) => ProfileScreen()),
+                                                  (_) => false,
+                                            );
+                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomersScreen()));
                                           } else {
                                             return "";
                                           }
@@ -205,12 +229,6 @@ class CustomerCard extends StatelessWidget {
                               );
                             })
                       },
-                  // Navigator.pushNamed(
-                  //   context,
-                  //   CustomerFormScreen.routeName,
-                  //   arguments: CustomerArguments(
-                  //       customer: customer, action: 'update'),
-                  // ),
                   child: const Icon(
                     Icons.more_vert,
                     color: kPrimaryColor,

@@ -5,7 +5,7 @@ import '../constants.dart';
 import 'package:http/http.dart' show Client;
 
 import '../models/Product.dart';
-import '../models/Rate.dart';
+import '../models/Rating.dart';
 class ProductService {
   Client client = Client();
 
@@ -35,9 +35,10 @@ class ProductService {
     return compute(parseProducts, response.body);
   }
 
-  Future<ProductDetail> getProductById(int id) async {
+  Future<Product> getProductById(int id) async {
     final response = await client.get(Uri.parse('$url/products/$id'));
-    return compute(parseProductDetail, response.body);
+    print(response.body);
+    return compute(parseProduct, response.body);
   }
 
   Future<List<Product>> searchProduct(String keyword) async {
@@ -49,11 +50,6 @@ class ProductService {
   Future<List<Product>> getProductByCategoryId(int id) async {
     final response = await client.get(Uri.parse('$url/products/categoryId/$id'));
     return compute(parseProducts, response.body);
-  }
-
-  Future<List<Rate>> getRateByProductId(int id) async {
-    final response = await client.get(Uri.parse('$url/rates/product/$id'));
-    return compute(parseRates, response.body);
   }
 
 }
