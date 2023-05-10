@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constants.dart';
 import './components/body.dart';
 
 class StoreScreen extends StatelessWidget {
@@ -10,7 +11,9 @@ class StoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Cửa hàng", style: TextStyle(color: Colors.black),),
+        title: const Text("Cửa hàng"),
+        backgroundColor: kPrimaryColor,
+        automaticallyImplyLeading: false,
       ),
       body: Body(),
     );

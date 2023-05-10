@@ -134,7 +134,7 @@ class buttonRate extends StatelessWidget {
           onPressed: () => {
             orderService.cancelOrder(order.id).then((value) {
               if(value == true) {
-                Navigator.pushNamed(context, OrderScreen.routeName);
+                Navigator.pushReplacementNamed(context, OrderScreen.routeName);
               } else {
                 print("Error");
               }

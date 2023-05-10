@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:gogi/SharedPref.dart';
 import 'package:gogi/models/Account.dart';
+import 'package:gogi/models/Request/ContactRequest.dart';
 import 'package:gogi/models/Voucher.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -96,4 +97,19 @@ class AccountService {
     }
   }
 
+  Future<bool> postContact(ContactRequest data) async {
+    final response = await client.post(
+        Uri.parse('$url/sendFeedback'),
+        headers: {"content-type": "application/json; charset=UTF-8"},
+        body: contactRequestToJson(data));
+
+    var res = json.decode(response.body);
+    print(response.body);
+
+    if (res["errCode"] == '200') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

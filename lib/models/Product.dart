@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'Category.dart';
-import 'Rate.dart';
+import 'Rating.dart';
 
 class Product {
   final int id;
@@ -41,6 +41,9 @@ List<Product> parseProducts(String responseBody) {
   return parsed.map<Product>((json) => Product.fromJson(json)).toList();
 
 }
+Product parseProduct(String responseBody) {
+  return Product.fromJson(jsonDecode(responseBody)["data"]["product"]);
+}
 
 class ProductDetail {
   final int id;
@@ -49,7 +52,7 @@ class ProductDetail {
   final bool status;
   final CategoryModel category;
   final double avgPoint;
-  final List<Rate> rates;
+  final List<Rating> rates;
 
   ProductDetail({
     required this.id,
@@ -65,7 +68,7 @@ class ProductDetail {
 
   factory ProductDetail.fromJson(Map<String, dynamic> json) {
     var rateList = json['rates'] as List;
-    List<Rate> rates = rateList.map((r) => Rate.fromJson(r)).toList();
+    List<Rating> rates = rateList.map((r) => Rating.fromJson(r)).toList();
     return ProductDetail(
       id: json["product"]['id'] as int,
       name: json["product"]['name'] as String,

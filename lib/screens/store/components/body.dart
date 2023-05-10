@@ -61,11 +61,14 @@ class BodyState extends State<Body> {
         children: [
           Column(
             children: [
+              const SizedBox(
+                height: 20,
+              ),
               InputDecorator(
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
                       horizontal: 40.0, vertical: 8.0),
-                  labelText: 'Chọn',
+                  labelText: 'Tỉnh/TP',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0)),
                 ),
@@ -97,7 +100,7 @@ class BodyState extends State<Body> {
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
                       horizontal: 40.0, vertical: 8.0),
-                  labelText: 'Chọn',
+                  labelText: 'Quận/Huyện',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0)),
                 ),
@@ -105,7 +108,7 @@ class BodyState extends State<Body> {
                   child: DropdownButton(
                     isExpanded: true,
                     value: districtValue,
-                    hint: const Text("Chọn Quận/ Huyện"),
+                    hint: const Text("Chọn Quận/Huyện"),
                     items: districts.map((d) {
                       return DropdownMenuItem(
                         value: d.code,

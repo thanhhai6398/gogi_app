@@ -14,10 +14,10 @@ import '../../customers/customers_screen.dart';
 
 class Body extends StatefulWidget {
   @override
-  State<Body> createState() => StateBody();
+  State<Body> createState() => BodyState();
 }
 
-class StateBody extends State<Body> {
+class BodyState extends State<Body> {
   SharedPref sharedPref = SharedPref();
   CustomerService customerService = CustomerService();
   StoreService storeService = StoreService();
@@ -28,32 +28,21 @@ class StateBody extends State<Body> {
   int customerId = 0;
   bool voucher = false;
   int voucherId = 0;
-  StateBody() {
+  BodyState() {
     sharedPref.containsKey("customerId").then((value) => setState(() {
       customer = value;
     }));
-    sharedPref.readId("customerId").then((value) => setState((){
+    sharedPref.readInt("customerId").then((value) => setState((){
       customerId = value!;
     }));
 
     sharedPref.containsKey("voucherId").then((value) => setState(() {
       voucher = value;
     }));
-    sharedPref.readId("voucherId").then((value) => setState((){
+    sharedPref.readInt("voucherId").then((value) => setState((){
       voucherId = value!;
     }));
   }
-
-  // Customer customer = Customer(
-  //     id: 1,
-  //     name: "Thanh Hải",
-  //     phone: '0914276398',
-  //     address:
-  //         '1332 Kha Vạn Cân, phường Linh Trung, Thành phố Thủ Đức, Thành phố Hồ Chí Minh',
-  //     districtId: 77,
-  //     provinceId: 746,
-  //     isDefault: true);
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -98,8 +87,9 @@ class StateBody extends State<Body> {
                       .then((value) {
                     setState(() {
                       stores = value;
-                      dropdownValue = stores.first.id;
                     });
+                    sharedPref.saveInt("customerId", snapshot.data?.id);
+                    sharedPref.saveInt("storeId", dropdownValue);
                   });
                   return CustomerInfor(customer: snapshot.data!);
                 } else {
@@ -121,9 +111,9 @@ class StateBody extends State<Body> {
                       .then((value) {
                     setState(() {
                       stores = value;
-                      dropdownValue = stores.first.id;
                     });
                   });
+                  sharedPref.saveInt("customerId", snapshot.data?.id);
                   return CustomerInfor(customer: snapshot.data!);
                 } else {
                   return const Center(
@@ -142,17 +132,6 @@ class StateBody extends State<Body> {
     );
   }
 
-  // setStore(Customer customer) {
-  //   storeService
-  //       .getStoreByAddress(
-  //       customer.provinceId, customer.districtId)
-  //       .then((value) {
-  //     setState(() {
-  //       stores = value;
-  //       dropdownValue = stores.first.id;
-  //     });
-  //   });
-  // }
   Padding buildStoreFormField() {
     if (stores.isEmpty) {
       return Padding(
@@ -201,11 +180,13 @@ class StateBody extends State<Body> {
               ),
               DropdownButtonFormField<int>(
                 value: dropdownValue,
-                onChanged: (int? newValue) {
+                hint: const Text("Chọn cửa hàng"),
+                onChanged: (int? value) {
+                  print(value);
                   setState(() {
-                    dropdownValue = newValue!;
+                    dropdownValue = value!;
                   });
-                  sharedPref.saveId("storeId", dropdownValue);
+                  sharedPref.saveInt("storeId", value);
                 },
                 items: stores.map((store) {
                   return DropdownMenuItem<int>(

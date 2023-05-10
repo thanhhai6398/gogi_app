@@ -8,7 +8,7 @@ import 'package:gogi/screens/forgot_password/forgot_password_screen.dart';
 
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
-import '../../../models/Account.dart';
+import '../../../models/Request/AccountRequest.dart';
 import '../../../size_config.dart';
 import '../../home/home_screen.dart';
 

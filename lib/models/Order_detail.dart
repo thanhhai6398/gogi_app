@@ -29,38 +29,6 @@ class OrderDetail {
   }
 }
 
-class OrderDetailReq{
-  final double price;
-  final int quantity, product_id;
-  final String size;
-
-  OrderDetailReq({
-    required this.price,
-    required this.quantity,
-    required this.size,
-    required this.product_id,
-  });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'product_id': product_id,
-      'size': size,
-      'quantity': quantity,
-      'price': price,
-    };
-  }
-
-  static dynamic getListMap(List<dynamic> items) {
-    if (items == null) {
-      return null;
-    }
-    List<Map<String, dynamic>> list = [];
-    for (var element in items) {
-      list.add(element.toMap());
-    }
-    return list;
-  }
-}
 List<OrderDetail> demoOrderDetails = [
   OrderDetail(
     id: 1,

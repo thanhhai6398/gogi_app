@@ -30,8 +30,8 @@ class Body extends StatelessWidget {
                 ),
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.03),
-              Text(
-                "Vui lòng nhập email của bạn và chúng tôi sẽ \ngửi bạn đường link để đặt lại mật khẩu",
+              const Text(
+                "Vui lòng nhập đúng địa chỉ email của bạn để đặt lại mật khẩu",
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.08),

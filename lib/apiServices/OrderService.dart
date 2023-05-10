@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 import '../models/Order.dart';
+import '../models/Request/OrderRequest.dart';
 
 class OrderService {
   Client client = Client();
@@ -37,10 +38,11 @@ class OrderService {
     }
   }
 
-  Future<bool> postOrder(OrderReq data) async {
+  Future<bool> postOrder(OrderRequest data) async {
     final response = await client.post(
         Uri.parse('$url/orders'),
-        body: orderReqToJson(data));
+        headers: {"content-type": "application/json; charset=UTF-8"},
+        body: orderRequestToJson(data));
 
     var res = json.decode(response.body);
     print(response.body);

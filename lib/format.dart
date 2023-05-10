@@ -1,10 +1,10 @@
 import "package:intl/intl.dart";
-String formatDate( DateTime date) {
-  var formattedDate = "${date.day}-${date.month}-${date.year}";
-  return formattedDate;
+String formatDate( DateTime datetime) {
+  var date = DateFormat("dd-MM-yyyy").format(datetime);
+  return date;
 }
-String formatTime( DateTime date) {
-  var formatTime = "${date.hour}:${date.minute}";
+String formatTime( DateTime datetime) {
+  var formatTime = DateFormat.Hms().format(datetime);
   return formatTime;
 }
 String prettify(double d) => d.toStringAsFixed(2).replaceFirst(RegExp(r'\.?0*$'), '');

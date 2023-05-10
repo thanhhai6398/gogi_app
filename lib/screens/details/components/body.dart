@@ -9,7 +9,7 @@ import 'package:gogi/utils/size.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/CartProvider.dart';
-import '../../../models/Rate.dart';
+import '../../../models/Rating.dart';
 import 'count.dart';
 import 'size.dart';
 import 'product_description.dart';
@@ -129,7 +129,7 @@ class _DetailState extends State<Body>{
                                   future: rateService
                                       .getRateByProductId(product.id),
                                   builder: (context,
-                                      AsyncSnapshot<List<Rate>> snapshot) {
+                                      AsyncSnapshot<List<Rating>> snapshot) {
                                     if (snapshot.hasError) {
                                       return Center(
                                         child: Text(

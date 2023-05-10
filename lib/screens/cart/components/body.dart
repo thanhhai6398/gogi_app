@@ -34,7 +34,8 @@ class _BodyState extends State<Body> {
                   TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                 ));
           }
-          else return ListView.builder(
+          else {
+            return ListView.builder(
             itemCount: provider.cart.length,
             itemBuilder: (context, index) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
@@ -63,6 +64,7 @@ class _BodyState extends State<Body> {
               ),
             ),
           );
+          }
         }
       )
     );

@@ -27,6 +27,7 @@ class _BodyState extends State<Body> {
     return SafeArea(
       child: Column(
         children: [
+          const SizedBox(height: 10.0,),
           Container(
               width: SizeConfig.screenWidth * 0.9,
               decoration: BoxDecoration(
@@ -102,7 +103,7 @@ class ListVoucher extends StatelessWidget {
                 child: Text("Không có mã giảm giá"),
               );
             } else if (snapshot.hasData) {
-              return VoucherCard(voucher: snapshot.data);
+              return VoucherCard(voucher: snapshot.data, active: true,);
             } else {
               return const Center(
                 child: CircularProgressIndicator(),

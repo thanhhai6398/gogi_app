@@ -24,7 +24,7 @@ class Categories extends StatelessWidget {
               return CategoryCard(
                 id: id,
                 category: categoies[index],
-                press: () => Navigator.pushNamed(
+                press: () => Navigator.pushReplacementNamed(
                   context,
                   MenuScreen.routeName,
                   arguments: Arguments(id: categoies[index].id),

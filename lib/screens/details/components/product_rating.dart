@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gogi/format.dart';
-import 'package:gogi/models/Rate.dart';
+import 'package:gogi/models/Rating.dart';
 
 import '../../../models/Product.dart';
 
 class ProductRating extends StatelessWidget {
-  final List<Rate> rates;
+  final List<Rating> rates;
 
   const ProductRating({super.key, required this.rates});
 
@@ -38,13 +38,13 @@ class ProductRating extends StatelessWidget {
 class RateCard extends StatelessWidget {
   RateCard({super.key, required this.rate});
 
-  Rate rate;
+  Rating rate;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      margin: EdgeInsets.symmetric(vertical: 1),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 1),
       decoration: BoxDecoration(
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(10),
@@ -57,7 +57,7 @@ class RateCard extends StatelessWidget {
             child: Row(
               children: [
                 const Icon(Icons.person),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Text(rate.username),
               ],
             ),
@@ -89,7 +89,7 @@ class RateCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Row(children: [
               Text(formatDate(rate.createdDate)),
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
               Text(formatTime(rate.createdDate)),
             ]),
           ),

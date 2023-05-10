@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:gogi/apiServices/ProductService.dart';
 import 'package:gogi/apiServices/RateService.dart';
 import 'package:gogi/format.dart';
-import 'package:gogi/models/Rate.dart';
 
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
 import '../../../models/Order_detail.dart';
+import '../../../models/Product.dart';
+import '../../../models/Request/RatingRequest.dart';
 import '../../../size_config.dart';
 import '../../details/details_screen.dart';
 
@@ -62,17 +64,17 @@ class ProductOrder extends StatelessWidget {
             width: 5.0,
           ),
           Container(
-            padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+            padding: EdgeInsets.all(getProportionateScreenWidth(5)),
             decoration: BoxDecoration(
               color: const Color(0xFFF5F6F9),
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(5),
             ),
             //product.image
             child: Image(
               image: NetworkImage(product.img_url),
               fit: BoxFit.contain,
-              height: getProportionateScreenHeight(80),
-              width: getProportionateScreenWidth(50),
+              height: getProportionateScreenHeight(90),
+              width: getProportionateScreenWidth(60),
             ),
           ),
           const SizedBox(
@@ -81,6 +83,9 @@ class ProductOrder extends StatelessWidget {
           Expanded(
               child: Column(
             children: [
+              const SizedBox(
+                height: 10,
+              ),
               Container(
                 alignment: Alignment.topLeft,
                 child: Text(
@@ -100,7 +105,6 @@ class ProductOrder extends StatelessWidget {
                   "Size: ${product.size}",
                 ),
               ),
-              SizedBox(height: getProportionateScreenHeight(5)),
               Container(
                 padding: const EdgeInsets.only(right: 5.0),
                 alignment: Alignment.topRight,
@@ -165,7 +169,10 @@ class StateIsRated extends State<IsRated> {
                       insetPadding: EdgeInsets.all(10),
                       scrollable: true,
                       content: Padding(
-                          padding: EdgeInsets.all(5.0), child: RateForm(product_id: widget.product_id,)),
+                          padding: EdgeInsets.all(5.0),
+                          child: RateForm(
+                            product_id: widget.product_id,
+                          )),
                       actions: [
                         TextButton(
                             child: const Text("Đóng"),
@@ -192,21 +199,26 @@ class StateIsRated extends State<IsRated> {
         return const SizedBox.shrink();
       }
     } else {
-      return Align(
-        alignment: Alignment.bottomRight,
-        child: TextButton(
-          onPressed: () => {},
-          style: const ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll<Color>(kPrimaryColor)),
-          child: const Text(
-            "Đã đánh giá",
-            style: TextStyle(
-                decoration: TextDecoration.underline,
-                fontStyle: FontStyle.italic,
-                color: Colors.white),
+      if (widget.state == 2) {
+        return Align(
+          alignment: Alignment.bottomRight,
+          child: TextButton(
+            onPressed: () => {},
+            style: const ButtonStyle(
+                backgroundColor:
+                    MaterialStatePropertyAll<Color>(kPrimaryColor)),
+            child: const Text(
+              "Đã đánh giá",
+              style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.white),
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
     }
   }
 }
@@ -215,17 +227,25 @@ class RateForm extends StatefulWidget {
   int product_id;
 
   RateForm({super.key, required this.product_id});
+
   @override
   State<RateForm> createState() => StateRateForm();
 }
 
 class StateRateForm extends State<RateForm> {
   RateService rateService = RateService();
+  ProductService productService = ProductService();
   TextEditingController textarea = TextEditingController();
   double point = 1.0;
+  late Product product;
 
   @override
   Widget build(BuildContext context) {
+    productService
+        .getProductById(widget.product_id)
+        .then((value) => setState(() {
+              product = value;
+            }));
     return Column(
       children: [
         RatingBar.builder(
@@ -260,20 +280,28 @@ class StateRateForm extends State<RateForm> {
         const SizedBox(
           height: 10.0,
         ),
-        DefaultButton(text: "Gửi", press: () {
-          String content = textarea.text.toString();
-          RateReq data = RateReq(id: widget.product_id, point: point.toInt(), content: content);
-          rateService.postRate(data).then((value) {
-            if (value == true) {
-              // Navigator.pop(context);
-              setState(() {
+        DefaultButton(
+            text: "Gửi",
+            press: () {
+              String content = textarea.text.toString();
+              RatingRequest data = RatingRequest(
+                  id: widget.product_id,
+                  point: point.toInt(),
+                  content: content);
+              rateService.postRate(data).then((value) {
+                if (value == true) {
+                  Navigator.pop(context);
 
+                  Navigator.pushNamed(
+                    context,
+                    DetailsScreen.routeName,
+                    arguments: ProductDetailsArguments(product: product),
+                  );
+                } else {
+                  print("error post rate");
+                }
               });
-            } else {
-              print("error post rate");
-            }
-          });
-        })
+            })
       ],
     );
   }

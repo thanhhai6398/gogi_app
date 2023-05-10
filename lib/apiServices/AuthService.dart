@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 
 import '../constants.dart';
 import '../models/Account.dart';
+import '../models/Request/AccountRequest.dart';
 
 class AuthService {
   Client client = Client();

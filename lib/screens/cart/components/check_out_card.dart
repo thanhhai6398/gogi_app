@@ -1,12 +1,9 @@
 import 'package:gogi/format.dart';
 import 'package:gogi/screens/checkout/checkout_screen.dart';
-import 'package:gogi/screens/customer_profile/customer_profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/default_button.dart';
-import '../../../constants.dart';
 import '../../../providers/CartProvider.dart';
 import '../../../size_config.dart';
 
@@ -32,9 +29,9 @@ class CheckoutCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, -15),
+            offset: const Offset(0, -15),
             blurRadius: 20,
-            color: Color(0xFFDADADA).withOpacity(0.15),
+            color: const Color(0xFFDADADA).withOpacity(0.15),
           )
         ],
       ),

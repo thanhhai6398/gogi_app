@@ -36,6 +36,7 @@ const String kNameNullError = "Vui lòng nhập tên";
 const String kPhoneNumberNullError = "Vui lòng nhập số điện thoại";
 const String kInvalidPhoneNumberError = "Số điện thoại chưa chính xác";
 const String kAddressNullError = "Vui lòng nhập địa chỉ";
+const String kContentNullError = "Vui lòng nhập feedback";
 
 final otpInputDecoration = InputDecoration(
   contentPadding:
@@ -52,4 +53,4 @@ OutlineInputBorder outlineInputBorder() {
   );
 }
 
-var url = 'http://192.168.1.133:8089';
+var url = 'http://192.168.1.11:8089';
