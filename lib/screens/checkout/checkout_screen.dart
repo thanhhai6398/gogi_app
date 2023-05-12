@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gogi/apiServices/OrderService.dart';
+import 'package:gogi/components/toast.dart';
 import 'package:gogi/models/CartItem.dart';
 import 'package:gogi/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -185,27 +186,29 @@ class BottomState extends State<Bottom> {
             total: total,
             details: details,
             voucher_id: voucher_id);
-        print(orderReq.toString());
+        print(store_id);
         if (customer_id == 0 || store_id == 0) {
           showAlertDialog(context);
+        } else {
+          orderService.postOrder(orderReq).then((value) {
+            if (value == true) {
+              sharedPref.remove("customerId");
+              sharedPref.remove("voucherId");
+              sharedPref.remove("storeId");
+              sharedPref.remove("lastTotal");
+              sharedPref.remove("type");
+              cart.removeAll();
+              successToast("Đặt hàng thành công");
+              Navigator.of(context).pushAndRemoveUntil(
+                CupertinoPageRoute(builder: (context) => const OrderScreen()),
+                (_) => false,
+              );
+            } else {
+              print("FALSE");
+            }
+          });
+          Navigator.pop(context);
         }
-        orderService.postOrder(orderReq).then((value) {
-          if (value == true) {
-            sharedPref.remove("customerId");
-            sharedPref.remove("voucherId");
-            sharedPref.remove("storeId");
-            sharedPref.remove("lastTotal");
-            sharedPref.remove("type");
-            cart.removeAll();
-            Navigator.of(context).pushAndRemoveUntil(
-              CupertinoPageRoute(builder: (context) => OrderScreen()),
-              (_) => false,
-            );
-          } else {
-            print("FALSE");
-          }
-        });
-        Navigator.pop(context);
       },
     );
 
@@ -245,8 +248,12 @@ class BottomState extends State<Bottom> {
     sharedPref.readInt("voucherId").then((value) => setState(() {
           voucher_id = value;
         }));
-    sharedPref.readInt("storeId").then((value) => setState(() {
-          store_id = value!;
-        }));
+    sharedPref.containsKey("storeId").then((value) => (value == true)
+        ? sharedPref.readInt("storeId").then((value) => setState(() {
+              store_id = value!;
+            }))
+        : setState(() {
+            store_id = 0;
+          }));
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gogi/apiServices/ProductService.dart';
 import 'package:gogi/apiServices/RateService.dart';
+import 'package:gogi/components/toast.dart';
 import 'package:gogi/format.dart';
 
 import '../../../components/default_button.dart';
@@ -291,7 +292,7 @@ class StateRateForm extends State<RateForm> {
               rateService.postRate(data).then((value) {
                 if (value == true) {
                   Navigator.pop(context);
-
+                  successToast("Đã đánh giá");
                   Navigator.pushNamed(
                     context,
                     DetailsScreen.routeName,

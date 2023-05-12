@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gogi/apiServices/OrderService.dart';
+import 'package:gogi/components/toast.dart';
 import 'package:gogi/screens/order/order_screen.dart';
 
 import '../../../constants.dart';
@@ -134,6 +135,7 @@ class buttonRate extends StatelessWidget {
           onPressed: () => {
             orderService.cancelOrder(order.id).then((value) {
               if(value == true) {
+                successToast("Hủy thành công");
                 Navigator.pushReplacementNamed(context, OrderScreen.routeName);
               } else {
                 print("Error");

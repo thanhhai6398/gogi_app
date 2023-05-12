@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gogi/apiServices/AccountService.dart';
 import 'package:gogi/apiServices/RateService.dart';
 import 'package:gogi/components/default_button.dart';
+import 'package:gogi/components/toast.dart';
+import 'package:gogi/constants.dart';
 import 'package:gogi/models/Product.dart';
 import 'package:gogi/screens/details/components/product_rating.dart';
 import 'package:gogi/size_config.dart';
@@ -98,6 +101,7 @@ class _DetailState extends State<Body>{
                               text: "Đặt hàng",
                               press: () {
                                 cart.addToCart(product, _size,_quantity);
+                                successToast("Đã thêm vào giỏ");
                                 setState(() {
                                   _quantity = 1;
                                   _size = SIZE.s;
