@@ -18,13 +18,14 @@ class Body extends StatelessWidget {
     if (order.orderType == 1) {
       fee = 20000.0;
     }
-    double origin = (order.total - fee) / (1 - order.voucherValue);
+    double origin = ((order.total - fee) / (1-order.voucherValue));
     double discount = order.voucherValue * origin;
 
-    if( discount > order.voucherValue) {
+    if( discount > order.voucherMax) {
       origin = order.total - fee +  order.voucherMax;
       discount = order.voucherMax ;
     }
+    print(order.toString());
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.only(right: 5, left: 5),
@@ -90,6 +91,21 @@ class Body extends StatelessWidget {
                       ),
                     ],
                   ),
+                  (order.orderType == 1) ? Row(
+                    children: [
+                      const Text(
+                        "Phí giao hàng:",
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                      const Spacer(),
+                      Text(
+                        formatPrice(20000),
+                        style: const TextStyle(
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                    ],
+                  ) : const SizedBox.shrink(),
                   Row(
                     children: [
                       const Text(

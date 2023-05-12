@@ -18,6 +18,12 @@ class Order {
   final List<OrderDetail> orderDetails;
   final double voucherValue, voucherMax;
 
+
+  @override
+  String toString() {
+    return 'Order{id: $id, createdDate: $createdDate, status: $status, orderType: $orderType, pay: $pay, total: $total, account_username: $account_username, customer: $customer, store: $store, orderDetails: $orderDetails, voucherValue: $voucherValue, voucherMax: $voucherMax}';
+  }
+
   Order({
     required this.id,
     required this.createdDate,

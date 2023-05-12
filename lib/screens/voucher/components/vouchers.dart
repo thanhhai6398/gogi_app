@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gogi/format.dart';
+import 'package:gogi/screens/profile/components/body.dart';
 import 'package:gogi/screens/voucher/voucher_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../SharedPref.dart';
+import '../../../components/toast.dart';
 import '../../../constants.dart';
 import '../../../models/Voucher.dart';
 import '../../../providers/CartProvider.dart';
@@ -90,9 +92,10 @@ class StateVouchers extends State<Vouchers> {
                                   builder: (context) => const CheckoutScreen()),
                               (_) => false,
                             )
-                          : Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => VoucherScreen()));
+                          : {
+                              alertToast(
+                                  'Bạn cần mua thêm ${formatPrice(value! - cart.totalPrice)} để sử dụng voucher này!')
+                            };
                     },
                     child: Container(
                       color: (selectedIndex == index)

@@ -29,7 +29,7 @@ class _BodyState extends State<Body> {
           if (provider.cart.isEmpty) {
             return const Center(
                 child: Text(
-                  'Your Cart is Empty',
+                  'Không có gì trong giỏ hàng',
                   style:
                   TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                 ));
