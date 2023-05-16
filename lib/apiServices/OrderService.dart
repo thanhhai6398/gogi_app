@@ -39,9 +39,11 @@ class OrderService {
   }
 
   Future<bool> postOrder(OrderRequest data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
     final response = await client.post(
         Uri.parse('$url/orders'),
-        headers: {"content-type": "application/json; charset=UTF-8"},
+        headers: {'Authorization': 'Bearer $token', "content-type": "application/json; charset=UTF-8"},
         body: orderRequestToJson(data));
 
     var res = json.decode(response.body);

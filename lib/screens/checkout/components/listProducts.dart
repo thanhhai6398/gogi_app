@@ -13,31 +13,27 @@ class ListProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding:
-        EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
         child: Consumer<CartProvider>(
             builder: (BuildContext context, provider, widget) {
-              if (provider.cart.isEmpty) {
-                return const Center(
-                    child: Text(
-                      'Your Cart is Empty',
-                      style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-                    ));
-              }
-              else {
-                return ListView(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  children: List.generate(provider.cart.length, (index) {
-                    return Center(
-                      child: CartCard(cartItem: provider.cart[index]),
-                    );
-                  }),
+          if (provider.cart.isEmpty) {
+            return const Center(
+                child: Text(
+              'Your Cart is Empty',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+            ));
+          } else {
+            return ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              children: List.generate(provider.cart.length, (index) {
+                return Center(
+                  child: CartCard(cartItem: provider.cart[index]),
                 );
-              }
-            }
-        )
-    );
+              }),
+            );
+          }
+        }));
   }
 }
 
@@ -99,7 +95,12 @@ class CartCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.deepOrange[50],
               ),
-              child: Image.network(cartItem.image, height: 70, width: 50, fit: BoxFit.contain,),
+              child: Image.network(
+                cartItem.image,
+                height: 70,
+                width: 50,
+                fit: BoxFit.contain,
+              ),
             ),
             SizedBox(
               width: 5.0,
@@ -111,12 +112,15 @@ class CartCard extends StatelessWidget {
                   MergeSemantics(
                     child: Row(
                       children: <Widget>[
-                      Text("x${cartItem.quantity?.value}"),
                         Flexible(
-                          child: Text(totTitle(cartItem.name),
-                            style: const TextStyle(color: Colors.black, fontSize: 16), maxLines: 2, overflow: TextOverflow.ellipsis,
-                            softWrap: false,)
-                        )
+                            child: Text(
+                          totTitle(cartItem.name),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 16),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: false,
+                        ))
                       ],
                     ),
                   ),
@@ -127,10 +131,17 @@ class CartCard extends StatelessWidget {
                   SizedBox(height: 5),
                   Container(
                     alignment: Alignment.bottomRight,
-                    child: Text(
-                      formatDouble(cartItem.price),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, color: kPrimaryColor),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          formatDouble(cartItem.price),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: kPrimaryColor),
+                        ),
+                        Text("x${cartItem.quantity?.value}"),
+                      ],
                     ),
                   )
                 ],

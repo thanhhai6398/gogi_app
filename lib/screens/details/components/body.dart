@@ -98,14 +98,14 @@ class _DetailState extends State<Body>{
                               right: SizeConfig.screenWidth * 0.05,
                             ),
                             child: DefaultButton(
-                              text: "Đặt hàng",
+                              text: "Thêm vào giỏ",
                               press: () {
                                 cart.addToCart(product, _size,_quantity);
                                 successToast("Đã thêm vào giỏ");
-                                setState(() {
-                                  _quantity = 1;
-                                  _size = SIZE.s;
-                                });
+                                // setState(() {
+                                //   _quantity = 1;
+                                //   _size = SIZE.s;
+                                // });
                               },
                             ),
                           ),

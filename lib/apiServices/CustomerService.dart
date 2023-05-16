@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -17,8 +16,8 @@ class CustomerService {
     String? token = prefs.getString("accessToken");
 
     final response =
-    await client.get(Uri.parse('$url/accounts/customers'),
-        headers: {'Authorization': 'Bearer $token',
+        await client.get(Uri.parse('$url/accounts/customers'), headers: {
+      'Authorization': 'Bearer $token',
     });
     return compute(parseCustomers, response.body);
   }
@@ -27,24 +26,31 @@ class CustomerService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("accessToken");
 
-    final response =
-    await client.get(Uri.parse('$url/accounts/customers/default'),
-        headers: {'Authorization': 'Bearer $token',
-        });
+    final response = await client
+        .get(Uri.parse('$url/accounts/customers/default'), headers: {
+      'Authorization': 'Bearer $token',
+    });
     return compute(parseCustomer, response.body);
   }
 
   Future<Customer> getCustomerById(int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
     final response =
-    await client.get(Uri.parse('$url/customers/$id'));
+        await client.get(Uri.parse('$url/customers/$id'), headers: {
+      'Authorization': 'Bearer $token',
+    });
     return compute(parseCustomer, response.body);
   }
 
   Future<bool> postCustomer(CustomerRequest data) async {
-    final response =
-    await client.post(Uri.parse('$url/customers'),
-      headers: {"content-type": "application/json; charset=UTF-8"},
-      body: customerReqToJson(data),);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
+    final response = await client.post(
+      Uri.parse('$url/customers'),
+      headers: {'Authorization': 'Bearer $token',"content-type": "application/json; charset=UTF-8"},
+      body: customerReqToJson(data),
+    );
     var res = json.decode(response.body);
     if (res["errCode"] == '200') {
       return true;
@@ -54,10 +60,14 @@ class CustomerService {
   }
 
   Future<bool> putCustomer(CustomerRequest data, int id) async {
-    final response =
-    await client.put(Uri.parse('$url/customers/$id'),
-      headers: {"content-type": "application/json; charset=UTF-8"},
-      body: customerReqToJson(data),);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
+
+    final response = await client.put(
+      Uri.parse('$url/customers/$id'),
+      headers: {'Authorization': 'Bearer $token',"content-type": "application/json; charset=UTF-8"},
+      body: customerReqToJson(data),
+    );
     var res = json.decode(response.body);
     if (res["errCode"] == '200') {
       return true;
@@ -69,9 +79,9 @@ class CustomerService {
   Future<bool> putCustomerDefault(int id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("accessToken");
-    final response =
-    await client.put(Uri.parse('$url/accounts/customers/default/$id'),
-      headers: {'Authorization': 'Bearer $token'});
+    final response = await client.put(
+        Uri.parse('$url/accounts/customers/default/$id'),
+        headers: {'Authorization': 'Bearer $token'});
     var res = json.decode(response.body);
 
     if (res["errCode"] == '200') {
