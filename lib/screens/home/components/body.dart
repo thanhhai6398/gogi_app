@@ -27,12 +27,6 @@ class Body extends StatelessWidget {
             const HomeHeader(),
             SizedBox(height: getProportionateScreenWidth(5)),
             const BannerHome(),
-            SizedBox(height: getProportionateScreenWidth(20)),
-            Padding(
-              padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-              child: SectionTitle(title: "Dành cho bạn", icon: Icons.ac_unit, press: () {}),
-            ),
             FutureBuilder(
                 future: productService.getProductsForYou(),
                 builder: (context, AsyncSnapshot<List<Product>> snapshot) {
@@ -41,7 +35,25 @@ class Body extends StatelessWidget {
                       child: Text('An error...'),
                     );
                   } else if (snapshot.hasData) {
-                    return PopularProducts(products: snapshot.data!);
+                    if(snapshot.data!.isNotEmpty) {
+                      return Column(
+                        children: [
+                          SizedBox(height: getProportionateScreenWidth(20)),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(20)),
+                            child: SectionTitle(
+                                title: "Dành cho bạn",
+                                icon: Icons.ac_unit,
+                                press: () {}),
+                          ),
+                          PopularProducts(products: snapshot.data!)
+                        ],
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+
                   } else {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -50,9 +62,10 @@ class Body extends StatelessWidget {
                 }),
             SizedBox(height: getProportionateScreenWidth(20)),
             Padding(
-              padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-              child: SectionTitle(title: "Best seller", icon: Icons.bolt, press: () {}),
+              padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(20)),
+              child: SectionTitle(
+                  title: "Best seller", icon: Icons.bolt, press: () {}),
             ),
             FutureBuilder(
                 future: productService.getBestSeller(),
@@ -84,9 +97,12 @@ class Body extends StatelessWidget {
                 }),
             SizedBox(height: getProportionateScreenWidth(20)),
             Padding(
-              padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-              child: SectionTitle(title: "Combo siêu HOT", icon: Icons.local_fire_department, press: () {}),
+              padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(20)),
+              child: SectionTitle(
+                  title: "Combo siêu HOT",
+                  icon: Icons.local_fire_department,
+                  press: () {}),
             ),
             FutureBuilder(
                 future: productService.getCombo(),

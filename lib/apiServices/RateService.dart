@@ -12,7 +12,11 @@ class RateService {
   Client client = Client();
 
   Future<List<Rating>> getRateByProductId(int id) async {
-    final response = await client.get(Uri.parse('$url/rates/product/$id'));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
+    final response = await client.get(Uri.parse('$url/rates/product/$id'),
+        headers: {'Authorization': 'Bearer $token'});
+    print(response.body);
     return compute(parseRates, response.body);
   }
 
@@ -21,7 +25,8 @@ class RateService {
     String? token = prefs.getString("accessToken");
     final response = await client.get(
       Uri.parse('$url/rates/username/$id'),
-      headers: {'Authorization': 'Bearer $token'},);
+      headers: {'Authorization': 'Bearer $token'},
+    );
     var res = json.decode(response.body);
 
     if (res["data"] == true) {
@@ -34,9 +39,11 @@ class RateService {
   Future<bool> postRate(RatingRequest data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("accessToken");
-    final response = await client.post(
-        Uri.parse('$url/rates'),
-        headers: {"content-type": "application/json; charset=UTF-8",'Authorization': 'Bearer $token'},
+    final response = await client.post(Uri.parse('$url/rates'),
+        headers: {
+          "content-type": "application/json; charset=UTF-8",
+          'Authorization': 'Bearer $token'
+        },
         body: rateReqToJson(data));
 
     var res = json.decode(response.body);

@@ -17,8 +17,12 @@ class AccountService {
   Client client = Client();
 
   Future<bool> forgotPassword(String email) async {
-    final response =
-        await client.post(Uri.parse('$url/accounts/forgot_password/$email'));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("accessToken");
+    final response = await client
+        .post(Uri.parse('$url/accounts/forgot_password/$email'), headers: {
+      'Authorization': 'Bearer $token',
+    });
     var res = json.decode(response.body);
     if (res["errCode"] == '200') {
       pref.save("token", res["data"]);
@@ -31,10 +35,11 @@ class AccountService {
   Future<bool?> resetPassword(Password data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
+    String? accessToken = prefs.getString("accessToken");
     try {
       final response = await client.put(
         Uri.parse('$url/accounts/reset_password/$token'),
-        headers: {"content-type": "application/json; charset=UTF-8"},
+        headers: {'Authorization': 'Bearer $accessToken',"content-type": "application/json; charset=UTF-8"},
         body: passwordToJson(data),
       );
       var res = json.decode(response.body);
@@ -43,8 +48,7 @@ class AccountService {
       } else {
         return false;
       }
-    }
-    catch(e) {
+    } catch (e) {
       print('objectError: $e');
     }
     return null;
@@ -98,8 +102,7 @@ class AccountService {
   }
 
   Future<bool> postContact(ContactRequest data) async {
-    final response = await client.post(
-        Uri.parse('$url/sendFeedback'),
+    final response = await client.post(Uri.parse('$url/sendFeedback'),
         headers: {"content-type": "application/json; charset=UTF-8"},
         body: contactRequestToJson(data));
 
