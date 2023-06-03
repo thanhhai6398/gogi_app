@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gogi/apiServices/AccountService.dart';
 import 'package:gogi/apiServices/RateService.dart';
+import 'package:gogi/apiServices/ToppingService.dart';
 import 'package:gogi/components/default_button.dart';
 import 'package:gogi/components/toast.dart';
-import 'package:gogi/constants.dart';
 import 'package:gogi/models/Product.dart';
+import 'package:gogi/models/Topping.dart';
 import 'package:gogi/screens/details/components/product_rating.dart';
+import 'package:gogi/screens/details/components/sugar.dart';
+import 'package:gogi/screens/details/components/toppings.dart';
 import 'package:gogi/size_config.dart';
-import 'package:gogi/utils/size.dart';
 import 'package:provider/provider.dart';
 
+import '../../../enums.dart';
 import '../../../providers/CartProvider.dart';
 import '../../../models/Rating.dart';
 import 'count.dart';
+import 'iced.dart';
 import 'size.dart';
 import 'product_description.dart';
 import 'top_rounded_container.dart';
@@ -21,26 +24,45 @@ import 'product_images.dart';
 
 class Body extends StatefulWidget {
   final Product product;
+
   Body({Key? key, required this.product}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DetailState();
 }
-class _DetailState extends State<Body>{
+
+class _DetailState extends State<Body> {
   AccountService accountService = AccountService();
   RateService rateService = RateService();
+  ToppingService toppingService = ToppingService();
   SIZE _size = SIZE.s;
+  String _iced = '0', _sugar = '0';
   int _quantity = 1;
-  setSize( size) {
+
+  setSize(size) {
     setState(() {
       _size = size;
     });
   }
-  setQuantity(int quantity){
+
+  setIced(String iced) {
+    setState(() {
+      _iced = iced;
+    });
+  }
+
+  setSugar(String sugar) {
+    setState(() {
+      _sugar = sugar;
+    });
+  }
+
+  setQuantity(int quantity) {
     setState(() {
       _quantity = quantity;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     Product product = widget.product;
@@ -78,81 +100,172 @@ class _DetailState extends State<Body>{
                       );
                     }
                   }),
-              // ProductDescription(
-              //   isLike: false,
-              //   product: product,
-              // ),
               TopRoundedContainer(
-                color: const Color(0xFFF6F7F9),
-                child: Column(
-                  children: [
-                    Size(notifyParent: setSize,size: _size,),
-                    SizedBox(height: getProportionateScreenHeight(10)),
-                    Row(
-                      children: [
-                       Count(notifyParent: setQuantity,quantity: _quantity,),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              left: SizeConfig.screenWidth * 0.05,
-                              right: SizeConfig.screenWidth * 0.05,
-                            ),
-                            child: DefaultButton(
-                              text: "Thêm vào giỏ",
-                              press: () {
-                                cart.addToCart(product, _size,_quantity);
-                                successToast("Đã thêm vào giỏ");
-                                // setState(() {
-                                //   _quantity = 1;
-                                //   _size = SIZE.s;
-                                // });
-                              },
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    TopRoundedContainer(
+                  color: const Color(0xFFF6F7F9),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(20)),
+                        child: const Text(
+                          "Chọn cỡ",
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(height: getProportionateScreenHeight(10)),
+                      Container(
                         color: Colors.white,
-                        child: Column(
-                          children: [
-                            Container(
-                              alignment: Alignment.topLeft,
-                              padding: const EdgeInsets.only(left: 15),
-                              child: const Text(
-                                "Đánh giá",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            FutureBuilder(
-                                  future: rateService
-                                      .getRateByProductId(product.id),
-                                  builder: (context,
-                                      AsyncSnapshot<List<Rating>> snapshot) {
-                                    if (snapshot.hasError) {
-                                      return Center(
-                                        child: Text(
-                                            'ERROR: ${snapshot.error.toString()}'),
-                                      );
-                                    } else if (snapshot.hasData) {
-                                      return ProductRating(
-                                          rates: snapshot.data!);
-                                    } else {
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    }
-                                  }),
-                          ],
-                        )),
-                  ],
-                ),
+                        child: Size(
+                          notifyParent: setSize,
+                          size: _size,
+                        ),
+                      ),
+                      SizedBox(height: getProportionateScreenHeight(10)),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(20)),
+                        child: const Text(
+                          "Chọn mức đá",
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(height: getProportionateScreenHeight(10)),
+                      Container(
+                        color: Colors.white,
+                        child: Iced(
+                          notifyParent: setIced,
+                          iced: _iced,
+                        ),
+                      ),
+                      SizedBox(height: getProportionateScreenHeight(10)),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(20)),
+                        child: const Text(
+                          "Chọn mức đường",
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(height: getProportionateScreenHeight(10)),
+                      Container(
+                        color: Colors.white,
+                        child: Sugar(
+                          notifyParent: setSugar,
+                          sugar: _sugar,
+                        ),
+                      ),
+                      (product.hasTopping == true)
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: getProportionateScreenHeight(10)),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          getProportionateScreenWidth(20)),
+                                  child: const Text(
+                                    "Chọn topping",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                SizedBox(
+                                    height: getProportionateScreenHeight(10)),
+                                FutureBuilder(
+                                    future: toppingService.getAllTopping(),
+                                    builder: (context,
+                                        AsyncSnapshot<List<Topping>> snapshot) {
+                                      if (snapshot.hasError) {
+                                        return const Center(
+                                          child: Text('An error...'),
+                                        );
+                                      } else if (snapshot.hasData) {
+                                        return Container(
+                                          color: Colors.white,
+                                          child: Toppings(
+                                              toppings: snapshot.data!),
+                                        );
+                                      } else {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      }
+                                    }),
+                                SizedBox(
+                                    height: getProportionateScreenHeight(10))
+                              ],
+                            )
+                          : const SizedBox.shrink(),
+                    ],
+                  )),
+              SizedBox(height: getProportionateScreenHeight(10)),
+              Row(
+                children: [
+                  Count(
+                    notifyParent: setQuantity,
+                    quantity: _quantity,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: SizeConfig.screenWidth * 0.05,
+                        right: SizeConfig.screenWidth * 0.05,
+                      ),
+                      child: DefaultButton(
+                        text: "Thêm vào giỏ",
+                        press: () {
+                          cart.addToCart(product, _size, _sugar, _iced, _quantity);
+                          successToast("Đã thêm vào giỏ");
+                          // setState(() {
+                          //   _quantity = 1;
+                          //   _size = SIZE.s;
+                          // });
+                        },
+                      ),
+                    ),
+                  )
+                ],
               ),
+              TopRoundedContainer(
+                  color: const Color(0xFFF6F7F9),
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.topLeft,
+                        padding: const EdgeInsets.only(left: 15),
+                        child: const Text(
+                          "Đánh giá",
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      FutureBuilder(
+                          future: rateService.getRateByProductId(product.id),
+                          builder:
+                              (context, AsyncSnapshot<List<Rating>> snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                child:
+                                    Text('ERROR: ${snapshot.error.toString()}'),
+                              );
+                            } else if (snapshot.hasData) {
+                              return ProductRating(rates: snapshot.data!);
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          }),
+                    ],
+                  )),
             ],
           ),
         ),

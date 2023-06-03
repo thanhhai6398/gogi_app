@@ -30,31 +30,33 @@ class DBHelper {
   // creating database table
   _onCreate(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE $_tableName(id INTEGER PRIMARY KEY AUTOINCREMENT, product_id INTEGER, name TEXT, image TEXT, size TEXT, quantity INTEGER, price  REAL)');
+        'CREATE TABLE $_tableName(id INTEGER PRIMARY KEY AUTOINCREMENT, product_id INTEGER, name TEXT, image TEXT, size TEXT, sugar TEXT, iced TEXT, quantity INTEGER, price  REAL)');
   }
 
 // inserting data into the table
   Future<CartItem> insert(CartItem item) async {
     var dbClient = await database;
     await dbClient?.rawInsert(
-        "INSERT INTO $_tableName (product_id, name, image, size, quantity, price) VALUES(?, ?, ?, ?, ?, ?)",
+        "INSERT INTO $_tableName (product_id, name, image, size, sugar, iced, quantity, price) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
         [
           item.product_id,
           item.name,
           item.image,
           item.size,
+          item.sugar,
+          item.iced,
           item.quantity?.value,
           item.price
         ]);
     return item;
   }
 
-  Future<CartItem?> getCartItem(int productId, String size) async {
+  Future<CartItem?> getCartItem(int productId, String size, String sugar, String iced) async {
     var dbClient = await database;
     final List<Map<String, Object?>> queryResult = await dbClient!.rawQuery(
-        'SELECT * FROM $_tableName WHERE product_id=? AND size = ?',
-        [productId, size]);
-    return queryResult.length > 0 ? CartItem.fromMap(queryResult[0]) : null;
+        'SELECT * FROM $_tableName WHERE product_id=? AND size = ? AND sugar=? AND iced = ?',
+        [productId, size, sugar, iced]);
+    return queryResult.isNotEmpty ? CartItem.fromMap(queryResult[0]) : null;
   }
 
 // getting all the items in the list from the database

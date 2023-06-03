@@ -5,19 +5,19 @@ class CartItem {
   int product_id;
   String name;
   String image;
-  String size;
+  String size, sugar, iced;
   ValueNotifier<int>? quantity;
   double price;
 
   CartItem(
-      {
-      required this.product_id,
+      {required this.product_id,
       required this.name,
       required this.image,
       required this.size,
+      required this.sugar,
+      required this.iced,
       required this.quantity,
       required this.price});
-
 
   CartItem.fromMap(Map<dynamic, dynamic> data)
       : id = data['id'],
@@ -25,6 +25,8 @@ class CartItem {
         name = data['name'],
         image = data['image'],
         size = data['size'],
+        sugar = data['sugar'],
+        iced = data['iced'],
         quantity = ValueNotifier(data['quantity']),
         price = data['price'];
 
@@ -32,10 +34,13 @@ class CartItem {
     return {
       'product_id': product_id,
       'size': size,
+      'sugar': sugar,
+      'iced': iced,
       'quantity': quantity?.value,
       'price': price,
     };
   }
+
   static dynamic getListMap(List<dynamic> items) {
     if (items == null) {
       return null;
