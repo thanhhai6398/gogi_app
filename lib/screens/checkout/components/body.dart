@@ -182,7 +182,6 @@ class BodyState extends State<Body> {
                 value: dropdownValue,
                 hint: const Text("Chọn cửa hàng"),
                 onChanged: (int? value) {
-                  print(value);
                   setState(() {
                     dropdownValue = value!;
                   });

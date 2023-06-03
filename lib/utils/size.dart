@@ -1,1 +1,0 @@
-enum SIZE { s, m, l }

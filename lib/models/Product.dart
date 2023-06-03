@@ -7,7 +7,7 @@ class Product {
   final int id;
   final String name, image, description;
   final double price;
-  final bool status;
+  final bool status, hasTopping;
   final CategoryModel category;
   final double avgPoint;
 
@@ -20,6 +20,7 @@ class Product {
     required this.description,
     required this.category,
     required this.avgPoint,
+    required this.hasTopping,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -32,6 +33,7 @@ class Product {
       description: json['description'],
       image: json['img_url'],
       avgPoint: json['avgPoint'],
+      hasTopping: json['hasTopping'],
     );
   }
 }
@@ -88,38 +90,38 @@ ProductDetail parseProductDetail(String responseBody) {
 }
 // Our demo Products
 
-List<Product> demoProducts = [
-  Product(
-    id: 1,
-    image: "https://firebasestorage.googleapis.com/v0/b/gogi-images.appspot.com/o/files%2Fzmnc2yp?alt=media&token=3307075b-e83f-4916-abe0-443fc2d78464",
-    name: "Trà sữa trân châu",
-    price: 30000,
-    description: "description",
-    status: true,
-    category: CategoryModel(id: 1, name: "Coffee", status: true),
-    avgPoint: 3,
-  ),
-  Product(
-    id: 2,
-    image: "https://firebasestorage.googleapis.com/v0/b/gogi-images.appspot.com/o/files%2Fzmnc2yp?alt=media&token=3307075b-e83f-4916-abe0-443fc2d78464",
-    name: "Trà sữa trân châu",
-    price: 30000,
-    description: "description",
-    status: true,
-    category: CategoryModel(id: 1, name: "Coffee", status: true),
-    avgPoint: 3,
-  ),
-  Product(
-    id: 3,
-    image: "https://firebasestorage.googleapis.com/v0/b/gogi-images.appspot.com/o/files%2Fzmnc2yp?alt=media&token=3307075b-e83f-4916-abe0-443fc2d78464",
-    name: "Trà sữa trân châu",
-    price: 30000,
-    description: "description",
-    status: true,
-    category: CategoryModel(id: 1, name: "Coffee", status: true),
-    avgPoint: 3,
-  ),
-];
+// List<Product> demoProducts = [
+//   Product(
+//     id: 1,
+//     image: "https://firebasestorage.googleapis.com/v0/b/gogi-images.appspot.com/o/files%2Fzmnc2yp?alt=media&token=3307075b-e83f-4916-abe0-443fc2d78464",
+//     name: "Trà sữa trân châu",
+//     price: 30000,
+//     description: "description",
+//     status: true,
+//     category: CategoryModel(id: 1, name: "Coffee", status: true),
+//     avgPoint: 3,
+//   ),
+//   Product(
+//     id: 2,
+//     image: "https://firebasestorage.googleapis.com/v0/b/gogi-images.appspot.com/o/files%2Fzmnc2yp?alt=media&token=3307075b-e83f-4916-abe0-443fc2d78464",
+//     name: "Trà sữa trân châu",
+//     price: 30000,
+//     description: "description",
+//     status: true,
+//     category: CategoryModel(id: 1, name: "Coffee", status: true),
+//     avgPoint: 3,
+//   ),
+//   Product(
+//     id: 3,
+//     image: "https://firebasestorage.googleapis.com/v0/b/gogi-images.appspot.com/o/files%2Fzmnc2yp?alt=media&token=3307075b-e83f-4916-abe0-443fc2d78464",
+//     name: "Trà sữa trân châu",
+//     price: 30000,
+//     description: "description",
+//     status: true,
+//     category: CategoryModel(id: 1, name: "Coffee", status: true),
+//     avgPoint: 3,
+//   ),
+// ];
 
 // const String description =
 //     "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";

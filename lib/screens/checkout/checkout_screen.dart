@@ -190,6 +190,7 @@ class BottomState extends State<Bottom> {
         if (customer_id == 0 || store_id == 0) {
           showAlertDialog(context);
         } else {
+          // print(orderReq);
           orderService.postOrder(orderReq).then((value) {
             if (value == true) {
               sharedPref.remove("customerId");

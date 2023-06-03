@@ -4,7 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gogi/format.dart';
 import 'package:gogi/models/Rating.dart';
 
-import '../../../models/Product.dart';
+import '../../../size_config.dart';
 
 class ProductRating extends StatelessWidget {
   final List<Rating> rates;
@@ -13,13 +13,15 @@ class ProductRating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (rates.isEmpty) {
-      return const Center(
-        child: Text(
-          "Chưa có đánh giá",
-          style: TextStyle(color: Colors.black),
-        ),
+      return Center(
+        child: Column(children: [
+          const Text(
+            "Chưa có đánh giá",
+            style: TextStyle(color: Colors.black),
+          ),
+          SizedBox(height: getProportionateScreenHeight(10)),
+        ]),
       );
     } else {
       return ListView(
@@ -65,21 +67,21 @@ class RateCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: RatingBar.builder(
-                itemSize: 25,
-                initialRating: rate.point.toDouble(),
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: Colors.deepOrangeAccent,
-                ),
-                onRatingUpdate: (rating) {
-                  print(rating);
-                },
+              itemSize: 25,
+              initialRating: rate.point.toDouble(),
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+              itemBuilder: (context, _) => const Icon(
+                Icons.star,
+                color: Colors.deepOrangeAccent,
               ),
+              onRatingUpdate: (rating) {
+                print(rating);
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -89,11 +91,12 @@ class RateCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Row(children: [
               Text(formatDate(rate.createdDate)),
-              const SizedBox(width: 10,),
+              const SizedBox(
+                width: 10,
+              ),
               Text(formatTime(rate.createdDate)),
             ]),
           ),
-
         ],
       ),
     );

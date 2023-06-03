@@ -1,4 +1,5 @@
 enum MenuState { home, menu, order, favorite, profile }
+enum SIZE { s, m, l }
 List orderStatus = [
   {
     "id": 0,

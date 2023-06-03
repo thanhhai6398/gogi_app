@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../DBHelper.dart';
+import '../enums.dart';
 import '../models/CartItem.dart';
 import '../models/Product.dart';
-import '../utils/size.dart';
 
 class CartProvider with ChangeNotifier {
   DBHelper dbHelper = DBHelper();
@@ -18,7 +18,7 @@ class CartProvider with ChangeNotifier {
 
   List<CartItem> cart = [];
 
-  Future<void> addToCart(Product product, SIZE size, int quantity) async {
+  Future<void> addToCart(Product product, SIZE size, String sugar, String iced, int quantity) async {
     double surCharge = size == SIZE.s
         ? 0
         : size == SIZE.m
@@ -30,10 +30,12 @@ class CartProvider with ChangeNotifier {
       name: product.name,
       image: product.image,
       size: sizeName,
+      sugar: sugar,
+      iced: iced,
       quantity: ValueNotifier(quantity),
       price: product.price + surCharge,
     );
-    CartItem? existCartItem = await dbHelper.getCartItem(product.id, sizeName);
+    CartItem? existCartItem = await dbHelper.getCartItem(product.id, sizeName, sugar, iced);
     if (existCartItem != null) {
       int newQuanity = quantity + existCartItem.quantity!.value;
       cartItem.quantity = ValueNotifier<int>(newQuanity);

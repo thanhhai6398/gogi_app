@@ -31,7 +31,7 @@ class OrderService {
     var res = json.decode(response.body);
     print(response.body);
 
-    if (res["errCode"] == '200') {
+    if (res["erMsg"] == null) {
       return true;
     } else {
       return false;
@@ -49,7 +49,7 @@ class OrderService {
     var res = json.decode(response.body);
     print(response.body);
 
-    if (res["errCode"] == '200') {
+    if (res["erMsg"] == null) {
       return true;
     } else {
       return false;

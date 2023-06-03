@@ -38,14 +38,14 @@ class CartCard extends StatelessWidget {
           children: [
             Text(
               totTitle(cartItem.name),
-              style: TextStyle(color: Colors.black, fontSize: 16),
+              style: const TextStyle(color: Colors.black, fontSize: 16),
               maxLines: 2,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
-              "Size: ${cartItem.size}",
+              "Cỡ ${cartItem.size}, ${cartItem.sugar} đường, ${cartItem.iced} đá",
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text.rich(
               TextSpan(
                 text: formatDouble(cartItem.price),

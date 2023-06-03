@@ -48,8 +48,17 @@ class ProductOrder extends StatelessWidget {
   final OrderDetail product;
   final int state;
 
+  String toppings = '';
+
   @override
   Widget build(BuildContext context) {
+    if (product.toppings.isNotEmpty) {
+      toppings = product.toppings.first.name;
+      for (int i = 1; i < product.toppings.length; i++) {
+        toppings = "$toppings, ${product.toppings[i].name}";
+      }
+    }
+
     return Card(
       color: Colors.white,
       child: Row(
@@ -103,9 +112,22 @@ class ProductOrder extends StatelessWidget {
               Container(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Size: ${product.size}",
+                  "Cỡ ${product.size}, ${product.sugar} đường, ${product.iced} đá.",
                 ),
               ),
+              (toppings.isNotEmpty)
+                  ? Column(
+                      children: [
+                        SizedBox(height: getProportionateScreenHeight(5)),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Topping: $toppings",
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
               Container(
                 padding: const EdgeInsets.only(right: 5.0),
                 alignment: Alignment.topRight,
