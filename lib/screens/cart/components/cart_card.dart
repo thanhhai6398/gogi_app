@@ -15,7 +15,8 @@ class CartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(child: Row(
+    return Card(
+        child: Row(
       children: [
         SizedBox(
           width: 88,
@@ -32,8 +33,8 @@ class CartCard extends StatelessWidget {
           ),
         ),
         SizedBox(width: 20),
-        Expanded(child:
-        Column(
+        Expanded(
+            child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -44,6 +45,9 @@ class CartCard extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               "Cỡ ${cartItem.size}, ${cartItem.sugar} đường, ${cartItem.iced} đá",
+            ),
+            Text(
+              cartItem.toppings.map((item) => totTitle(item.name)).join((', ')),
             ),
             const SizedBox(height: 10),
             Text.rich(

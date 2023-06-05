@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class Topping {
-  final int id;
-  final String name;
-  final double price;
-  final bool status;
+  int id;
+  String name;
+  double price = 0;
+  bool status = false;
 
   Topping({
     required this.id,
@@ -14,6 +14,10 @@ class Topping {
     required this.price,
     required this.status,
   });
+
+  Topping.fromMap(Map<dynamic, dynamic> data)
+      : id = data['topping_id'],
+        name = data['topping_name'];
 
   factory Topping.fromJson(Map<String, dynamic> json) {
     return Topping(
@@ -26,7 +30,5 @@ class Topping {
 
 List<Topping> parseToppings(String responseBody) {
   final parsed = jsonDecode(responseBody)["data"].cast<Map<String, dynamic>>();
-  return parsed
-      .map<Topping>((json) => Topping.fromJson(json))
-      .toList();
+  return parsed.map<Topping>((json) => Topping.fromJson(json)).toList();
 }

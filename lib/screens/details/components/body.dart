@@ -4,6 +4,7 @@ import 'package:gogi/apiServices/RateService.dart';
 import 'package:gogi/apiServices/ToppingService.dart';
 import 'package:gogi/components/default_button.dart';
 import 'package:gogi/components/toast.dart';
+import 'package:gogi/models/CartItem.dart';
 import 'package:gogi/models/Product.dart';
 import 'package:gogi/models/Topping.dart';
 import 'package:gogi/screens/details/components/product_rating.dart';
@@ -36,8 +37,9 @@ class _DetailState extends State<Body> {
   RateService rateService = RateService();
   ToppingService toppingService = ToppingService();
   SIZE _size = SIZE.s;
-  String _iced = '0', _sugar = '0';
+  String _iced = '100%', _sugar = '100%';
   int _quantity = 1;
+  List<Topping> toppings = [];
 
   setSize(size) {
     setState(() {
@@ -60,6 +62,18 @@ class _DetailState extends State<Body> {
   setQuantity(int quantity) {
     setState(() {
       _quantity = quantity;
+    });
+  }
+
+  setToppings(List<int> selectedToppings, List<Topping> toppingOptions) {
+    List<Topping> selected = [];
+    for (final id in selectedToppings) {
+      Topping topping =
+          toppingOptions.firstWhere((element) => element.id == id);
+      selected.add(topping);
+    }
+    setState(() {
+      toppings = selected;
     });
   }
 
@@ -162,7 +176,8 @@ class _DetailState extends State<Body> {
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: getProportionateScreenHeight(10)),
+                                SizedBox(
+                                    height: getProportionateScreenHeight(10)),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
                                       horizontal:
@@ -188,7 +203,9 @@ class _DetailState extends State<Body> {
                                         return Container(
                                           color: Colors.white,
                                           child: Toppings(
-                                              toppings: snapshot.data!),
+                                            toppings: snapshot.data!,
+                                            notifyParent: setToppings,
+                                          ),
                                         );
                                       } else {
                                         return const Center(
@@ -217,14 +234,34 @@ class _DetailState extends State<Body> {
                         right: SizeConfig.screenWidth * 0.05,
                       ),
                       child: DefaultButton(
-                        text: "Thêm vào giỏ",
+                        text: 'Thêm vào giỏ',
                         press: () {
-                          cart.addToCart(product, _size, _sugar, _iced, _quantity);
+                          double surCharge = _size == SIZE.s
+                              ? 0
+                              : _size == SIZE.m
+                                  ? 6000
+                                  : 10000;
+                          double toppingPrice = 0;
+                          for (final t in toppings) {
+                            toppingPrice += t.price;
+                          }
+                          double price =
+                              product.price + surCharge + toppingPrice;
+                          CartItem carItem = CartItem(
+                              product_id: product.id,
+                              name: product.name,
+                              image: product.image,
+                              size: _size.name,
+                              sugar: _sugar,
+                              iced: _iced,
+                              quantity: ValueNotifier(_quantity),
+                              price: price,
+                              toppings: toppings);
+                          cart.addToCart(carItem);
                           successToast("Đã thêm vào giỏ");
-                          // setState(() {
-                          //   _quantity = 1;
-                          //   _size = SIZE.s;
-                          // });
+                          setState(() {
+                            _quantity = 1;
+                          });
                         },
                       ),
                     ),

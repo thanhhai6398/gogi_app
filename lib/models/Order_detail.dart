@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:gogi/models/Topping.dart';
 
 class OrderDetail {

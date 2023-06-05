@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 
+import 'Topping.dart';
+
 class CartItem {
-  late final int id;
+  int id = 0;
   int product_id;
   String name;
   String image;
   String size, sugar, iced;
+  late List<Topping> toppings;
   ValueNotifier<int>? quantity;
   double price;
 
@@ -17,7 +20,12 @@ class CartItem {
       required this.sugar,
       required this.iced,
       required this.quantity,
-      required this.price});
+      required this.price,
+      required this.toppings});
+
+  void addTopping(List<Topping> toppings) {
+    this.toppings = toppings;
+  }
 
   CartItem.fromMap(Map<dynamic, dynamic> data)
       : id = data['id'],
@@ -55,5 +63,17 @@ class CartItem {
   @override
   String toString() {
     return 'CartItem{product_id: $product_id, size: $size, quantity: $quantity, price: $price}';
+  }
+
+  bool equal(CartItem obj) {
+    if (name == obj.name &&
+        image == obj.image &&
+        size == obj.size &&
+        sugar == obj.sugar &&
+        iced == obj.iced && toppings == obj.toppings
+    ) {
+      return true;
+    }
+    return false;
   }
 }

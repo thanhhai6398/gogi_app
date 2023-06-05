@@ -6,17 +6,18 @@ import '../../../models/Topping.dart';
 
 class Toppings extends StatefulWidget {
   List<Topping> toppings = [];
+  final Function(List<int> selectedToppings, List<Topping> toppingOptions) notifyParent;
 
-  Toppings({super.key, required this.toppings});
+  Toppings({super.key, required this.toppings, required this.notifyParent});
 
   @override
   ToppingsState createState() => ToppingsState();
 }
 
 class ToppingsState extends State<Toppings> {
-  final List<String> _selectedItems = [];
+  final List<int> _selectedItems = [];
 
-  void _itemChange(String itemValue, bool isSelected) {
+  void _itemChange(int itemValue, bool isSelected) {
     setState(() {
       if (isSelected) {
         _selectedItems.add(itemValue);
@@ -24,6 +25,7 @@ class ToppingsState extends State<Toppings> {
         _selectedItems.remove(itemValue);
       }
     });
+    widget.notifyParent(_selectedItems, widget.toppings);
   }
 
   @override
@@ -31,7 +33,7 @@ class ToppingsState extends State<Toppings> {
     return ListBody(
       children: widget.toppings
           .map((item) => CheckboxListTile(
-                value: _selectedItems.contains(item.name),
+                value: _selectedItems.contains(item.id),
                 title: Row(
                   children: [
                     Text(item.name),
@@ -42,7 +44,7 @@ class ToppingsState extends State<Toppings> {
                   ],
                 ),
                 controlAffinity: ListTileControlAffinity.leading,
-                onChanged: (isChecked) => _itemChange(item.name, isChecked!),
+                onChanged: (isChecked) => _itemChange(item.id, isChecked!),
               ))
           .toList(),
     );
