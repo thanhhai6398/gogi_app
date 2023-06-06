@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../DBHelper.dart';
-import '../components/toast.dart';
 import '../enums.dart';
 import '../models/CartItem.dart';
 import '../models/Product.dart';
@@ -11,54 +10,46 @@ class CartProvider with ChangeNotifier {
   DBHelper dbHelper = DBHelper();
   int _counter = 0;
   int _quantity = 1;
+
   int get counter => _counter;
+
   int get quantity => _quantity;
 
   double _totalPrice = 0.0;
+
   double get totalPrice => _totalPrice;
 
   List<CartItem> cart = [];
 
-  Future<void> addToCart(Product product, SIZE size, String sugar, String iced, int quantity) async {
-    double surCharge = size == SIZE.s
-        ? 0
-        : size == SIZE.m
-            ? 6000
-            : 10000;
-    String sizeName = size.name;
-    CartItem cartItem = CartItem(
-      product_id: product.id,
-      name: product.name,
-      image: product.image,
-      size: sizeName,
-      sugar: sugar,
-      iced: iced,
-      quantity: ValueNotifier(quantity),
-      price: product.price + surCharge,
-    );
-    CartItem? existCartItem = await dbHelper.getCartItem(product.id, sizeName, sugar, iced);
-    if (existCartItem != null) {
-      int newQuanity = quantity + existCartItem.quantity!.value;
-      cartItem.quantity = ValueNotifier<int>(newQuanity);
-      dbHelper.update(existCartItem.id, cartItem).then((value) {
-        print('Update quantity');
-        successToast("Đã thêm vào giỏ");
-
-      }).onError((error, stackTrace) {
-        print(error.toString());
-        return;
-      });
-    } else {
-      dbHelper.insert(cartItem).then((value) {
-        print('Product Added to cart');
-        successToast("Đã thêm vào giỏ");
-
-      }).onError((error, stackTrace) {
-        print(error.toString());
-        return;
-      });
-    }
-    addTotalPrice(cartItem.price*quantity);
+  Future<void> addToCart(CartItem cartItem) async {
+    // await getData();
+    // var existCartItem = cart.firstWhere((item) => item.equal(cartItem), orElse: () => cartItem);
+    // if (existCartItem.id != 0){
+    //   int newQuantity = quantity + existCartItem.quantity!.value;
+    //   cartItem.quantity = ValueNotifier<int>(newQuantity);
+    //   dbHelper.update(existCartItem.id, cartItem).then((value) {
+    //     print('Update quantity');
+    //   }).onError((error, stackTrace) {
+    //     print(error.toString());
+    //     return;
+    //   });
+    // } else {
+    // dbHelper.insert(cartItem).then((value) {
+    // print('Product Added to cart');
+    // }).onError((error, stackTrace) {
+    // print(error.toString());
+    // return;
+    // });
+    // }
+    int quantity = cartItem.quantity?.value as int;
+    dbHelper.insert(cartItem).then((value) {
+      print(value);
+      print('Product Added to cart');
+    }).onError((error, stackTrace) {
+      print(error.toString());
+      return;
+    });
+    addTotalPrice (cartItem.price * quantity);
     addCounter(quantity);
   }
 
