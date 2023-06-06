@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../DBHelper.dart';
+import '../components/toast.dart';
 import '../enums.dart';
 import '../models/CartItem.dart';
 import '../models/Product.dart';
@@ -41,6 +42,8 @@ class CartProvider with ChangeNotifier {
       cartItem.quantity = ValueNotifier<int>(newQuanity);
       dbHelper.update(existCartItem.id, cartItem).then((value) {
         print('Update quantity');
+        successToast("Đã thêm vào giỏ");
+
       }).onError((error, stackTrace) {
         print(error.toString());
         return;
@@ -48,6 +51,8 @@ class CartProvider with ChangeNotifier {
     } else {
       dbHelper.insert(cartItem).then((value) {
         print('Product Added to cart');
+        successToast("Đã thêm vào giỏ");
+
       }).onError((error, stackTrace) {
         print(error.toString());
         return;

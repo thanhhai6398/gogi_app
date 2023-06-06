@@ -220,7 +220,6 @@ class _DetailState extends State<Body> {
                         text: "Thêm vào giỏ",
                         press: () {
                           cart.addToCart(product, _size, _sugar, _iced, _quantity);
-                          successToast("Đã thêm vào giỏ");
                           // setState(() {
                           //   _quantity = 1;
                           //   _size = SIZE.s;

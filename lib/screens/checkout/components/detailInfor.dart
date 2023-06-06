@@ -82,27 +82,27 @@ class _StateDetailInfor extends State<DetailInfor> {
                       Navigator.pushNamed(context, VoucherScreen.routeName),
                   child: (widget.id != 0)
                       ? Row(
-                          children: [
-                            Text(
-                              voucherName,
-                              style: const TextStyle(
-                                  fontSize: 16, color: kPrimaryColor),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.cancel_rounded, size: 22, color: kPrimaryColor),
-                              onPressed: () {
-                                sharedPref.remove("voucherId");
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => const CheckoutScreen()));
-                              },
-                            ),
-                          ],
-                        )
+                    children: [
+                      Text(
+                        voucherName,
+                        style: const TextStyle(
+                            fontSize: 16, color: kPrimaryColor),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.cancel_rounded, size: 22, color: kPrimaryColor),
+                        onPressed: () {
+                          sharedPref.remove("voucherId");
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const CheckoutScreen()));
+                        },
+                      ),
+                    ],
+                  )
                       : const Text(
-                          "Chọn voucher >",
-                          style: TextStyle(fontSize: 16),
-                        ),
+                    "Chọn voucher >",
+                    style: TextStyle(fontSize: 16),
+                  ),
                 )
               ],
             ),
@@ -143,14 +143,14 @@ class _StateDetailInfor extends State<DetailInfor> {
                     ),
                     items: items
                         .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ))
+                      value: item,
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ))
                         .toList(),
                     value: selectedValue,
                     onChanged: (value) {
