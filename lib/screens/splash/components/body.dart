@@ -4,6 +4,7 @@ import 'package:gogi/screens/sign_in/sign_in_screen.dart';
 import 'package:gogi/size_config.dart';
 
 // This is the best practice
+import '../../../DBHelper.dart';
 import '../../../SharedPref.dart';
 import '../../home/home_screen.dart';
 import '../components/splash_content.dart';
@@ -15,9 +16,12 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  DBHelper dbHelper = DBHelper();
+
   SharedPref sharedPref = SharedPref();
   bool login = false;
   _BodyState() {
+    dbHelper.initDB();
     sharedPref.containsKey("username").then((value) => setState(() {
       login = value;
     }));

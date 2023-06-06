@@ -53,10 +53,11 @@ class ProductOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (product.toppings.isNotEmpty) {
-      toppings = product.toppings.first.name;
-      for (int i = 1; i < product.toppings.length; i++) {
-        toppings = "$toppings, ${product.toppings[i].name}";
-      }
+      // toppings = product.toppings.first.name;
+      // for (int i = 1; i < product.toppings.length; i++) {
+      //   toppings = "$toppings, ${product.toppings[i].name}";
+      // }
+      toppings = product.toppings.map((item) => totTitle(item.name)).join((', '));
     }
 
     return Card(

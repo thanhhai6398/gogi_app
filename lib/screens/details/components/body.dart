@@ -69,7 +69,7 @@ class _DetailState extends State<Body> {
     List<Topping> selected = [];
     for (final id in selectedToppings) {
       Topping topping =
-          toppingOptions.firstWhere((element) => element.id == id);
+      toppingOptions.firstWhere((element) => element.id == id);
       selected.add(topping);
     }
     setState(() {
@@ -174,49 +174,49 @@ class _DetailState extends State<Body> {
                       ),
                       (product.hasTopping == true)
                           ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                    height: getProportionateScreenHeight(10)),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          getProportionateScreenWidth(20)),
-                                  child: const Text(
-                                    "Chọn topping",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                SizedBox(
-                                    height: getProportionateScreenHeight(10)),
-                                FutureBuilder(
-                                    future: toppingService.getAllTopping(),
-                                    builder: (context,
-                                        AsyncSnapshot<List<Topping>> snapshot) {
-                                      if (snapshot.hasError) {
-                                        return const Center(
-                                          child: Text('An error...'),
-                                        );
-                                      } else if (snapshot.hasData) {
-                                        return Container(
-                                          color: Colors.white,
-                                          child: Toppings(
-                                            toppings: snapshot.data!,
-                                            notifyParent: setToppings,
-                                          ),
-                                        );
-                                      } else {
-                                        return const Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      }
-                                    }),
-                                SizedBox(
-                                    height: getProportionateScreenHeight(10))
-                              ],
-                            )
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                              height: getProportionateScreenHeight(10)),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                getProportionateScreenWidth(20)),
+                            child: const Text(
+                              "Chọn topping",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                              height: getProportionateScreenHeight(10)),
+                          FutureBuilder(
+                              future: toppingService.getAllTopping(),
+                              builder: (context,
+                                  AsyncSnapshot<List<Topping>> snapshot) {
+                                if (snapshot.hasError) {
+                                  return const Center(
+                                    child: Text('An error...'),
+                                  );
+                                } else if (snapshot.hasData) {
+                                  return Container(
+                                    color: Colors.white,
+                                    child: Toppings(
+                                      toppings: snapshot.data!,
+                                      notifyParent: setToppings,
+                                    ),
+                                  );
+                                } else {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              }),
+                          SizedBox(
+                              height: getProportionateScreenHeight(10))
+                        ],
+                      )
                           : const SizedBox.shrink(),
                     ],
                   )),
@@ -239,8 +239,8 @@ class _DetailState extends State<Body> {
                           double surCharge = _size == SIZE.s
                               ? 0
                               : _size == SIZE.m
-                                  ? 6000
-                                  : 10000;
+                              ? 6000
+                              : 10000;
                           double toppingPrice = 0;
                           for (final t in toppings) {
                             toppingPrice += t.price;
@@ -291,7 +291,7 @@ class _DetailState extends State<Body> {
                             if (snapshot.hasError) {
                               return Center(
                                 child:
-                                    Text('ERROR: ${snapshot.error.toString()}'),
+                                Text('ERROR: ${snapshot.error.toString()}'),
                               );
                             } else if (snapshot.hasData) {
                               return ProductRating(rates: snapshot.data!);

@@ -46,6 +46,7 @@ class CartItem {
       'iced': iced,
       'quantity': quantity?.value,
       'price': price,
+      'toppings': Topping.getListMap(toppings),
     };
   }
 
@@ -62,7 +63,7 @@ class CartItem {
 
   @override
   String toString() {
-    return 'CartItem{product_id: $product_id, size: $size, quantity: $quantity, price: $price}';
+    return 'CartItem{product_id: $product_id, size: $size, sugar: $sugar, iced: $iced, quantity: $quantity, price: $price, toppings: $toppings}';
   }
 
   bool equal(CartItem obj) {

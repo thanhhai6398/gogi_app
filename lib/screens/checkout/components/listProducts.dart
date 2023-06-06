@@ -19,7 +19,7 @@ class ListProducts extends StatelessWidget {
           if (provider.cart.isEmpty) {
             return const Center(
                 child: Text(
-              'Your Cart is Empty',
+              'Không có gì trong giỏ hàng',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
             ));
           } else {
@@ -48,46 +48,9 @@ class CartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      // child: Row(
-      //   children: [
-      //     Container(
-      //       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      //       decoration: BoxDecoration(
-      //         color: Colors.deepOrange[50],
-      //       ),
-      //       child: Image.network(cartItem.image, height: 70, width: 50, fit: BoxFit.contain,),
-      //     ),
-      //     const SizedBox(width: 10),
-      //     Column(
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: [
-      //         Row(children: [
-      //           Text("x${cartItem.quantity?.value}"),
-      //           Text(totTitle(cartItem.name),
-      //             style: const TextStyle(color: Colors.black, fontSize: 16), maxLines: 2, overflow: TextOverflow.ellipsis,
-      //             softWrap: false,)
-      //         ],),
-      //         const SizedBox(height: 10),
-      //         Text(
-      //           "Size: ${cartItem.size}",
-      //         ),
-      //         const SizedBox(height: 10),
-      //         Container(
-      //           alignment: Alignment.bottomRight,
-      //           child: Text(
-      //             formatDouble(cartItem.price),
-      //             style: const TextStyle(
-      //                 fontWeight: FontWeight.w600, color: kPrimaryColor),
-      //           ),
-      //         )
-      //       ],
-      //     ),
-      //
-      //   ],
-      // ),
       elevation: 4,
       child: Container(
-        padding: EdgeInsets.all(6),
+        padding: const EdgeInsets.all(6),
         child: Row(
           children: <Widget>[
             Container(
@@ -102,7 +65,7 @@ class CartCard extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 5.0,
             ),
             Flexible(
@@ -124,11 +87,14 @@ class CartCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Text(
-                    "Size: ${cartItem.size}",
+                    "Cỡ ${cartItem.size}, ${cartItem.sugar} đường, ${cartItem.iced} đá",
                   ),
-                  SizedBox(height: 5),
+                  Text(
+                    cartItem.toppings.map((item) => totTitle(item.name)).join((', ')),
+                  ),
+                  const SizedBox(height: 5),
                   Container(
                     alignment: Alignment.bottomRight,
                     child: Row(

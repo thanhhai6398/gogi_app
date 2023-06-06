@@ -100,7 +100,6 @@ class BottomState extends State<Bottom> {
     sharedPref.read("username").then((value) => setState(() {
           account_username = value;
         }));
-    //readValue();
   }
 
   @override
@@ -154,7 +153,7 @@ class BottomState extends State<Bottom> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: const Text("Thông báo", style: TextStyle(color: kPrimaryColor)),
-      content: const Text("Thông tin chưa chính xác"),
+      content: const Text("Chưa đủ thông tin đặt hàng"),
       actions: [
         okButton,
       ],
@@ -186,11 +185,10 @@ class BottomState extends State<Bottom> {
             total: total,
             details: details,
             voucher_id: voucher_id);
-        print(store_id);
         if (customer_id == 0 || store_id == 0) {
           showAlertDialog(context);
         } else {
-          // print(orderReq);
+          //print(orderReq);
           orderService.postOrder(orderReq).then((value) {
             if (value == true) {
               sharedPref.remove("customerId");
@@ -243,9 +241,15 @@ class BottomState extends State<Bottom> {
     sharedPref.readDouble("lastTotal").then((value) => setState(() {
           total = value!;
         }));
-    sharedPref.readInt("customerId").then((value) => setState(() {
+
+    sharedPref.containsKey("customerId").then((value) {
+      if (value == true) {
+        sharedPref.readInt("customerId").then((value) => setState(() {
           customer_id = value!;
         }));
+      }
+    });
+
     sharedPref.readInt("voucherId").then((value) => setState(() {
           voucher_id = value;
         }));

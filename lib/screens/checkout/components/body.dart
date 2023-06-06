@@ -83,7 +83,7 @@ class BodyState extends State<Body> {
                 } else if (snapshot.hasData) {
                   storeService
                       .getStoreByAddress(
-                          snapshot.data!.provinceId, snapshot.data?.districtId)
+                      snapshot.data!.provinceId, snapshot.data?.districtId)
                       .then((value) {
                     setState(() {
                       stores = value;

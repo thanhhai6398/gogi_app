@@ -26,6 +26,29 @@ class Topping {
         price: json['price'],
         status: json['status']);
   }
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "name": name,
+      "price": price,
+      "status": status,
+    };
+  }
+  static dynamic getListMap(List<dynamic> items) {
+    if (items == null) {
+      return null;
+    }
+    List<Map<String, dynamic>> list = [];
+    for (var element in items) {
+      list.add(element.toJson());
+    }
+    return list;
+  }
+
+  @override
+  String toString() {
+    return 'Topping{id: $id, name: $name, price: $price, status: $status}';
+  }
 }
 
 List<Topping> parseToppings(String responseBody) {
