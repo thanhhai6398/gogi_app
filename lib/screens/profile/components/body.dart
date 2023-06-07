@@ -87,10 +87,12 @@ alertDialogLogout(BuildContext context) {
   SharedPref sharedPref = SharedPref();
 // set up the buttons
   Widget cancelButton = TextButton(
+    style: ElevatedButton.styleFrom(primary: Colors.black54),
     child: const Text(
       "Hủy",
       style: TextStyle(
-        color: kPrimaryColor,
+        fontWeight: FontWeight.w600,
+        color: Colors.white
       ),
     ),
     onPressed: () {
@@ -98,10 +100,12 @@ alertDialogLogout(BuildContext context) {
     },
   );
   Widget continueButton = TextButton(
+    style: ElevatedButton.styleFrom(primary: kPrimaryColor),
     child: const Text(
       "Đăng xuất",
       style: TextStyle(
-        color: kPrimaryColor,
+        fontWeight: FontWeight.w600,
+          color: Colors.white
       ),
     ),
     onPressed: () {
@@ -118,7 +122,7 @@ alertDialogLogout(BuildContext context) {
     title: const Text(
       "Đăng xuất",
       style: TextStyle(
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w600,
         color: kPrimaryColor,
       ),
     ),

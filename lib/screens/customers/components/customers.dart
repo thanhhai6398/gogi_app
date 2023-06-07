@@ -150,7 +150,7 @@ class CustomerCard extends StatelessWidget {
                                     right: 10,
                                     left: 180,
                                     top: 250,
-                                    bottom: 300),
+                                    bottom: 250),
                                 scrollable: true,
                                 content: Padding(
                                   padding: const EdgeInsets.all(5.0),

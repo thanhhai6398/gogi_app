@@ -58,15 +58,59 @@ class _ProductDescriptionState extends State<ProductDescription> {
           ),
         ),
         SizedBox(height: getProportionateScreenHeight(10)),
+        Padding(
+          padding: EdgeInsets.only(
+            left: getProportionateScreenWidth(20),
+          ),
+          child: Container(
+            width: 80,
+            height: 30,
+            color: kPrimaryColor,
+            padding: const EdgeInsets.all(5),
+            child: Center(
+              child: Text(
+                'GIẢM ${formatDouble(widget.product.discount * 100)}%',
+                style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white),
+              ),
+            ),
+          ),
+          // TextButton(
+          //   onPressed: () {},
+          //   style: TextButton.styleFrom(
+          //       foregroundColor: Colors.white,
+          //       elevation: 2,
+          //       backgroundColor: kPrimaryColor),
+          //   child: Text(
+          //     'GIẢM ${formatDouble(widget.product.discount * 100)}%',
+          //     style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+          //   ),
+          // ),
+        ),
         Row(
           children: [
             Padding(
               padding: EdgeInsets.only(
                 left: getProportionateScreenWidth(20),
-                right: getProportionateScreenWidth(64),
               ),
               child: Text(
-                "${formatDouble(widget.product.price)}đ",
+                formatPrice(
+                    widget.product.price / (1 - widget.product.discount)),
+                style: TextStyle(
+                    fontSize: getProportionateScreenWidth(16),
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey,
+                    decoration: TextDecoration.lineThrough),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: getProportionateScreenWidth(10),
+              ),
+              child: Text(
+                formatPrice(widget.product.price),
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(18),
                   fontWeight: FontWeight.w600,
@@ -74,7 +118,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             InkWell(
               borderRadius: BorderRadius.circular(50),
               onTap: () {
@@ -96,7 +140,9 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 ),
                 child: SvgPicture.asset(
                   "assets/icons/Heart Icon_2.svg",
-                  color: widget.isLike ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
+                  color: widget.isLike
+                      ? const Color(0xFFFF4848)
+                      : const Color(0xFFDBDEE4),
                   height: getProportionateScreenWidth(16),
                 ),
               ),

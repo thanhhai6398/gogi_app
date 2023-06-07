@@ -77,9 +77,9 @@ class ProductCardMenu extends StatelessWidget {
                       child: Text(
                         totTitle(product.name),
                         style: TextStyle(
-                          fontSize: getProportionateScreenWidth(18),
-                          fontWeight: FontWeight.w400,
-                          color: kPrimaryColor,
+                          fontSize: getProportionateScreenWidth(16),
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
                         ),
                         maxLines: 2,
                       ),
@@ -96,11 +96,11 @@ class ProductCardMenu extends StatelessWidget {
                     SizedBox(height: getProportionateScreenHeight(10)),
                     Row(
                       children: [
-                        const Align(
+                        Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            "35.000đ",
-                            style: TextStyle(
+                            formatPrice(product.price / (1 - product.discount)),
+                            style: const TextStyle(
                                 decoration: TextDecoration.lineThrough),
                           ),
                         ),
@@ -108,7 +108,7 @@ class ProductCardMenu extends StatelessWidget {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            "${product.price}đ",
+                            formatPrice(product.price),
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               color: kPrimaryColor,

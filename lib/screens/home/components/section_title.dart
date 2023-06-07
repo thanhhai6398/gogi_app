@@ -31,16 +31,22 @@ class SectionTitle extends StatelessWidget {
               style: TextStyle(
                 fontSize: getProportionateScreenWidth(18),
                 color: Colors.black,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],
         ),
         GestureDetector(
-          onTap: press,
-          child: const Text(
-            "Xem thêm",
-            style: TextStyle(color: kPrimaryColor),
-          ),
+            onTap: press,
+            child: Row(
+              children: const [
+                Text(
+                  "Xem thêm",
+                  style: TextStyle(color: kPrimaryColor),
+                ),
+                Icon(Icons.keyboard_arrow_right_sharp, color: kPrimaryColor, size: 20,)
+              ],
+            ),
         ),
       ],
     );

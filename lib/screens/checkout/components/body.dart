@@ -143,13 +143,13 @@ class BodyState extends State<Body> {
                 child: Text(
                   "Cửa hàng gần nhất",
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                       color: Colors.black,
                       fontSize: 15),
                 ),
               ),
               SizedBox(
-                height: 5.0,
+                height: 10,
               ),
               Align(
                 alignment: Alignment.topLeft,
@@ -162,7 +162,7 @@ class BodyState extends State<Body> {
           ));
     } else {
       return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 5),
           child: Column(
             children: [
               const Align(

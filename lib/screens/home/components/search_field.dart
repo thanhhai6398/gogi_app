@@ -24,6 +24,7 @@ class _SearchFieldScreen extends State<SearchField> {
       ),
       child: TextField(
         controller: controller,
+        textAlign: TextAlign.center,
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(20),
@@ -33,7 +34,7 @@ class _SearchFieldScreen extends State<SearchField> {
             enabledBorder: InputBorder.none,
             hintText: "Tìm kiếm sản phẩm",
             suffixIcon: IconButton(
-                icon: Icon(Icons.search),
+                icon: const Icon(Icons.search),
                 onPressed: () {
                   print(controller.text);
                   onSearchTextChanged(controller.text);
@@ -48,14 +49,15 @@ class _SearchFieldScreen extends State<SearchField> {
       return;
     }
 
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => SearchResultScreen(keyword: text)));
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => SearchResultScreen(keyword: text)));
     setState(() {});
   }
 }
 
 class SearchResultScreen extends StatelessWidget {
   String keyword;
+
   SearchResultScreen({super.key, required this.keyword});
 
   ProductService productService = ProductService();
@@ -64,7 +66,8 @@ class SearchResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Kết quả tìm kiếm", style: TextStyle(color: Colors.black)),
+        title: const Text("Kết quả tìm kiếm",
+            style: TextStyle(color: Colors.black)),
       ),
       body: SafeArea(
         child: FutureBuilder(

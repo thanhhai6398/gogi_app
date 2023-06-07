@@ -76,61 +76,74 @@ class _StateDetailInfor extends State<DetailInfor> {
                   " Thêm voucher",
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
-                Spacer(),
+                const Spacer(),
                 GestureDetector(
                   onTap: () =>
                       Navigator.pushNamed(context, VoucherScreen.routeName),
                   child: (widget.id != 0)
                       ? Row(
-                    children: [
-                      Text(
-                        voucherName,
-                        style: const TextStyle(
-                            fontSize: 16, color: kPrimaryColor),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.cancel_rounded, size: 22, color: kPrimaryColor),
-                        onPressed: () {
-                          sharedPref.remove("voucherId");
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const CheckoutScreen()));
-                        },
-                      ),
-                    ],
-                  )
-                      : const Text(
-                    "Chọn voucher >",
-                    style: TextStyle(fontSize: 16),
-                  ),
+                          children: [
+                            Text(
+                              voucherName,
+                              style: const TextStyle(
+                                  fontSize: 16, color: kPrimaryColor),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.cancel_rounded,
+                                  size: 22, color: kPrimaryColor),
+                              onPressed: () {
+                                sharedPref.remove("voucherId");
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const CheckoutScreen()));
+                              },
+                            ),
+                          ],
+                        )
+                      : Row(
+                          children: const [
+                            Text(
+                              "Chọn voucher",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            Icon(Icons.keyboard_arrow_right_outlined)
+                          ],
+                        ),
                 )
               ],
             ),
-            SizedBox(height: getProportionateScreenHeight(15)),
+            SizedBox(height: getProportionateScreenHeight(10)),
             Row(
               children: [
                 const Text("Thành tiền",
                     style: TextStyle(fontWeight: FontWeight.w600)),
-                Spacer(),
+                const Spacer(),
                 Text(
-                  formatPrice(cart.getTotalPrice()),
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-            SizedBox(height: getProportionateScreenHeight(10)),
-            Row(
-              children: [
-                const Text("Mã khuyến mãi",
-                    style: TextStyle(fontWeight: FontWeight.w600)),
-                Spacer(),
-                Text(
-                  "-${formatPrice(discount)}",
+                  formatCurrency(cart.getTotalPrice()),
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
             ),
-            SizedBox(height: getProportionateScreenHeight(10)),
+            (widget.id != 0)
+                ? Column(
+                    children: [
+                      SizedBox(height: getProportionateScreenHeight(5)),
+                      Row(
+                        children: [
+                          const Text("Mã khuyến mãi",
+                              style: TextStyle(fontWeight: FontWeight.w600)),
+                          const Spacer(),
+                          Text(
+                            "- ${formatCurrency(discount)}",
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                : const SizedBox.shrink(),
+            SizedBox(height: getProportionateScreenHeight(5)),
             Row(
               children: [
                 DropdownButtonHideUnderline(
@@ -139,18 +152,18 @@ class _StateDetailInfor extends State<DetailInfor> {
                       'Phương thức',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
+                        fontSize: 15,
                       ),
                     ),
                     items: items
                         .map((item) => DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(
-                        item,
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                    ))
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w600),
+                              ),
+                            ))
                         .toList(),
                     value: selectedValue,
                     onChanged: (value) {
@@ -167,21 +180,21 @@ class _StateDetailInfor extends State<DetailInfor> {
                     },
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Text(
-                  formatPrice(fee),
-                  style: TextStyle(fontSize: 16),
+                  formatCurrency(fee),
+                  style: const TextStyle(fontSize: 16),
                 ),
               ],
             ),
-            SizedBox(height: getProportionateScreenHeight(10)),
+            SizedBox(height: getProportionateScreenHeight(5)),
             Row(
               children: [
                 const Text("Tổng cộng",
                     style: TextStyle(fontWeight: FontWeight.w600)),
                 Spacer(),
                 Text(
-                  formatPrice(total),
+                  formatCurrency(total),
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,

@@ -43,8 +43,8 @@ class Body extends StatelessWidget {
                             padding: EdgeInsets.symmetric(
                                 horizontal: getProportionateScreenWidth(20)),
                             child: SectionTitle(
-                                title: "Dành cho bạn",
-                                icon: Icons.ac_unit,
+                                title: " Dành cho bạn",
+                                icon: Icons.eco,
                                 press: () {}),
                           ),
                           PopularProducts(products: snapshot.data!)

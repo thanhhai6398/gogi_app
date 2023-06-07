@@ -62,14 +62,14 @@ class CategoryCard extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(right: 5.0),
               padding: EdgeInsets.all(getProportionateScreenWidth(15)),
-              height: getProportionateScreenWidth(55),
+              height: getProportionateScreenWidth(50),
               decoration: BoxDecoration(
                   color: id == category.id ? Colors.deepOrangeAccent : const Color(0xFFFFECDF),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(category.name!,
                   style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w600),
+                      color: Colors.black, fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center),
             ),
           ],

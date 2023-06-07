@@ -72,7 +72,7 @@ class OrderCard extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          formatPrice(order.total),
+                          formatCurrency(order.total),
                           style: const TextStyle(
                               color: Colors.black, fontWeight: FontWeight.w600),
                         ),

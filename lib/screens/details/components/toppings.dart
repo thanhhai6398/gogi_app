@@ -39,7 +39,7 @@ class ToppingsState extends State<Toppings> {
                     Text(item.name),
                     Spacer(),
                     Text(
-                      "${formatDouble(item.price)}đ",
+                      formatPrice(item.price),
                     )
                   ],
                 ),
