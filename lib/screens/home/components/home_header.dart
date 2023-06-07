@@ -24,6 +24,9 @@ class HomeHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SearchField(),
+          const SizedBox(
+            width: 8,
+          ),
           badges.Badge(
             badgeContent: Consumer<CartProvider>(
               builder: (context, value, child) {
@@ -34,7 +37,7 @@ class HomeHeader extends StatelessWidget {
                 );
               },
             ),
-            badgeStyle: badges.BadgeStyle(badgeColor: Color(0xFFE57905),),
+            badgeStyle: const badges.BadgeStyle(badgeColor: Color(0xFFE57905),),
             position: badges.BadgePosition.topEnd(top: -5, end: 0),
             child: IconBtnWithCounter(
               svgSrc: "assets/icons/Cart Icon.svg",

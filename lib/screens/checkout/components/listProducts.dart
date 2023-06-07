@@ -13,7 +13,7 @@ class ListProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
         child: Consumer<CartProvider>(
             builder: (BuildContext context, provider, widget) {
           if (provider.cart.isEmpty) {
@@ -25,7 +25,7 @@ class ListProducts extends StatelessWidget {
           } else {
             return ListView(
               shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
               children: List.generate(provider.cart.length, (index) {
                 return Center(
                   child: CartCard(cartItem: provider.cart[index]),
@@ -50,11 +50,11 @@ class CartCard extends StatelessWidget {
     return Card(
       elevation: 4,
       child: Container(
-        padding: const EdgeInsets.all(6),
+        padding: const EdgeInsets.all(5),
         child: Row(
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
               decoration: BoxDecoration(
                 color: Colors.deepOrange[50],
               ),
@@ -66,7 +66,7 @@ class CartCard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              width: 5.0,
+              width: 10,
             ),
             Flexible(
               child: Column(
@@ -101,12 +101,12 @@ class CartCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          formatDouble(cartItem.price),
+                          formatPrice(cartItem.price),
                           style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               color: kPrimaryColor),
                         ),
-                        Text("x${cartItem.quantity?.value}"),
+                        Text(" x ${cartItem.quantity?.value}"),
                       ],
                     ),
                   )

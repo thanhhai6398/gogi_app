@@ -48,7 +48,7 @@ class CheckoutCard extends StatelessWidget {
                     text: "Tổng cộng:\n",
                     children: [
                       TextSpan(
-                        text: formatPrice(cart.getTotalPrice()),
+                        text: formatCurrency(cart.getTotalPrice()),
                         style: const TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],

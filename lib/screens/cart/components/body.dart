@@ -23,7 +23,7 @@ class _BodyState extends State<Body> {
     final cart = Provider.of<CartProvider>(context);
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
       child: Consumer<CartProvider>(
         builder: (BuildContext context, provider, widget) {
           if (provider.cart.isEmpty) {
@@ -48,14 +48,14 @@ class _BodyState extends State<Body> {
                   });
                 },
                 background: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
-                    color: Color(0xFFFFE6E6),
+                    color: const Color(0xFFFFE6E6),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Row(
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       SvgPicture.asset("assets/icons/Trash.svg"),
                     ],
                   ),

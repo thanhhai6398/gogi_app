@@ -133,7 +133,7 @@ class ProductOrder extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 5.0),
                 alignment: Alignment.topRight,
                 child: Text(
-                  formatPrice(product.price),
+                  formatCurrency(product.price),
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     color: kPrimaryColor,

@@ -85,7 +85,7 @@ class ProductCardGrid extends StatelessWidget{
               Container(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  "${product.price}đ",
+                  formatPrice(product.price),
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     fontWeight: FontWeight.w600,

@@ -100,7 +100,7 @@ class CouponCard extends StatelessWidget {
                           Align(
                             alignment: Alignment.topCenter,
                             child: Text(
-                              "Khuyến mãi từ đơn ${formatPrice(voucher.minimumOrderValue)}",
+                              "Khuyến mãi từ đơn ${formatCurrency(voucher.minimumOrderValue)}",
                               style: TextStyle(
                                 fontSize: getProportionateScreenWidth(13),
                                 fontWeight: FontWeight.bold
@@ -129,7 +129,7 @@ class CouponCard extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Text(formatPrice(voucher.maximumDiscountAmount),
+            child: Text(formatCurrency(voucher.maximumDiscountAmount),
                 style: const TextStyle(color: Colors.white, fontSize: 13)),
           ),
         ),

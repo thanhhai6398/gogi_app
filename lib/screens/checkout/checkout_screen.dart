@@ -24,15 +24,13 @@ class CheckoutScreen extends StatelessWidget {
     SharedPref sharedPref = SharedPref();
     Future<bool> showExitPopup() async {
       return await showDialog(
-            //show confirm dialogue
-            //the return value will be from "Yes" or "No" options
-            context: context,
+           context: context,
             builder: (context) => AlertDialog(
-              title: const Text('Trang thanh toán'),
+              title: const Icon(Icons.info, color: kPrimaryColor, size: 50),
               content: const Text('Bạn muốn thoát khỏi trang thanh toán?'),
               actions: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: kPrimaryColor),
+                  style: ElevatedButton.styleFrom(primary: Colors.black54),
                   onPressed: () => Navigator.of(context).pop(false),
                   child: const Text('Hủy'),
                 ),
@@ -152,8 +150,13 @@ class BottomState extends State<Bottom> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: const Text("Thông báo", style: TextStyle(color: kPrimaryColor)),
-      content: const Text("Chưa đủ thông tin đặt hàng"),
+      insetPadding: const EdgeInsets.only(
+          right: 30,
+          left: 30,
+          top: 250,
+          bottom: 250),
+      title: const Icon(Icons.info, color: kPrimaryColor, size: 40,),
+      content: const Text("Chưa đủ thông tin đặt hàng", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w600)),
       actions: [
         okButton,
       ],
@@ -186,7 +189,9 @@ class BottomState extends State<Bottom> {
             details: details,
             voucher_id: voucher_id);
         if (customer_id == 0 || store_id == 0) {
+          Navigator.pop(context);
           showAlertDialog(context);
+
         } else {
           //print(orderReq);
           orderService.postOrder(orderReq).then((value) {
@@ -202,6 +207,7 @@ class BottomState extends State<Bottom> {
                 CupertinoPageRoute(builder: (context) => const OrderScreen()),
                 (_) => false,
               );
+
             } else {
               print("FALSE");
             }
@@ -213,8 +219,13 @@ class BottomState extends State<Bottom> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: const Text("Đặt hàng", style: TextStyle(color: kPrimaryColor)),
-      content: const Text("Xác nhận đặt hàng"),
+      insetPadding: const EdgeInsets.only(
+          right: 30,
+          left: 30,
+          top: 250,
+          bottom: 250),
+      title: const Icon(Icons.info, color: kPrimaryColor, size: 40,),
+      content: const Text("Xác nhận đặt hàng", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w600)),
       actions: [
         okButton,
       ],

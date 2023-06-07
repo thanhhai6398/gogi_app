@@ -69,7 +69,7 @@ class Body extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        formatPrice(origin),
+                        formatCurrency(origin),
                         style: const TextStyle(
                           color: kPrimaryColor,
                         ),
@@ -84,7 +84,7 @@ class Body extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        "-${formatPrice(discount)}",
+                        "-${formatCurrency(discount)}",
                         style: const TextStyle(
                           color: kPrimaryColor,
                         ),
@@ -99,7 +99,7 @@ class Body extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        formatPrice(20000),
+                        formatCurrency(20000),
                         style: const TextStyle(
                           color: kPrimaryColor,
                         ),
@@ -117,7 +117,7 @@ class Body extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        formatPrice(order.total),
+                        formatCurrency(order.total),
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           color: kPrimaryColor,

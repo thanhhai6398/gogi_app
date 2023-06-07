@@ -50,12 +50,14 @@ class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 10),
       child: Card(
           elevation: 50,
           shadowColor: Colors.black.withOpacity(0.2),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),
-            side: const BorderSide(width: 1),),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: const BorderSide(width: 1),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(5),
             child: SizedBox(
@@ -78,14 +80,15 @@ class _ProductCardState extends State<ProductCard> {
                               child: Hero(
                                 tag: widget.product.id.toString(),
                                 child: Image(
-                                  image: NetworkImage(widget.product.image), fit: BoxFit.contain,
+                                  image: NetworkImage(widget.product.image),
+                                  fit: BoxFit.contain,
                                 ),
                               )),
                         ),
                         FutureBuilder(
                             future: accountService.getProductLiked(),
-                            builder:
-                                (context, AsyncSnapshot<List<Product>> snapshot) {
+                            builder: (context,
+                                AsyncSnapshot<List<Product>> snapshot) {
                               if (snapshot.hasError) {
                                 return const Center(
                                   child: Text('An error...'),
@@ -123,8 +126,8 @@ class _ProductCardState extends State<ProductCard> {
                                       child: SvgPicture.asset(
                                         "assets/icons/Heart Icon_2.svg",
                                         color: isLike
-                                            ? Color(0xFFFF4848)
-                                            : Color(0xFFDBDEE4),
+                                            ? const Color(0xFFFF4848)
+                                            : const Color(0xFFDBDEE4),
                                       ),
                                     ),
                                   ),
@@ -135,6 +138,31 @@ class _ProductCardState extends State<ProductCard> {
                                 );
                               }
                             }),
+                        (widget.product.avgPoint > 0) ? Positioned(
+                          top: 10,
+                          left: 5,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  widget.product.avgPoint.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                SvgPicture.asset("assets/icons/Star Icon.svg"),
+                              ],
+                            ),
+                          ),
+                        ) : const SizedBox.shrink(),
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -142,14 +170,15 @@ class _ProductCardState extends State<ProductCard> {
                       alignment: Alignment.topCenter,
                       child: Text(
                         totTitle(widget.product.name),
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    const SizedBox(height: 5),
                     Container(
                       alignment: Alignment.topCenter,
                       child: Text(
-                        "${formatDouble(widget.product.price)}đ",
+                        formatPrice(widget.product.price),
                         style: TextStyle(
                           fontSize: getProportionateScreenWidth(18),
                           fontWeight: FontWeight.w600,

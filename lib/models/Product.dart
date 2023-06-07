@@ -6,7 +6,7 @@ import 'Rating.dart';
 class Product {
   final int id;
   final String name, image, description;
-  final double price;
+  final double price, discount;
   final bool status, hasTopping;
   final CategoryModel category;
   final double avgPoint;
@@ -16,6 +16,7 @@ class Product {
     required this.name,
     required this.image,
     required this.price,
+    required this.discount,
     required this.status,
     required this.description,
     required this.category,
@@ -29,6 +30,7 @@ class Product {
       name: json['name'] as String,
       category: CategoryModel.fromJson(json["category"]),
       price: json['price'],
+      discount: json['discount'],
       status: json['status'],
       description: json['description'],
       image: json['img_url'],
@@ -50,7 +52,7 @@ Product parseProduct(String responseBody) {
 class ProductDetail {
   final int id;
   final String name, image, description;
-  final double price;
+  final double price, discount;
   final bool status;
   final CategoryModel category;
   final double avgPoint;
@@ -61,6 +63,7 @@ class ProductDetail {
     required this.name,
     required this.image,
     required this.price,
+    required this.discount,
     required this.status,
     required this.description,
     required this.category,
@@ -76,6 +79,7 @@ class ProductDetail {
       name: json["product"]['name'] as String,
       category: CategoryModel.fromJson(json["product"]["category"]),
       price: json["product"]['price'],
+      discount: json["product"]['discount'],
       status: json["product"]['status'],
       description: json["product"]['description'],
       image: json["product"]['img_url'],

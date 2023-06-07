@@ -14,7 +14,7 @@ String formatDouble(double d) {
     int.parse(prettify(d)),
   );
 }
-String formatPrice(double s) {
+String formatCurrency(double s) {
   return NumberFormat.currency(locale: "vi-VN").format(
     int.parse(prettify(s)),
   );
@@ -27,4 +27,7 @@ String totTitle(String input) {
   }
   final output = splitStr.join(' ');
   return output;
+}
+String formatPrice(double d) {
+  return '₫${NumberFormat('#,##0', 'eu',).format(d)}';
 }

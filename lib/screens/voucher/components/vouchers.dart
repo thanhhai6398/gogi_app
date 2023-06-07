@@ -94,7 +94,7 @@ class StateVouchers extends State<Vouchers> {
                             )
                           : {
                               alertToast(
-                                  'Bạn cần mua thêm ${formatPrice(value! - cart.totalPrice)} để sử dụng voucher này!')
+                                  'Bạn cần mua thêm ${formatCurrency(value! - cart.totalPrice)} để sử dụng voucher này!')
                             };
                     },
                     child: Container(
@@ -238,14 +238,14 @@ class VoucherCard extends StatelessWidget {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Đơn tối thiểu: ${formatPrice(voucher.minimumOrderValue)}",
+                        "Đơn tối thiểu: ${formatCurrency(voucher.minimumOrderValue)}",
                       ),
                     ),
                     SizedBox(height: getProportionateScreenHeight(5)),
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Giảm tối đa: ${formatPrice(voucher.maximumDiscountAmount)}",
+                        "Giảm tối đa: ${formatCurrency(voucher.maximumDiscountAmount)}",
                         maxLines: 2,
                       ),
                     ),
