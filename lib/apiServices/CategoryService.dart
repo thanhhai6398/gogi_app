@@ -9,7 +9,7 @@ class CategoryService {
   Client client = Client();
 
   Future<List<CategoryModel>> getAllCategory() async {
-    final response = await client.get(Uri.parse('$url/categories'));
+    final response = await client.get(Uri.parse('$url/categories/available'));
     return compute(parseCategories, response.body);
   }
 }

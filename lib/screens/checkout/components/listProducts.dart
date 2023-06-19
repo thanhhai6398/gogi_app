@@ -53,16 +53,18 @@ class CartCard extends StatelessWidget {
         padding: const EdgeInsets.all(5),
         child: Row(
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              decoration: BoxDecoration(
-                color: Colors.deepOrange[50],
-              ),
-              child: Image.network(
-                cartItem.image,
-                height: 70,
-                width: 50,
-                fit: BoxFit.contain,
+            SizedBox(
+              width: 70,
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Container(
+                  padding: EdgeInsets.all(getProportionateScreenWidth(5)),
+                  decoration: BoxDecoration(
+                    //color: const Color(0xFFF5F6F9),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Image.network(cartItem.image),
+                ),
               ),
             ),
             const SizedBox(

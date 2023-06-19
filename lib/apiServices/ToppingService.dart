@@ -12,7 +12,7 @@ class ToppingService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("accessToken");
 
-    final response = await client.get(Uri.parse('$url/toppings'), headers: {
+    final response = await client.get(Uri.parse('$url/toppings/available'), headers: {
       'Authorization': 'Bearer $token',
     });
     print(response.body);
