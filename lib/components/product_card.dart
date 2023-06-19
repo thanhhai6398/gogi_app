@@ -74,7 +74,7 @@ class _ProductCardState extends State<ProductCard> {
                     Stack(
                       children: [
                         AspectRatio(
-                          aspectRatio: 2 / 3,
+                          aspectRatio: 0.9,
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Hero(

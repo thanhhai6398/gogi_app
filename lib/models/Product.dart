@@ -25,6 +25,10 @@ class Product {
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
+    var point = 0.0;
+    if( json['avgPoint'] != null) {
+      point = json['avgPoint'];
+    }
     return Product(
       id: json['id'] as int,
       name: json['name'] as String,
@@ -34,7 +38,7 @@ class Product {
       status: json['status'],
       description: json['description'],
       image: json['img_url'],
-      avgPoint: json['avgPoint'],
+      avgPoint: point,
       hasTopping: json['hasTopping'],
     );
   }

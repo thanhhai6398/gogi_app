@@ -64,7 +64,7 @@ class ProductCardMenu extends StatelessWidget {
                   child: Image(
                     image: NetworkImage(product.image),
                     height: 120,
-                    width: 80,
+                    width: 100,
                   ),
                 ),
                 Expanded(

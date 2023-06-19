@@ -5,12 +5,11 @@ import '../constants.dart';
 import 'package:http/http.dart' show Client;
 
 import '../models/Product.dart';
-import '../models/Rating.dart';
 class ProductService {
   Client client = Client();
 
   Future<List<Product>> getAllProduct() async {
-    final response = await client.get(Uri.parse('$url/products/all'));
+    final response = await client.get(Uri.parse('$url/products/available'));
     return compute(parseProducts, response.body);
   }
 
