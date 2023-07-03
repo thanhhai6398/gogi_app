@@ -36,13 +36,19 @@ class CheckoutScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: kPrimaryColor),
-                  onPressed: () => {
-                    sharedPref.remove("customerId"),
-                    sharedPref.remove("voucherId"),
-                    sharedPref.remove("storeId"),
-                    sharedPref.remove("lastTotal"),
-                    sharedPref.remove("type"),
-                    Navigator.pushNamed(context, HomeScreen.routeName)
+                  onPressed: ()  {
+                    sharedPref.removeMultiple();
+
+                    // sharedPref.remove("customerId"),
+                    // sharedPref.remove("voucherId"),
+                    // sharedPref.remove("storeId"),
+                    // sharedPref.remove("lastTotal"),
+                    // sharedPref.remove("type"),
+                    Navigator.of(context).pushAndRemoveUntil(
+                      CupertinoPageRoute(builder: (context) => HomeScreen()),
+                          (_) => false,
+                    );
+
                   },
                   child: const Text('Thoát'),
                 ),
@@ -196,11 +202,12 @@ class BottomState extends State<Bottom> {
           //print(orderReq);
           orderService.postOrder(orderReq).then((value) {
             if (value == true) {
-              sharedPref.remove("customerId");
-              sharedPref.remove("voucherId");
-              sharedPref.remove("storeId");
-              sharedPref.remove("lastTotal");
-              sharedPref.remove("type");
+              sharedPref.removeMultiple();
+              // sharedPref.remove("customerId");
+              // sharedPref.remove("voucherId");
+              // sharedPref.remove("storeId");
+              // sharedPref.remove("lastTotal");
+              // sharedPref.remove("type");
               cart.removeAll();
               successToast("Đặt hàng thành công");
               Navigator.of(context).pushAndRemoveUntil(

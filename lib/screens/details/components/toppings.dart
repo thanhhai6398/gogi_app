@@ -31,7 +31,7 @@ class ToppingsState extends State<Toppings> {
   @override
   Widget build(BuildContext context) {
     return ListBody(
-      children: widget.toppings
+      children: widget.toppings.where((element) => element.status == true)
           .map((item) => CheckboxListTile(
                 value: _selectedItems.contains(item.id),
                 title: Row(

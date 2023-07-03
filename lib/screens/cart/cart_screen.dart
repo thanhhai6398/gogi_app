@@ -14,6 +14,7 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       appBar: buildAppBar(context),
       body: Body(),
+      backgroundColor: Colors.grey[100],
       bottomNavigationBar: const CheckoutCard(),
     );
   }

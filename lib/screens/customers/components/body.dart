@@ -29,7 +29,7 @@ class BodyState extends State<Body> {
                       child: Text('ERROR: ${snapshot.error.toString()}'),
                     );
                   } else if (snapshot.hasData) {
-                    return Customers(customers: snapshot.data!);
+                    return Customers(customers: snapshot.data!, screen: 'customers',);
                   } else {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -48,17 +48,14 @@ class BodyState extends State<Body> {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
-                                insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-                                scrollable: true,
-                                content: AddCustomerForm(),
-                                actions: [
-                                  TextButton(
-                                      child: const Text("Đóng"),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      })
-                                ],
+                              return Dialog(
+                                insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                elevation: 10,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: AddCustomerForm(),
+                                ),
                               );
                             })
                       }),

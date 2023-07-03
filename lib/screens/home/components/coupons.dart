@@ -65,7 +65,7 @@ class CouponCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20)),
           child: SizedBox(
             width: 160,
-            height: 200,
+            height: 0.3*SizeConfig.screenHeight,
             child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(

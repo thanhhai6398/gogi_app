@@ -15,7 +15,6 @@ class ToppingService {
     final response = await client.get(Uri.parse('$url/toppings/available'), headers: {
       'Authorization': 'Bearer $token',
     });
-    print(response.body);
     return compute(parseToppings, response.body);
   }
 }

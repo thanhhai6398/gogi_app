@@ -6,11 +6,13 @@ import 'package:gogi/models/Customer.dart';
 import 'package:gogi/screens/checkout/components/customerInfor.dart';
 import 'package:gogi/screens/checkout/components/detailInfor.dart';
 import 'package:gogi/screens/checkout/components/listProducts.dart';
-
 import '../../../SharedPref.dart';
+import '../../../components/default_button.dart';
 import '../../../models/Store.dart';
 import '../../../size_config.dart';
-import '../../customers/customers_screen.dart';
+import '../../customers/components/customer_form.dart';
+import '../../customers/components/customers.dart';
+import 'dialogCustomer.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -26,107 +28,169 @@ class BodyState extends State<Body> {
 
   bool customer = false;
   int customerId = 0;
-  bool voucher = false;
   int voucherId = 0;
-  BodyState() {
-    sharedPref.containsKey("customerId").then((value) => setState(() {
-      customer = value;
-    }));
-    sharedPref.readInt("customerId").then((value) => setState((){
-      customerId = value!;
-    }));
 
-    sharedPref.containsKey("voucherId").then((value) => setState(() {
-      voucher = value;
-    }));
-    sharedPref.readInt("voucherId").then((value) => setState((){
-      voucherId = value!;
-    }));
+  // getValue() {
+  //   sharedPref.containsKey("customerId").then((value) {
+  //     setState(() {
+  //       customer = value;
+  //     });
+  //   });
+  //
+  //   sharedPref.readInt("customerId").then((value) => setState(() {
+  //         customerId = value!;
+  //       }));
+  //
+  //   sharedPref.containsKey("voucherId").then((value) {
+  //     if (value == true) {
+  //       sharedPref.readInt("voucherId").then((value) => setState(() {
+  //             voucherId = value!;
+  //           }));
+  //     }
+  //   });
+  // }
+
+  // getCustomerDefault() async {
+  //   await customerService.getCustomerDefault().then((value) {
+  //     storeService
+  //         .getStoreByAddress(value.provinceId, value.districtId)
+  //         .then((value) {
+  //       setState(() {
+  //         stores = value;
+  //       });
+  //     });
+  //     sharedPref.saveInt("customerId", value.id);
+  //   });
+  // }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getCustomerDefault();
+  //   sharedPref.readInt("customerId").then((value) => setState(() {
+  //     customerId = value!;
+  //   }));
+  // }
+
+  BodyState() {
+    // sharedPref.containsKey("customerId").then((value) => setState(() {
+    //   customer = value;
+    // }));
+    sharedPref.readInt("customerId").then((value) {
+      if (value != null) {
+        setState(() {
+          customerId = value;
+        });
+      }
+    });
+
+    sharedPref.readInt("voucherId").then((value) {
+      if (value != null) {
+        setState(() {
+          voucherId = value;
+        });
+      }
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         children: [
-          (customer == false) ?
-          FutureBuilder(
-              future: customerService.getCustomerDefault(),
-              builder: (context, AsyncSnapshot<Customer> snapshot) {
-                if (snapshot.hasError) {
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: SizedBox(
-                        child: GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                              context, CustomersScreen.routeName),
-                          child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Expanded(
-                                  child: Container(
-                                      padding: const EdgeInsets.all(5.0),
-                                      alignment: Alignment.center,
-                                      child: const Text(
-                                          "+Thêm địa chỉ nhận hàng")),
-                                ),
-                                const Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Icon(Icons.arrow_right),
-                                ),
-                              ]),
-                        ),
+          (customerId == 0)
+              ? Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: SizedBox(
+                      child: GestureDetector(
+                        onTap: () => showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                elevation: 10,
+                                child: dialogCustomer(),
+                              );
+                            }),
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                    padding: const EdgeInsets.all(5.0),
+                                    alignment: Alignment.center,
+                                    child:
+                                        const Text("+ Thêm địa chỉ nhận hàng")),
+                              ),
+                              const Align(
+                                alignment: Alignment.centerRight,
+                                child: Icon(Icons.arrow_right),
+                              ),
+                            ]),
                       ),
                     ),
-                  );
-                } else if (snapshot.hasData) {
-                  storeService
-                      .getStoreByAddress(
-                      snapshot.data!.provinceId, snapshot.data?.districtId)
-                      .then((value) {
-                    setState(() {
-                      stores = value;
-                    });
-                    sharedPref.saveInt("customerId", snapshot.data?.id);
-                    sharedPref.saveInt("storeId", dropdownValue);
-                  });
-                  return CustomerInfor(customer: snapshot.data!);
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              }) : FutureBuilder(
-              future: customerService.getCustomerById(customerId),
-              builder: (context, AsyncSnapshot<Customer> snapshot) {
-                if (snapshot.hasError) {
-                  return const Center(
-                    child: Text('An error...'),
-                  );
-                } else if (snapshot.hasData) {
-                  storeService
-                      .getStoreByAddress(
-                      snapshot.data!.provinceId, snapshot.data?.districtId)
-                      .then((value) {
-                    setState(() {
-                      stores = value;
-                    });
-                  });
-                  sharedPref.saveInt("customerId", snapshot.data?.id);
-                  return CustomerInfor(customer: snapshot.data!);
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              }),
+                  ),
+                )
+              // FutureBuilder(
+              //         future: customerService.getCustomerDefault(),
+              //         builder: (context, AsyncSnapshot<Customer> snapshot) {
+              //           if (snapshot.hasError) {
+              //
+              //           } else if (snapshot.hasData && !snapshot.hasError) {
+              //             storeService
+              //                 .getStoreByAddress(snapshot.data!.provinceId,
+              //                     snapshot.data?.districtId)
+              //                 .then((value) {
+              //               setState(() {
+              //                 stores = value;
+              //               });
+              //               sharedPref.saveInt("customerId", snapshot.data?.id);
+              //               //sharedPref.saveInt("storeId", dropdownValue);
+              //             });
+              //             return CustomerInfor(customer: snapshot.data!);
+              //           } else {
+              //             return const Center(
+              //               child: CircularProgressIndicator(),
+              //             );
+              //           }
+              //         })
+              : FutureBuilder(
+                  future: customerService.getCustomerById(customerId),
+                  builder: (context, AsyncSnapshot<Customer> snapshot) {
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Text('An error...'),
+                      );
+                    } else if (snapshot.hasData && !snapshot.hasError) {
+                      storeService
+                          .getStoreByAddress(snapshot.data!.provinceId,
+                              snapshot.data?.districtId)
+                          .then((value) {
+                        if (value.isNotEmpty) {
+                          setState(() {
+                            stores = value;
+                          });
+                        }
+                      });
+                      // sharedPref.saveInt("customerId", snapshot.data?.id);
+                      return CustomerInfor(customer: snapshot.data!);
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }),
           SizedBox(height: getProportionateScreenHeight(20)),
           buildStoreFormField(),
           SizedBox(height: getProportionateScreenHeight(20)),
           ListProducts(),
           SizedBox(height: getProportionateScreenHeight(20)),
-          DetailInfor(id: voucherId,),
+          DetailInfor(
+            id: voucherId,
+          ),
         ],
       ),
     );
@@ -162,7 +226,7 @@ class BodyState extends State<Body> {
           ));
     } else {
       return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           child: Column(
             children: [
               const Align(
@@ -199,3 +263,5 @@ class BodyState extends State<Body> {
     }
   }
 }
+
+
