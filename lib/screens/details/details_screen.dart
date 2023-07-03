@@ -30,14 +30,11 @@ class DetailsScreen extends StatelessWidget {
         badgeStyle: const badges.BadgeStyle(badgeColor: Colors.white,),
         position: badges.BadgePosition.topEnd(top: -5, end: 0),
         child: FloatingActionButton(
+          heroTag: 'cart',
           backgroundColor: Colors.deepOrangeAccent[200],
           onPressed: () => Navigator.pushNamed(context, CartScreen.routeName),
           child: const Icon(Icons.shopping_cart_sharp),
         ),
-        // IconBtnWithCounter(
-        //   svgSrc: "assets/icons/Cart Icon.svg",
-        //   press: () => Navigator.pushNamed(context, CartScreen.routeName),
-        // ),
       ),
       backgroundColor: Color(0xFFF5F6F9),
       appBar: PreferredSize(

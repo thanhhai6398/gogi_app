@@ -3,7 +3,6 @@ import 'package:gogi/format.dart';
 
 import '../../../constants.dart';
 import '../../../models/CartItem.dart';
-import '../../../size_config.dart';
 
 class CartCard extends StatelessWidget {
   final CartItem cartItem;
@@ -16,19 +15,22 @@ class CartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+        elevation: 4,
         child: Row(
           children: [
-            SizedBox(
-              width: 100,
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: Container(
-                  padding: EdgeInsets.all(getProportionateScreenWidth(5)),
-                  decoration: BoxDecoration(
-                    //color: const Color(0xFFF5F6F9),
-                    borderRadius: BorderRadius.circular(15),
+            Container(
+              margin: const EdgeInsets.all(5),
+              child: SizedBox(
+                width: 100,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image(
+                      image: NetworkImage(cartItem.image),
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                  child: Image.network(cartItem.image),
                 ),
               ),
             ),

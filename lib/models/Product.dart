@@ -96,6 +96,7 @@ class ProductDetail {
 ProductDetail parseProductDetail(String responseBody) {
   return ProductDetail.fromJson(jsonDecode(responseBody)["data"]);
 }
+
 // Our demo Products
 
 // List<Product> demoProducts = [

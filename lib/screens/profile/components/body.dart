@@ -5,8 +5,10 @@ import 'package:gogi/screens/customers/customers_screen.dart';
 import 'package:gogi/screens/forgot_password/forgot_password_screen.dart';
 import 'package:gogi/screens/splash/splash_screen.dart';
 import 'package:gogi/screens/voucher/voucher_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
+import '../../../providers/CartProvider.dart';
 import '../../../size_config.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
@@ -84,6 +86,7 @@ class _BodyState extends State<Body> {
 }
 
 alertDialogLogout(BuildContext context) {
+  final cart = Provider.of<CartProvider>(context);
   SharedPref sharedPref = SharedPref();
 // set up the buttons
   Widget cancelButton = TextButton(
@@ -110,6 +113,7 @@ alertDialogLogout(BuildContext context) {
     ),
     onPressed: () {
       sharedPref.clear();
+      cart.removeAll();
       Navigator.of(context).pushAndRemoveUntil(
         CupertinoPageRoute(builder: (context) => SplashScreen()),
         (_) => false,

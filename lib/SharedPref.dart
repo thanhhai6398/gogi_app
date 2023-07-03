@@ -48,4 +48,23 @@ class SharedPref {
     return prefs.getDouble(key);
   }
 
+  removeMultiple() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs
+        .getKeys()
+        .where((key) =>
+            key != "username" &&
+            key != "accessToken" &&
+            key != "cart_items" &&
+            key != "item_quantity" &&
+            key != "total_price")
+        .toList()
+        .forEach((element) => remove(element));
+    print('delete');
+    // for(String key in prefs.getKeys()) {
+    //   if( key != "username" && key != "accessToken" ) {
+    //     remove(key);
+    //   }
+    // }
+  }
 }

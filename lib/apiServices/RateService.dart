@@ -16,7 +16,6 @@ class RateService {
     String? token = prefs.getString("accessToken");
     final response = await client.get(Uri.parse('$url/rates/product/$id'),
         headers: {'Authorization': 'Bearer $token'});
-    print(response.body);
     return compute(parseRates, response.body);
   }
 
@@ -47,7 +46,6 @@ class RateService {
         body: rateReqToJson(data));
 
     var res = json.decode(response.body);
-    print(response.body);
 
     if (res["errCode"] == '200') {
       return true;

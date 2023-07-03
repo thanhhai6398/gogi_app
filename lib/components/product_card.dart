@@ -9,14 +9,16 @@ import '../screens/details/details_screen.dart';
 import '../size_config.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard({
+  ProductCard({
     Key? key,
     this.width = 140,
     required this.product,
+    required this.isLike
   }) : super(key: key);
 
   final double width;
   final Product product;
+  bool isLike;
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -25,13 +27,11 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends State<ProductCard> {
   AccountService accountService = AccountService();
 
-  bool isLike = false;
-
   void handleUnlike() {
     accountService.unlike(widget.product.id).then((value) {
       if (value == true) {
         setState(() {
-          isLike = false;
+          widget.isLike = false;
         });
       }
     });
@@ -41,7 +41,7 @@ class _ProductCardState extends State<ProductCard> {
     accountService.like(widget.product.id).then((value) {
       if (value == true) {
         setState(() {
-          isLike = true;
+          widget.isLike = true;
         });
       }
     });
@@ -74,7 +74,7 @@ class _ProductCardState extends State<ProductCard> {
                     Stack(
                       children: [
                         AspectRatio(
-                          aspectRatio: 0.9,
+                          aspectRatio: 1,
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Hero(
@@ -85,59 +85,38 @@ class _ProductCardState extends State<ProductCard> {
                                 ),
                               )),
                         ),
-                        FutureBuilder(
-                            future: accountService.getProductLiked(),
-                            builder: (context,
-                                AsyncSnapshot<List<Product>> snapshot) {
-                              if (snapshot.hasError) {
-                                return const Center(
-                                  child: Text('An error...'),
-                                );
-                              } else if (snapshot.hasData) {
-                                List<Product>? listProductLiked = snapshot.data;
-                                for (var e in listProductLiked!) {
-                                  if (e.id == widget.product.id) {
-                                    isLike = true;
-                                  }
-                                }
-                                return Positioned(
-                                  top: 5,
-                                  right: 5,
-                                  child: InkWell(
-                                    borderRadius: BorderRadius.circular(50),
-                                    onTap: () {
-                                      if (isLike == true) {
-                                        handleUnlike();
-                                      } else {
-                                        handleLike();
-                                      }
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.all(
-                                          getProportionateScreenWidth(8)),
-                                      height: getProportionateScreenWidth(40),
-                                      width: getProportionateScreenWidth(40),
-                                      decoration: BoxDecoration(
-                                        color: isLike
-                                            ? kPrimaryColor.withOpacity(0.15)
-                                            : kSecondaryColor.withOpacity(0.1),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: SvgPicture.asset(
-                                        "assets/icons/Heart Icon_2.svg",
-                                        color: isLike
-                                            ? const Color(0xFFFF4848)
-                                            : const Color(0xFFDBDEE4),
-                                      ),
-                                    ),
-                                  ),
-                                );
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(50),
+                            onTap: () {
+                              if (widget.isLike == true) {
+                                handleUnlike();
                               } else {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
+                                handleLike();
                               }
-                            }),
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(
+                                  getProportionateScreenWidth(8)),
+                              height: getProportionateScreenWidth(40),
+                              width: getProportionateScreenWidth(40),
+                              decoration: BoxDecoration(
+                                color: widget.isLike
+                                    ? kPrimaryColor.withOpacity(0.15)
+                                    : kSecondaryColor.withOpacity(0.1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: SvgPicture.asset(
+                                "assets/icons/Heart Icon_2.svg",
+                                color: widget.isLike
+                                    ? const Color(0xFFFF4848)
+                                    : const Color(0xFFDBDEE4),
+                              ),
+                            ),
+                          ),
+                        ),
                         (widget.product.avgPoint > 0) ? Positioned(
                           top: 10,
                           left: 5,

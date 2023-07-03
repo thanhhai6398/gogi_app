@@ -16,7 +16,6 @@ import '../../../models/Customer.dart';
 import '../../../models/Request/CustomerRequest.dart';
 import '../../../size_config.dart';
 import '../../profile/profile_screen.dart';
-import '../../splash/splash_screen.dart';
 
 class AddCustomerForm extends StatefulWidget {
   @override
@@ -104,27 +103,11 @@ class AddCustomerFormState extends State<AddCustomerForm> {
 
   @override
   Widget build(BuildContext context) {
-    // if (widget.action != 'add') {
-    //   Customer args = widget.customer;
-    //   _controllerName.text = args.name;
-    //   _controllerPhoneNumber.text = args.phone;
-    //   _controllerAddress.text = args.address;
-    //
-    //   getDistrictList(args.provinceId);
-    //
-    //   provinceId = args.provinceId;
-    //   getNameProvince(args.provinceId);
-    //   districtId = args.districtId;
-    //   getNameDistrict(args.districtId);
-    //
-    //   id = args.id;
-    //   //provinceValue = provinceId;
-    //   //districtValue = districtId;
-    // }
     return Form(
       key: _formKey,
       child: Column(
         children: [
+          SizedBox(height: getProportionateScreenHeight(10)),
           const Text(
             "Địa chỉ",
             textAlign: TextAlign.center,
@@ -234,9 +217,10 @@ class AddCustomerFormState extends State<AddCustomerForm> {
                   if (value == true) {
                     Navigator.of(context).pushAndRemoveUntil(
                       CupertinoPageRoute(builder: (context) => ProfileScreen()),
-                          (_) => false,
+                      (_) => false,
                     );
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomersScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CustomersScreen()));
                   } else {
                     addError(error: "Thêm địa chỉ không thành công");
                     return "";
@@ -252,29 +236,30 @@ class AddCustomerFormState extends State<AddCustomerForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
-      controller: _controllerAddress,
-      onSaved: (newValue) => address = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kAddressNullError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kAddressNullError);
-          return "";
-        }
-        return null;
-      },
-      decoration: const InputDecoration(
-        labelText: "Địa chỉ",
-        hintText: "Số nhà, Tên đường, Phường/Xã",
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon:
-            CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
-      ),
-    );
+        controller: _controllerAddress,
+        onSaved: (newValue) => address = newValue,
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            removeError(error: kAddressNullError);
+          }
+          return null;
+        },
+        validator: (value) {
+          if (value!.isEmpty) {
+            addError(error: kAddressNullError);
+            return "";
+          }
+          return null;
+        },
+        decoration: const InputDecoration(
+          labelText: "Địa chỉ",
+          hintText: "Số nhà, Tên đường, Phường/Xã",
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon:
+              CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
+        ),
+        keyboardType: TextInputType.multiline,
+        maxLines: 3);
   }
 
   TextFormField buildPhoneNumberFormField() {
@@ -470,6 +455,7 @@ class EditCustomerFormState extends State<EditCustomerForm> {
       key: _formKey,
       child: Column(
         children: [
+          SizedBox(height: getProportionateScreenHeight(10)),
           const Text(
             "Địa chỉ",
             textAlign: TextAlign.center,
@@ -578,9 +564,10 @@ class EditCustomerFormState extends State<EditCustomerForm> {
                   if (value == true) {
                     Navigator.of(context).pushAndRemoveUntil(
                       CupertinoPageRoute(builder: (context) => ProfileScreen()),
-                          (_) => false,
+                      (_) => false,
                     );
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomersScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CustomersScreen()));
                   } else {
                     addError(error: "Thay đổi không thành công");
                     return "";
@@ -596,31 +583,32 @@ class EditCustomerFormState extends State<EditCustomerForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
-      controller: _controllerAddress,
-      onSaved: (newValue) => address = newValue!,
-      onChanged: (value) {
-        getNameProvince(provinceId);
-        getNameDistrict(districtId);
-        if (value.isNotEmpty) {
-          removeError(error: kAddressNullError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kAddressNullError);
-          return "";
-        }
-        return null;
-      },
-      decoration: const InputDecoration(
-        labelText: "Địa chỉ",
-        hintText: "Số nhà, Tên đường, Phường/Xã",
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon:
-            CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
-      ),
-    );
+        controller: _controllerAddress,
+        onSaved: (newValue) => address = newValue!,
+        onChanged: (value) {
+          getNameProvince(provinceId);
+          getNameDistrict(districtId);
+          if (value.isNotEmpty) {
+            removeError(error: kAddressNullError);
+          }
+          return null;
+        },
+        validator: (value) {
+          if (value!.isEmpty) {
+            addError(error: kAddressNullError);
+            return "";
+          }
+          return null;
+        },
+        decoration: const InputDecoration(
+          labelText: "Địa chỉ",
+          hintText: "Số nhà, Tên đường, Phường/Xã",
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon:
+              CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
+        ),
+        keyboardType: TextInputType.multiline,
+        maxLines: 3);
   }
 
   TextFormField buildPhoneNumberFormField() {

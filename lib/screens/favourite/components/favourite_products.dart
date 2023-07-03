@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gogi/format.dart';
 
+import '../../../components/product_card.dart';
 import '../../../constants.dart';
 import '../../../models/Product.dart';
 import '../../../size_config.dart';
@@ -25,12 +26,12 @@ class FavouriteProducts extends StatelessWidget {
         itemCount: products.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 8.0,
+          crossAxisSpacing: 10.0,
           mainAxisSpacing: 10.0,
-          childAspectRatio: 0.6,
+          childAspectRatio: 0.7,
         ),
         itemBuilder: (BuildContext context, int index) {
-          return ProductCardGrid(product: products[index]);
+          return ProductCard(product: products[index], isLike: true,);
         },
       );
     }
@@ -39,11 +40,9 @@ class FavouriteProducts extends StatelessWidget {
 class ProductCardGrid extends StatelessWidget{
   const ProductCardGrid({
     Key? key,
-    this.width = 140,
     required this.product,
   }) : super(key: key);
 
-  final double width;
   final Product product;
 
   @override
@@ -51,7 +50,6 @@ class ProductCardGrid extends StatelessWidget{
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
-        width: getProportionateScreenWidth(width),
         child: GestureDetector(
           onTap: () => Navigator.pushNamed(
             context,

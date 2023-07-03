@@ -40,6 +40,12 @@ class StoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         color: Colors.white,
+        elevation: 50,
+        shadowColor: Colors.black.withOpacity(0.2),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: const BorderSide(width: 1),
+        ),
         child: Row(
           children: <Widget>[
             Container(

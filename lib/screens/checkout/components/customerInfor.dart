@@ -7,6 +7,7 @@ import '../../../format.dart';
 import '../../../models/Customer.dart';
 import '../../../size_config.dart';
 import '../../customers/customers_screen.dart';
+import 'dialogCustomer.dart';
 
 class CustomerInfor extends StatelessWidget {
   Customer customer;
@@ -22,7 +23,18 @@ class CustomerInfor extends StatelessWidget {
         child: IntrinsicHeight(
             child: SizedBox(
                 child: GestureDetector(
-          onTap: () => Navigator.pushNamed(context, CustomersScreen.routeName),
+          onTap: () => showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  insetPadding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  elevation: 10,
+                  child: dialogCustomer(),
+                );
+              }),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -75,13 +87,23 @@ class CustomerInfor extends StatelessWidget {
                   ]),
                 ),
               ),
-              Align(
-                alignment: Alignment.center,
-                child: GestureDetector(
-                    onTap: () =>
-                        Navigator.pushNamed(context, CustomersScreen.routeName),
-                    child: const Icon(Icons.arrow_right)),
-              ),
+              const Align(
+                  alignment: Alignment.center, child: Icon(Icons.arrow_right)),
+              // GestureDetector(
+              //     onTap: () => showDialog(
+              //         context: context,
+              //         builder: (BuildContext context) {
+              //           return Dialog(
+              //             insetPadding: const EdgeInsets.symmetric(
+              //                 horizontal: 15, vertical: 30),
+              //             shape: RoundedRectangleBorder(
+              //                 borderRadius: BorderRadius.circular(30)),
+              //             elevation: 10,
+              //             child: dialogCustomer(),
+              //           );
+              //         }),
+              //     child: const Icon(Icons.arrow_right)),
+              // ),
             ],
           ),
         ))));

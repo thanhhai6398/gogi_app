@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../../SharedPref.dart';
+import '../../../apiServices/CustomerService.dart';
 import '../../../providers/CartProvider.dart';
 import '../../../size_config.dart';
 import 'cart_card.dart';
@@ -12,10 +14,18 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  CustomerService customerService = CustomerService();
+  SharedPref sharedPref = SharedPref();
+
   @override
   void initState() {
     super.initState();
     context.read<CartProvider>().getData();
+    customerService.getCustomerDefault().then((value) {
+      if(value != null) {
+        sharedPref.saveInt("customerId", value.id);
+      }
+    });
   }
 
   @override
@@ -38,7 +48,7 @@ class _BodyState extends State<Body> {
             return ListView.builder(
             itemCount: provider.cart.length,
             itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
+              padding: const EdgeInsets.only(bottom: 5),
               child: Dismissible(
                 key: Key(provider.cart[index].id.toString()),
                 direction: DismissDirection.endToStart,

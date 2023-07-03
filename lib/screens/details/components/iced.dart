@@ -41,41 +41,6 @@ class _IcedState extends State<Iced> {
               child: Row(
                 children: [
                   Radio(
-                    value: '70%',
-                    groupValue: widget.iced,
-                    onChanged: (value) {
-                      widget.notifyParent(value!);
-                    },
-                  ),
-                  const Expanded(child: Text('70% đá'))
-                ],
-              ),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Expanded(
-              flex: 1,
-              child: Row(
-                children: [
-                  Radio(
-                    value: '30%',
-                    groupValue: widget.iced,
-                    onChanged: (value) {
-                      widget.notifyParent(value!);
-                    },
-                  ),
-                  const Expanded(child: Text('30% đá'))
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Row(
-                children: [
-                  Radio(
                     value: '100%',
                     groupValue: widget.iced,
                     onChanged: (value) {

@@ -16,8 +16,9 @@ import '../customers_screen.dart';
 
 class Customers extends StatefulWidget {
   List<Customer> customers = [];
+  String screen;
 
-  Customers({super.key, required this.customers});
+  Customers({super.key, required this.customers, required this.screen});
 
   @override
   State<Customers> createState() => StateCustomers();
@@ -42,36 +43,34 @@ class StateCustomers extends State<Customers> {
         shrinkWrap: true,
         padding: const EdgeInsets.all(10.0),
         children: List.generate(widget.customers.length, (index) {
-          return Center(
-            child: InkWell(
-              onTap: () {
-                setState(() =>
-                    {selectedIndex = index, id = widget.customers[index].id});
-                sharedPref.saveInt("customerId", id);
-                Navigator.of(context).pushAndRemoveUntil(
-                  CupertinoPageRoute(
-                      builder: (context) => const CheckoutScreen()),
-                  (_) => false,
-                );
-              },
-              child: Container(
-                color:
-                    (selectedIndex == index) ? Colors.deepOrange : Colors.white,
-                child: CustomerCard(customer: widget.customers[index]),
+          if (widget.screen == 'checkout') {
+            return Center(
+              child: InkWell(
+                onTap: () {
+                  setState(() =>
+                      {selectedIndex = index, id = widget.customers[index].id});
+                  sharedPref.saveInt("customerId", id);
+                  Navigator.of(context).pushAndRemoveUntil(
+                    CupertinoPageRoute(
+                        builder: (context) => const CheckoutScreen()),
+                    (_) => false,
+                  );
+                },
+                child: Container(
+                  color: (selectedIndex == index)
+                      ? Colors.deepOrange
+                      : Colors.white,
+                  child: CustomerCard(customer: widget.customers[index]),
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            return Center(
+              child: CustomerCard(customer: widget.customers[index]),
+            );
+          }
         }),
       );
-      // ListView(
-      //   shrinkWrap: true,
-      //   padding: const EdgeInsets.all(10.0),
-      //   children: List.generate(widget.customers.length, (index) {
-      //     return Center(
-      //       child: CustomerCard(customer: widget.customers[index]),
-      //     );
-      //   }),
-      // );
     }
   }
 }
@@ -145,14 +144,13 @@ class CustomerCard extends StatelessWidget {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
+                              return Dialog(
                                 insetPadding: const EdgeInsets.only(
                                     right: 10,
                                     left: 180,
                                     top: 250,
-                                    bottom: 250),
-                                scrollable: true,
-                                content: Padding(
+                                    bottom: 350),
+                                child: Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Column(children: [
                                     TextButton(
@@ -166,21 +164,23 @@ class CustomerCard extends StatelessWidget {
                                         showDialog(
                                             context: context,
                                             builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                insetPadding:
-                                                    const EdgeInsets.symmetric(
+                                              return Dialog(
+                                                  insetPadding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 15,
+                                                      vertical: 50),
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30)),
+                                                  elevation: 10,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
                                                         horizontal: 10),
-                                                scrollable: true,
-                                                content: EditCustomerForm(
-                                                    customer: customer),
-                                                actions: [
-                                                  TextButton(
-                                                      child: const Text("Đóng"),
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      })
-                                                ],
-                                              );
+                                                    child: EditCustomerForm(
+                                                        customer: customer),
+                                                  ));
                                             });
                                       },
                                     ),
@@ -206,11 +206,17 @@ class CustomerCard extends StatelessWidget {
                                             .putCustomerDefault(customer.id)
                                             .then((value) {
                                           if (value == true) {
-                                            Navigator.of(context).pushAndRemoveUntil(
-                                              CupertinoPageRoute(builder: (context) => ProfileScreen()),
-                                                  (_) => false,
+                                            Navigator.of(context)
+                                                .pushAndRemoveUntil(
+                                              CupertinoPageRoute(
+                                                  builder: (context) =>
+                                                      ProfileScreen()),
+                                              (_) => false,
                                             );
-                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomersScreen()));
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        CustomersScreen()));
                                           } else {
                                             return "";
                                           }
@@ -219,13 +225,6 @@ class CustomerCard extends StatelessWidget {
                                     ),
                                   ]),
                                 ),
-                                actions: [
-                                  TextButton(
-                                      child: const Text("Đóng"),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      })
-                                ],
                               );
                             })
                       },

@@ -59,78 +59,81 @@ class BodyState extends State<Body> {
     return SafeArea(
       child: Column(
         children: [
-          Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              InputDecorator(
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 40.0, vertical: 8.0),
-                  labelText: 'Tỉnh/TP',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0)),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
                 ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    isExpanded: true,
-                    value: provinceValue,
-                    hint: const Text("Chọn Tỉnh/TP"),
-                    items: provinces.map((p) {
-                      return DropdownMenuItem(
-                        value: p.code,
-                        child: Text(p.name), //value of item
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        provinceValue = value!;
-                        districtValue = null;
-                      });
-                      getDistrictList(value!);
-                    },
+                InputDecorator(
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 40.0, vertical: 8.0),
+                    labelText: 'Tỉnh/TP',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              InputDecorator(
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 40.0, vertical: 8.0),
-                  labelText: 'Quận/Huyện',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0)),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    isExpanded: true,
-                    value: districtValue,
-                    hint: const Text("Chọn Quận/Huyện"),
-                    items: districts.map((d) {
-                      return DropdownMenuItem(
-                        value: d.code,
-                        child: Text(d.name), //value of item
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        districtValue = value!;
-                      });
-                      storeService
-                          .getStoreByAddress(provinceValue!, districtValue)
-                          .then((value) {
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      isExpanded: true,
+                      value: provinceValue,
+                      hint: const Text("Chọn Tỉnh/TP"),
+                      items: provinces.map((p) {
+                        return DropdownMenuItem(
+                          value: p.code,
+                          child: Text(p.name), //value of item
+                        );
+                      }).toList(),
+                      onChanged: (value) {
                         setState(() {
-                          stores = value;
+                          provinceValue = value!;
+                          districtValue = null;
                         });
-                      });
-                    },
+                        getDistrictList(value!);
+                      },
+                    ),
                   ),
                 ),
-              )
-            ],
+                const SizedBox(
+                  height: 20,
+                ),
+                InputDecorator(
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 40.0, vertical: 8.0),
+                    labelText: 'Quận/Huyện',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      isExpanded: true,
+                      value: districtValue,
+                      hint: const Text("Chọn Quận/Huyện"),
+                      items: districts.map((d) {
+                        return DropdownMenuItem(
+                          value: d.code,
+                          child: Text(d.name), //value of item
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          districtValue = value!;
+                        });
+                        storeService
+                            .getStoreByAddress(provinceValue!, districtValue)
+                            .then((value) {
+                          setState(() {
+                            stores = value;
+                          });
+                        });
+                      },
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
           SizedBox(height: getProportionateScreenHeight(20)),
           (stores.isNotEmpty)
