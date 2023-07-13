@@ -18,7 +18,7 @@ class OrderScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       body: Body(),
-      bottomNavigationBar: const CustomBottomNavBar(selectedMenu: MenuState.order),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.order),
     );
   }
 }

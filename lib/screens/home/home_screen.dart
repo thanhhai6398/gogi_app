@@ -66,7 +66,7 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: Body(),
-      bottomNavigationBar: const CustomBottomNavBar(selectedMenu: MenuState.home),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
     );
   }
 }

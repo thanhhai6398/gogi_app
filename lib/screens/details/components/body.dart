@@ -13,6 +13,7 @@ import 'package:gogi/screens/details/components/toppings.dart';
 import 'package:gogi/size_config.dart';
 import 'package:provider/provider.dart';
 
+import '../../../SharedPref.dart';
 import '../../../enums.dart';
 import '../../../providers/CartProvider.dart';
 import '../../../models/Rating.dart';
@@ -40,6 +41,14 @@ class _DetailState extends State<Body> {
   String _iced = '100%', _sugar = '100%';
   int _quantity = 1;
   List<Topping> toppings = [];
+
+  SharedPref sharedPref = SharedPref();
+  bool login = false;
+  _DetailState() {
+    sharedPref.containsKey("username").then((value) => setState(() {
+      login = value;
+    }));
+  }
 
   setSize(size) {
     setState(() {
@@ -89,7 +98,7 @@ class _DetailState extends State<Body> {
           color: Colors.white,
           child: Column(
             children: [
-              FutureBuilder(
+              (login == true) ? FutureBuilder(
                   future: accountService.getProductLiked(),
                   builder: (context, AsyncSnapshot<List<Product>> snapshot) {
                     if (snapshot.hasError) {
@@ -113,7 +122,11 @@ class _DetailState extends State<Body> {
                         child: CircularProgressIndicator(),
                       );
                     }
-                  }),
+                  })
+              : ProductDescription(
+                isLike: false,
+                product: product,
+              ),
               TopRoundedContainer(
                   color: const Color(0xFFF6F7F9),
                   child: Column(

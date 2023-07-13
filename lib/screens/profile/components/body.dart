@@ -86,7 +86,7 @@ class _BodyState extends State<Body> {
 }
 
 alertDialogLogout(BuildContext context) {
-  final cart = Provider.of<CartProvider>(context);
+  //final cart = Provider.of<CartProvider>(context);
   SharedPref sharedPref = SharedPref();
 // set up the buttons
   Widget cancelButton = TextButton(
@@ -113,7 +113,7 @@ alertDialogLogout(BuildContext context) {
     ),
     onPressed: () {
       sharedPref.clear();
-      cart.removeAll();
+      //if(cart.getCounter() > 0) {cart.removeAll();}
       Navigator.of(context).pushAndRemoveUntil(
         CupertinoPageRoute(builder: (context) => SplashScreen()),
         (_) => false,
