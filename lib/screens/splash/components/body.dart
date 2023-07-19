@@ -82,12 +82,13 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Tiếp tục",
                       press: () {
-                        if (login == false) {
-                          Navigator.pushNamed(context, SignInScreen.routeName);
-                        }
-                        else {
-                          Navigator.pushNamed(context, HomeScreen.routeName);
-                        }
+                        Navigator.pushNamed(context, HomeScreen.routeName);
+                        // if (login == false) {
+                        //   Navigator.pushNamed(context, SignInScreen.routeName);
+                        // }
+                        // else {
+                        //   Navigator.pushNamed(context, HomeScreen.routeName);
+                        // }
                       },
                     ),
                     Spacer(),

@@ -113,7 +113,7 @@ class _SignFormState extends State<SignForm> {
                       sharedPref.save("username", username);
                       sharedPref.save("accessToken", value?.accessToken);
                       //Navigator.pushNamed(context, HomeScreen.routeName);
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) => HomeScreen()));
                     }
                     else {

@@ -49,9 +49,11 @@ final otpInputDecoration = InputDecoration(
 OutlineInputBorder outlineInputBorder() {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(getProportionateScreenWidth(15)),
-    borderSide: BorderSide(color: kTextColor),
+    borderSide: const BorderSide(color: kTextColor),
   );
 }
 
-var url = 'http://192.168.0.109:8089';
-// IPv4 Address: 192.168.0.107
+var url = 'http://192.168.43.247:8089';
+//https://gogi-4dfede23b564.herokuapp.com
+// http://192.168.1.220:8089
+// IPv4 Address: 192.168.1.220

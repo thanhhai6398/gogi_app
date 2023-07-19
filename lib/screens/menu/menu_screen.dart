@@ -20,7 +20,7 @@ class MenuScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       body: Body(id: agrs.id),
-      bottomNavigationBar: const CustomBottomNavBar(selectedMenu: MenuState.menu),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.menu),
     );
   }
 }

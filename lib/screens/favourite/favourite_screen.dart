@@ -18,7 +18,7 @@ class FavouriteScreen extends StatelessWidget{
         automaticallyImplyLeading: false,
       ),
       body: Body(),
-      bottomNavigationBar: const CustomBottomNavBar(selectedMenu: MenuState.favorite),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.favorite),
     );
   }
 

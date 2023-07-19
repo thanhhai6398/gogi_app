@@ -3,17 +3,22 @@ import 'package:gogi/screens/checkout/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../SharedPref.dart';
 import '../../../components/default_button.dart';
 import '../../../providers/CartProvider.dart';
 import '../../../size_config.dart';
+import '../../sign_in/sign_in_screen.dart';
 
 class CheckoutCard extends StatelessWidget {
-  const CheckoutCard({
+  CheckoutCard({
     Key? key,
   }) : super(key: key);
 
+  SharedPref sharedPref = SharedPref();
+  bool login = false;
   @override
   Widget build(BuildContext context) {
+    sharedPref.containsKey("username").then((value) => login = value);
     final cart = Provider.of<CartProvider>(context);
     return Container(
       padding: EdgeInsets.symmetric(
@@ -59,7 +64,12 @@ class CheckoutCard extends StatelessWidget {
                   child: DefaultButton(
                     text: "Tiếp tục",
                     press: () {
-                      Navigator.pushNamed(context, CheckoutScreen.routeName);
+                      if(login == false) {
+                          Navigator.pushNamed(context, SignInScreen.routeName);
+                        }
+                        else {
+                        Navigator.pushNamed(context, CheckoutScreen.routeName);
+                        }
                     },
                   ),
                 ),

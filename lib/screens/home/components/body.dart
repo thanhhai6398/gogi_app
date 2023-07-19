@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gogi/apiServices/VoucherService.dart';
 import 'package:gogi/screens/home/components/section_title.dart';
 
+import '../../../SharedPref.dart';
 import '../../../apiServices/AccountService.dart';
 import '../../../apiServices/ProductService.dart';
 import '../../../models/Product.dart';
@@ -12,10 +13,21 @@ import 'home_banner.dart';
 import 'popular_product.dart';
 import 'coupons.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  @override
+  State<Body> createState() => _BodyState();
+}
+class _BodyState extends State<Body> {
   ProductService productService = ProductService();
   AccountService accountService = AccountService();
   VoucherService voucherService = VoucherService();
+  SharedPref sharedPref = SharedPref();
+  bool login = false;
+  _BodyState() {
+    sharedPref.containsKey("username").then((value) => setState(() {
+      login = value;
+    }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +36,10 @@ class Body extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: getProportionateScreenHeight(20)),
-            const HomeHeader(),
+            HomeHeader(),
             SizedBox(height: getProportionateScreenWidth(5)),
             const BannerHome(),
-            FutureBuilder(
+            (login == true) ? FutureBuilder(
                 future: productService.getProductsForYou(),
                 builder: (context, AsyncSnapshot<List<Product>> snapshot) {
                   if (snapshot.hasError) {
@@ -35,7 +47,7 @@ class Body extends StatelessWidget {
                       child: Text('An error...'),
                     );
                   } else if (snapshot.hasData) {
-                    if(snapshot.data!.isNotEmpty) {
+                    if (snapshot.data!.isNotEmpty) {
                       return Column(
                         children: [
                           SizedBox(height: getProportionateScreenWidth(20)),
@@ -53,13 +65,13 @@ class Body extends StatelessWidget {
                     } else {
                       return const SizedBox.shrink();
                     }
-
                   } else {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
-                }),
+                })
+            : const SizedBox.shrink(),
             SizedBox(height: getProportionateScreenWidth(20)),
             Padding(
               padding: EdgeInsets.symmetric(
@@ -83,7 +95,7 @@ class Body extends StatelessWidget {
                     );
                   }
                 }),
-            FutureBuilder(
+            (login == true) ? FutureBuilder(
                 future: voucherService.getVoucher(),
                 builder: (context, AsyncSnapshot<List<Voucher>> snapshot) {
                   if (snapshot.hasError) {
@@ -97,7 +109,8 @@ class Body extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   }
-                }),
+                })
+            : const SizedBox.shrink(),
             SizedBox(height: getProportionateScreenWidth(20)),
             Padding(
               padding: EdgeInsets.symmetric(
