@@ -53,7 +53,7 @@ OutlineInputBorder outlineInputBorder() {
   );
 }
 
-var url = 'http://192.168.1.249:8089';
+var url = 'http://192.168.43.247:8089';
 //https://gogi-4dfede23b564.herokuapp.com
 // http://192.168.1.220:8089
 // IPv4 Address: 192.168.1.220
